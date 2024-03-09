@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { MatDialogRef,MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-addperson',
@@ -7,15 +8,22 @@ import { FormBuilder, Validators } from '@angular/forms';
   styleUrl: './addperson.component.css'
 })
 export class AddpersonComponent implements OnInit{
+  title = 'Agregar Persona';
+  isedit = false;
+  dialogdata : any;
 
-  constructor(private builder: FormBuilder){
+  constructor(private builder: FormBuilder, private ref: MatDialogRef<AddpersonComponent>
+    ,@Inject(MAT_DIALOG_DATA) public data:any){
 
   }
 
   ngOnInit(): void {
-    
+    this.dialogdata=this.data;
+    this.title=this.dialogdata.title;
   }
-  title = 'Agregar Persona';
+
+
+
   personForm = this.builder.group({
     id: this.builder.control(0),
     apellido: this.builder.control('',Validators.required),
@@ -48,7 +56,7 @@ export class AddpersonComponent implements OnInit{
   }
 
   closePopup(){
-
+    this.ref.close();
   }
 
 }
