@@ -10,6 +10,12 @@ import { Store } from '@ngrx/store';
 
 import { AuthService } from './auth.service';
 //import * as fromApp from '../store/app.reducer';
+/**
+ * 
+ * artículo para leer
+ * https://medium.com/@seanhaddock_60973/how-to-add-a-bearer-token-to-api-calls-when-using-ngrx-317f35fbb6f2
+ * 
+ */
 
 @Injectable()
 export class AuthInterceptorService implements HttpInterceptor {
