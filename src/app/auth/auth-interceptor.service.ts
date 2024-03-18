@@ -3,12 +3,15 @@ import {
   HttpInterceptor,
   HttpRequest,
   HttpHandler,
-  HttpParams
+  HttpParams,
+  HttpEvent
 } from '@angular/common/http';
 import { take, exhaustMap, map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
 import { AuthService } from './auth.service';
+import { Observable } from 'rxjs';
+import { config } from '../service/config';
 //import * as fromApp from '../store/app.reducer';
 /**
  * 
@@ -19,23 +22,25 @@ import { AuthService } from './auth.service';
 
 @Injectable()
 export class AuthInterceptorService implements HttpInterceptor {
-  constructor(private authService: AuthService, private store: Store<fromApp.AppState>) {}
+  constructor(private authService: AuthService, private store: Store) {}
 
-  intercept(req: HttpRequest<any>, next: HttpHandler) {
-    return this.store.select('auth').pipe(
-      take(1),
-      map(authState => {
-        return authState.user;
-      }),
-      exhaustMap(user => {
-        if (!user) {
+  intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    if (config.apiUrl && 
+        req.url.startsWith(config.apiUrl)) {
+      return this.store.select(userFeature.selectCurrentUser).pipe(
+        first(),
+        mergeMap((currentUser) => {
+          if (currentUser) {
+            const authReq = req.clone({
+              setHeaders: {
+                Authorization: `Bearer ${currentUser.authToken}`
+              },
+            });
+            return next.handle(authReq);
+          }
           return next.handle(req);
-        }
-        const modifiedReq = req.clone({
-          params: new HttpParams().set('auth', user.token)
-        });
-        return next.handle(modifiedReq);
-      })
-    );
-  }
+        })
+      );
+    }
+    return next.handle(req);
 }
