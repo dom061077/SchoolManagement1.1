@@ -24,9 +24,10 @@ import { config } from '../service/config';
 export class AuthInterceptorService implements HttpInterceptor {
   constructor(private authService: AuthService, private store: Store) {}
 
-  intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+   intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     if (config.apiUrl && 
         req.url.startsWith(config.apiUrl)) {
+          /*
       return this.store.select(userFeature.selectCurrentUser).pipe(
         first(),
         mergeMap((currentUser) => {
@@ -40,7 +41,8 @@ export class AuthInterceptorService implements HttpInterceptor {
           }
           return next.handle(req);
         })
-      );
+      );*/
     }
     return next.handle(req);
+  }
 }
