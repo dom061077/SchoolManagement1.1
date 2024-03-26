@@ -13,14 +13,16 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import {MAT_DATE_LOCALE} from '@angular/material/core';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { LoginComponent } from './component/login/login.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     AddpersonComponent,
-    PersonlistingComponent
+    PersonlistingComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
