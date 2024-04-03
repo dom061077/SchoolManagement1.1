@@ -1,4 +1,4 @@
-<form [formGroup]="personForm" (ngSubmit)="savePerson">
+<form [formGroup]="personForm" (ngSubmit)="savePerson()">
     <mat-card>
         <mat-card-header>
             <mat-card-title class="white-text">{{title}}</mat-card-title>
@@ -14,7 +14,7 @@
             </mat-form-field>            
             <mat-form-field>
                 <mat-label>D.N.I</mat-label>
-                <input formControlName="dni" matInput class=".align-middle">
+                <input formControlName="dni" type="number" matInput class=".align-middle">
             </mat-form-field>  
             <mat-form-field>
                 <mat-label>Padre</mat-label>
@@ -31,30 +31,45 @@
               
 
                     <input matInput >
-                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-hint>DD/MM/YYYY</mat-hint>
                     <mat-datepicker-toggle matIconSuffix [for]="pickerFechaNacimiento"></mat-datepicker-toggle>
                     <mat-datepicker #pickerFechaNacimiento></mat-datepicker>                    
               
             </mat-form-field>  
             <mat-form-field> 
                 <mat-label>Fecha Bautismo</mat-label>
-                <input formControlName="fechaBautismo" matInput class=".align-middle">
+                <input formControlName="fechaBautismo" [matDatepicker]="pickerFechaBautismo" matInput 
+                    class=".align-middle">
+                    <input matInput>
+                    <mat-hint>DD/MM/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="pickerFechaBautismo"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerFechaBautismo></mat-datepicker>                      
             </mat-form-field>  
             <mat-form-field>
                 <mat-label>Fecha Confirmación</mat-label>
-                <input formControlName="fechaConfirmacion" matInput class=".align-middle">
+                <input formControlName="fechaConfirmacion" [matDatepicker]="pickerFechaConfirmacion" matInput 
+                    class=".align-middle">
+                    <input matInput>
+                    <mat-hint>DD/MM/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="pickerFechaConfirmacion"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerFechaConfirmacion></mat-datepicker>                      
             </mat-form-field>  
             <mat-form-field>
                 <mat-label>Fecha Matrimonio</mat-label>
-                <input formControlName="fechaMatrimonio" matInput class=".align-middle">
+                <input formControlName="fechaMatrimonio" [matDatepicker]="pickerFechaMatrimonio" matInput 
+                    class=".align-middle">
+                    <input matInput>
+                    <mat-hint>DD/MM/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="pickerFechaMatrimonio"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerFechaMatrimonio></mat-datepicker>                      
             </mat-form-field>  
             <mat-form-field>
                 <mat-label>N° de Libro</mat-label>
-                <input formControlName="nroLibro" matInput class=".align-middle">
+                <input formControlName="nroLibro" type="number" matInput class=".align-middle">
             </mat-form-field>  
             <mat-form-field>
                 <mat-label>N° de Folio</mat-label>
-                <input formControlName="nroFolio" matInput class=".align-middle">
+                <input formControlName="nroFolio" type="number" matInput class=".align-middle">
             </mat-form-field>  
             <mat-form-field>
                 <mat-label>Apellido del Padrino Bautismo</mat-label>

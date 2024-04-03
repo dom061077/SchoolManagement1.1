@@ -22,6 +22,7 @@ export interface Userinfo{
     name:string,
     email:string,
     role:string,
+    token:string,
     status:boolean
 }
 

@@ -3,10 +3,12 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { MenubarComponent } from './component/menubar/menubar.component';
 import { AddpersonComponent } from './component/addperson/addperson.component';
 import { PersonlistingComponent } from './component/personlisting/personlisting.component';
 import { MaterialModule } from './material.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { StoreModule } from '@ngrx/store';
@@ -15,6 +17,9 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { LoginComponent } from './component/login/login.component';
+import { UserEffect } from './auth/store/user.effects';
+import { AppEffects } from './common/store/app.effects';
+import { UserReducer } from './auth/store/user.reducer';
 
 
 @NgModule({
@@ -22,7 +27,8 @@ import { LoginComponent } from './component/login/login.component';
     AppComponent,
     AddpersonComponent,
     PersonlistingComponent,
-    LoginComponent
+    LoginComponent,
+    MenubarComponent
   ],
   imports: [
     BrowserModule,
@@ -30,13 +36,14 @@ import { LoginComponent } from './component/login/login.component';
     MaterialModule,
     HttpClientModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({}, {}),
-    EffectsModule.forRoot([]),
+    StoreModule.forRoot({user:UserReducer,person: PersonReducer}),
+    EffectsModule.forRoot([UserEffect,AppEffects]),
     StoreRouterConnectingModule.forRoot(),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'es' },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi:true },
     provideAnimationsAsync()
   ],
   bootstrap: [AppComponent]

@@ -2,12 +2,23 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-.white-text {
+
+.green-snackbar {
+    background: green !important ;
     color: white;
-  }
+}
+.green-snackbar button {
+    background-color:green;
+    color: white !important;
+    border: none;
+}
 
-  form mat-form-field {
-    margin-right: 20px; /* Adjust the margin value as needed */
-    width: 40%;
-
-  }  
+.red-snackbar {
+    background: red ;
+    color: white;
+}
+.red-snackbar button {
+    background-color:red;
+    color: white !important;
+    border: none;
+}

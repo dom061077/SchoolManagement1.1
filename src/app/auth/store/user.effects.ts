@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { UserService } from "src/app/service/user.service";
-import { beginLogin, beginRegister, duplicateUser, duplicateUserSuccess, fetchmenu, fetchmenusuccess, getroles, getrolesuccess, getuserbycode, getuserbycodesuccess, getusers, getuserssuccess, updateuserrole } from "./User.action";
+import { UserService } from "../../service/user.service";
+import { beginLogin, beginRegister, duplicateUser, duplicateUserSuccess, fetchmenu, fetchmenusuccess, getroles, getrolesuccess, getuserbycode, getuserbycodesuccess, getusers, getuserssuccess, updateuserrole } from "./user.actions";
 import { exhaustMap, map, catchError, of, switchMap } from 'rxjs'
-import { showalert } from "../Common/App.Action";
+import { showalert } from "../../common/store/app.action";
 import { Router } from "@angular/router";
 import { Userinfo } from "../user.model";
 
@@ -13,6 +13,35 @@ export class UserEffect {
 
     }
 
+    _userlogin = createEffect(() =>
+        this.action$.pipe(
+            ofType(beginLogin),
+            switchMap((action) => {
+                return this.service.userLogin(action.usercred).pipe(
+                    switchMap((data: Userinfo) => {
+                        if (data) {
+                            const _userdata = data;
+                            console.log(data);
+                            //if (_userdata.status === true) {
+                                this.service.setUserToLoaclStorage(_userdata);
+                                this.route.navigate([''])
+                                return of(fetchmenu({ userrole: _userdata.role }),
+                                    showalert({ message: 'Login success.', resulttype: 'pass' }))
+                            //} else {
+                            //    return of(showalert({ message: 'InActive User.', resulttype: 'fail' }))
+                            //}
+                        } else {
+                            return of(showalert({ message: 'Login Failed: Invalid credentials.', resulttype: 'fail' }))
+                        }
+
+
+                    }), 
+                    catchError((_error) => of(showalert({ message: 'Login Failed due to :.' + _error.message, resulttype: 'fail' })))
+                )
+            })
+        )
+    )  
+            /*
     _userregister = createEffect(() =>
         this.action$.pipe(
             ofType(beginRegister),
@@ -48,34 +77,7 @@ export class UserEffect {
         )
     )
 
-    _userlogin = createEffect(() =>
-        this.action$.pipe(
-            ofType(beginLogin),
-            switchMap((action) => {
-                return this.service.UserLogin(action.usercred).pipe(
-                    switchMap((data: Userinfo[]) => {
-                        if (data.length > 0) {
-                            const _userdata = data[0];
-                            console.log(data);
-                            if (_userdata.status === true) {
-                                this.service.SetUserToLoaclStorage(_userdata);
-                                this.route.navigate([''])
-                                return of(fetchmenu({ userrole: _userdata.role }),
-                                    showalert({ message: 'Login success.', resulttype: 'pass' }))
-                            } else {
-                                return of(showalert({ message: 'InActive User.', resulttype: 'fail' }))
-                            }
-                        } else {
-                            return of(showalert({ message: 'Login Failed: Invalid credentials.', resulttype: 'fail' }))
-                        }
 
-
-                    }),
-                    catchError((_error) => of(showalert({ message: 'Login Failed due to :.' + _error.message, resulttype: 'fail' })))
-                )
-            })
-        )
-    )
 
     _loadmenubyrole = createEffect(() =>
         this.action$.pipe(
@@ -139,7 +141,7 @@ export class UserEffect {
         )
     )
 
-    _assignrole = createEffect(() =>
+    _assignrole = createEffect(() => null
         this.action$.pipe(
             ofType(updateuserrole),
             switchMap((action) => {
@@ -151,6 +153,6 @@ export class UserEffect {
                 )
             })
         )
-    )
+    )*/
 
 }
