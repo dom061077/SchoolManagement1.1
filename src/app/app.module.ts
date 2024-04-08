@@ -20,6 +20,8 @@ import { LoginComponent } from './component/login/login.component';
 import { UserEffect } from './auth/store/user.effects';
 import { AppEffects } from './common/store/app.effects';
 import { UserReducer } from './auth/store/user.reducer';
+import { PERSONreducer } from './person/store/person.reducer';
+import { PersonEffects } from './person/store/person.effects';
 
 
 @NgModule({
@@ -36,8 +38,8 @@ import { UserReducer } from './auth/store/user.reducer';
     MaterialModule,
     HttpClientModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({user:UserReducer,person: PersonReducer}),
-    EffectsModule.forRoot([UserEffect,AppEffects]),
+    StoreModule.forRoot({user:UserReducer,person: PERSONreducer}),
+    EffectsModule.forRoot([UserEffect,AppEffects,PersonEffects]),
     StoreRouterConnectingModule.forRoot(),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })
   ],

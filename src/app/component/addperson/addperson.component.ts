@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef,MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { PersonInfo } from '../../person/person.model';
+import { Person } from '../../person/person.model';
 import { Store } from '@ngrx/store';
-import { addPerson } from '../../person/store/person.actions';
+import { addPERSON } from '../../person/store/person.actions';
 import { showalert } from '../../common/store/app.action';
 
 @Component({
@@ -55,8 +55,10 @@ export class AddpersonComponent implements OnInit{
 
   savePerson(){
     if(this.personForm.valid){
-      const _obj: PersonInfo = {
+      const _obj: Person = {
+        id: 0,
         apellido: this.personForm.value.apellido as string,
+        apellidoNombre: '',
         nombre: this.personForm.value.nombre as string,
         dni: parseInt(this.personForm.value.dni as string) ,
         padre: this.personForm.value.padre as string,
@@ -75,7 +77,7 @@ export class AddpersonComponent implements OnInit{
         nombreMatrimonio: this.personForm.value.nombreMatrimonio as string,
         otrasNotas: this.personForm.value.otrasNotas as string        
       }
-      this.store.dispatch(addPerson({personData:_obj}));
+      this.store.dispatch(addPERSON({inputdata:_obj}));
     }else{
       this.store.dispatch(showalert({message:'Por favor, ingrese los datos obligatorios',resulttype:'fail'}));
     }

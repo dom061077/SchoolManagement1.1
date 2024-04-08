@@ -22,7 +22,7 @@ export interface Userinfo{
     name:string,
     email:string,
     role:string,
-    token:string,
+    access_token:string,
     status:boolean
 }
 

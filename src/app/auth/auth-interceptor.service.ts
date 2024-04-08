@@ -30,12 +30,12 @@ export class AuthInterceptorService implements HttpInterceptor {
     if (config.apiUrl && 
         req.url.startsWith(config.apiUrl)) {
         if(localStorage.getItem('userdata') != null){
-          let jsonstring = localStorage.getItem('userdata') as string;
+            let jsonstring = localStorage.getItem('userdata') as string;
           const _obj = JSON.parse(jsonstring) as Userinfo; 
           const authReq = req.clone({
             setHeaders: {
-              Authorization: `Bearer ${_obj.token}`
-            },
+              authorization: `Bearer ${ _obj.access_token }`
+            }         
           });
           return next.handle(authReq);          
         }else{
@@ -44,21 +44,6 @@ export class AuthInterceptorService implements HttpInterceptor {
           else
             this.route.navigate(['login']);
         }
-          /*
-      return this.store.select(userFeature.selectCurrentUser).pipe(
-        first(),
-        mergeMap((currentUser) => {
-          if (currentUser) {
-            const authReq = req.clone({
-              setHeaders: {
-                Authorization: `Bearer ${currentUser.authToken}`
-              },
-            });
-            return next.handle(authReq);
-          }
-          return next.handle(req);
-        })
-      );*/
     }
     return next.handle(req);
   }

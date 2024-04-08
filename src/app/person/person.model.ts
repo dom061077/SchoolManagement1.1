@@ -25,10 +25,11 @@ import { EntityState } from "@ngrx/entity";
     String otrasNotas;
 
  */
-export interface PersonInfo{
-    
+export interface Person{
+    id: number,
     apellido: string,
     nombre: string,
+    apellidoNombre: string,
     dni: number,
     padre: string,
     madre: string,
@@ -47,6 +48,7 @@ export interface PersonInfo{
     otrasNotas: string     
 }
 
-export interface PersonModel extends EntityState<PersonInfo>{
-    
+export interface PersonModel extends EntityState<Person>{
+    errormessage:string,
+    isloading:boolean
 }
