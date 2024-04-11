@@ -21,7 +21,7 @@ export class PersonlistingComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  displayedColums: string[] = ["id","apellido","nombre","apellidoNombre","dni", "padre", "madre"]
+  displayedColums: string[] = ["id","apellido"]
   constructor(private dialog: MatDialog, private store: Store) {
 
   }

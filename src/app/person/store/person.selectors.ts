@@ -4,12 +4,14 @@ import { personAdapter } from "./person.state";
 
 const getpersonstate = createFeatureSelector<PersonModel>('customer');
 
-const customerSeletor = personAdapter.getSelectors();
+const personSelector = personAdapter.getSelectors();
 
-export const getpersonlist = createSelector(getpersonstate, customerSeletor.selectAll)
+export const getpersonlist = createSelector(getpersonstate, personSelector.selectAll)
 
-const selectedentities = createSelector(getpersonstate, customerSeletor.selectEntities)
+const selectedentities = createSelector(getpersonstate, personSelector.selectEntities)
 
-export const getperson = (id: number) => createSelector(selectedentities, (state) => state[id]);
+export const getperson = (id: number) => createSelector(selectedentities,     (state) => state[id]);
 
-export const getErrormessage=createSelector(getpersonstate,(state)=>state.errormessage);
+export const getErrormessage=createSelector(getpersonstate,
+    (state)=>state.errormessage
+);

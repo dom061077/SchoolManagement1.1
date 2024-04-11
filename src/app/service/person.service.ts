@@ -15,7 +15,7 @@ export class PersonService {
   }
 
   GetAll() {
-    return this.http.get<Person[]>(this.baseurl+'/list');
+    return this.http.get<Person[]>(this.baseurl+'/list?offset=0&limit=10&qfilters=');
   }
 
   Getbycode(code: number) {
