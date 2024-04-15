@@ -2,7 +2,7 @@ import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { PersonModel } from "../person.model";
 import { personAdapter } from "./person.state";
 
-const getpersonstate = createFeatureSelector<PersonModel>('customer');
+const getpersonstate = createFeatureSelector<PersonModel>('person');
 
 const personSelector = personAdapter.getSelectors();
 

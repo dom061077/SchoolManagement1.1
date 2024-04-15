@@ -3,7 +3,7 @@ import { Person, PersonModel } from "../person.model";
 
 
 export const personAdapter=createEntityAdapter<Person>({
-    selectId:(customer:Person)=>customer.id,
+    selectId:(person:Person)=>person.id,
     sortComparer:sortbyName
 });
 
@@ -13,5 +13,5 @@ export const PersonState:PersonModel=personAdapter.getInitialState({
 });
 
 export function sortbyName(a:Person,b:Person){
-    return a.apellidoNombre.localeCompare(b.apellidoNombre);
+    return a.apellido.localeCompare(b.apellido);
 }

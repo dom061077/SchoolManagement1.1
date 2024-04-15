@@ -6,11 +6,11 @@ import {
   HttpParams,
   HttpEvent
 } from '@angular/common/http';
-import { take, exhaustMap, map } from 'rxjs/operators';
+import { take, exhaustMap, map, catchError } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
 
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { config } from '../service/config';
 import { Userinfo } from './user.model';
 import { Router } from '@angular/router';
@@ -34,10 +34,20 @@ export class AuthInterceptorService implements HttpInterceptor {
           const _obj = JSON.parse(jsonstring) as Userinfo; 
           const authReq = req.clone({
             setHeaders: {
-              authorization: `Bearer ${ _obj.access_token }`
+              Authorization: `Bearer ${ _obj.access_token }`
             }         
           });
-          return next.handle(authReq);          
+          return next.handle(authReq)
+            .pipe(
+              catchError(error => {
+                if(error.status == 403){
+                  throw new Error("Ingrese de nuevo con usuario y contraseña");
+                }else{
+                  throw error;
+                }
+                
+              })
+            );          
         }else{
           if(req.url.indexOf('authenticate',0)>1)
             return next.handle(req);     
