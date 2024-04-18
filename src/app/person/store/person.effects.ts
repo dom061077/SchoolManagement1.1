@@ -49,7 +49,7 @@ export class PersonEffects {
             switchMap((action) => {
                 return this.service.Create(action.inputdata).pipe(
                     switchMap((data) => {
-                        return of(addPERSONsuccess({ inputdata: action.inputdata }),
+                        return of(loadPERSON(),
                             showalert({ message: 'Created successfully.', resulttype: 'pass' }))
                     }),
                     catchError((_error) => of(showalert({ message: 'Failed to create CUSTOMER', resulttype: 'fail' })))

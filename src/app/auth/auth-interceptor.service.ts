@@ -14,6 +14,7 @@ import { Observable, throwError } from 'rxjs';
 import { config } from '../service/config';
 import { Userinfo } from './user.model';
 import { Router } from '@angular/router';
+import { loadPERSONfail } from '../person/store/person.actions';
 //import * as fromApp from '../store/app.reducer';
 /**
  * 
@@ -41,7 +42,11 @@ export class AuthInterceptorService implements HttpInterceptor {
             .pipe(
               catchError(error => {
                 if(error.status == 403){
-                  throw new Error("Ingrese de nuevo con usuario y contraseña");
+                  //throw new Error("Ingrese de nuevo con usuario y contraseña");
+                  this.store.dispatch(loadPERSONfail({errormessage:'Ingrese con usuario y contraseña'}));
+                  this.route.navigate(['login']);
+                  //return next.handle();
+                  throw error;
                 }else{
                   throw error;
                 }

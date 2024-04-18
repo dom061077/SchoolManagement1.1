@@ -63,3 +63,52 @@ export class PersonlistingComponent implements OnInit {
   }
 
 }
+
+/*
+ 
+ 
+ import { Component, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { DataService } from './data.service';
+
+@Component({
+  selector: 'app-table',
+  templateUrl: './table.component.html',
+  styleUrls: ['./table.component.css']
+})
+export class TableComponent {
+  dataSource = new MatTableDataSource<any>();
+  displayedColumns: string[] = ['id', 'name', 'email'];
+  
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  constructor(private dataService: DataService) {}
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.loadPage();
+  }
+
+  loadPage() {
+    const pageIndex = this.paginator.pageIndex;
+    const pageSize = this.paginator.pageSize;
+    const sortField = this.dataSource.sort?.active;
+    const sortDirection = this.dataSource.sort?.direction;
+
+    this.dataService.getData(pageIndex, pageSize, sortField, sortDirection)
+      .subscribe(data => {
+        this.dataSource.data = data;
+      });
+  }
+
+  sortData(event: any) {
+    // Reset paginator to first page when sorting is applied
+    this.paginator.firstPage();
+    this.loadPage();
+  }
+}
+ 
+  
+ 
+ */
