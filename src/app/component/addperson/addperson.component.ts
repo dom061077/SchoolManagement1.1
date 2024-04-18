@@ -5,6 +5,7 @@ import { Person } from '../../person/person.model';
 import { Store } from '@ngrx/store';
 import { addPERSON } from '../../person/store/person.actions';
 import { showalert } from '../../common/store/app.action';
+import { getperson } from '../../person/store/person.selectors';
 
 @Component({
   selector: 'app-addperson',
@@ -15,6 +16,8 @@ export class AddpersonComponent implements OnInit{
   title = 'Agregar Persona';
   isedit = false;
   dialogdata : any;
+  editcode!: number;
+  editdata!: Person;
 
   constructor(private builder: FormBuilder, private ref: MatDialogRef<AddpersonComponent>
     ,@Inject(MAT_DIALOG_DATA) public data:any, private store: Store){
@@ -24,6 +27,39 @@ export class AddpersonComponent implements OnInit{
   ngOnInit(): void {
     this.dialogdata=this.data;
     this.title=this.dialogdata.title;
+
+    this.dialogdata = this.data;
+    this.title = this.dialogdata.title;
+    this.editcode = this.dialogdata.code;
+    if (this.editcode > 0) {
+      
+      this.store.select(getperson(this.editcode)).subscribe(res => {
+        this.editdata = res as Person;
+        this.personForm.setValue({
+          id: this.editdata.id,
+          apellido: this.editdata.apellido,
+          nombre: this.editdata.nombre,
+          dni: this.editdata.dni.toString(),
+          padre: this.editdata.padre.toString(),
+          madre: this.editdata.madre.toString(),
+          fechaNacimiento: this.editdata.fechaNacimiento.toString(),
+          fechaBautismo: this.editdata.fechaBautismo.toString(),
+          fechaConfirmacion: this.editdata.fechaConfirmacion.toString(),
+          fechaMatrimonio: this.editdata.fechaMatrimonio.toString(),
+          apellidoPadrinoBaut: this.editdata.apellidoPadrinoBaut,
+          nroLibro: this.editdata.nroLibro.toString(),
+          nroFolio: this.editdata.nroFolio.toString(),
+          nombrePadrinoBaut: this.editdata.nombrePadrinoBaut.toString(),
+          apellidoPadrinoConf: this.editdata.apellidoPadrinoConf.toString(),
+          nombrePadrinoConf: this.editdata.nombrePadrinoConf.toString(),
+          apellidoMatrimonio: this.editdata.apellidoMatrimonio.toString(),
+          nombreMatrimonio: this.editdata.nombreMatrimonio.toString(),
+          otrasNotas: this.editdata.otrasNotas.toString(),
+      
+
+        })
+      })
+    }    
   }
 
 
