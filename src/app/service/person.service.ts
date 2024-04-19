@@ -36,5 +36,8 @@ export class PersonService {
    
     return this.http.post(this.baseurl+'/create', data ,{headers});
   }
+  list(offset:number,limit:number,qfilters:string){
+    return this.http.get()
+  }
 }
 

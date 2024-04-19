@@ -8,6 +8,7 @@ import { Person } from '../../person/person.model';
 import { loadPERSON } from '../../person/store/person.actions';
 import { getErrormessage, getpersonlist } from '../../person/store/person.selectors';
 import { MatTableDataSource } from '@angular/material/table';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-personlisting',
@@ -18,13 +19,19 @@ export class PersonlistingComponent implements OnInit {
   personList!: Person[];
   datasource: any;
   errormessage='';
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   displayedColums: string[] = ["id","apellido"]
-  constructor(private dialog: MatDialog, private store: Store) {
+  constructor(private dialog: MatDialog, private store: Store, private builder: FormBuilder) {
 
   }
+
+  filterForm = this.builder.group({
+    filter : ""
+  });
+
   ngOnInit(): void {
     this.store.dispatch(loadPERSON());
     this.store.select(getErrormessage).subscribe(res=>{
@@ -51,7 +58,7 @@ export class PersonlistingComponent implements OnInit {
   }
 
   openPopup(code: number, title: string){
-    this.dialog.open(AddpersonComponent,{
+    this.dialog.open(AddpersonComponent,{ 
       //width: '50%',
       enterAnimationDuration: '1000ms',
       exitAnimationDuration: '1000ms',
@@ -60,6 +67,14 @@ export class PersonlistingComponent implements OnInit {
         title: title
       }
     })
+  }
+
+  applyFilter(){
+    const pageIndex = this.paginator.pageIndex;
+    const pageSize = this.paginator.pageSize;
+    const sortField = this.datasource.sort?.active;
+    const sortDirection = this.datasource.sort?.direction;    
+    console.log('Filtro de persona: '+this.filterForm.value.filter);
   }
 
 }

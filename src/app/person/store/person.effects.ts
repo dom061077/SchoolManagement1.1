@@ -49,14 +49,25 @@ export class PersonEffects {
             switchMap((action) => {
                 return this.service.Create(action.inputdata).pipe(
                     switchMap((data) => {
-                        return of(loadPERSON(),
-                            showalert({ message: 'Created successfully.', resulttype: 'pass' }))
+                        return of(addPERSONsuccess({ inputdata: action.inputdata }),
+                            showalert({ message: 'Created successfully.', resulttype: 'pass' }))                        
+                        //return of(loadPERSON(),
+                        //    showalert({ message: 'Created successfully.', resulttype: 'pass' }))
                     }),
                     catchError((_error) => of(showalert({ message: 'Failed to create CUSTOMER', resulttype: 'fail' })))
                 )
             })
         )
     )
+    _addedPerson = createEffect(()=>
+        this.actin$.pipe(
+            ofType(addPERSONsuccess),
+            switchMap((action) => {
+                return of(loadPERSON())
+            })
+        )
+    )
+
     _updatePERSON = createEffect(() =>
         this.actin$.pipe(
             ofType(updatePERSON),

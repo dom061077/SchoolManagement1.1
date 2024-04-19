@@ -19,6 +19,7 @@ export class AddpersonComponent implements OnInit{
   editcode!: number;
   editdata!: Person;
 
+
   constructor(private builder: FormBuilder, private ref: MatDialogRef<AddpersonComponent>
     ,@Inject(MAT_DIALOG_DATA) public data:any, private store: Store){
 
@@ -31,7 +32,7 @@ export class AddpersonComponent implements OnInit{
     this.dialogdata = this.data;
     this.title = this.dialogdata.title;
     this.editcode = this.dialogdata.code;
-    if (this.editcode > 0) {
+    //if (this.editcode > 0) {
       
       this.store.select(getperson(this.editcode)).subscribe(res => {
         this.editdata = res as Person;
@@ -59,7 +60,7 @@ export class AddpersonComponent implements OnInit{
 
         })
       })
-    }    
+    //}    
   }
 
 
