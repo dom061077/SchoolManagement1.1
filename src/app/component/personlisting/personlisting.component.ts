@@ -33,7 +33,7 @@ export class PersonlistingComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.store.dispatch(loadPERSON({offset: 0, limit: 5, qfilter: ""}));
+    this.store.dispatch(loadPERSON({offset: 0, limit: 5, qfilter: "", sorts: ""}));
     this.store.select(getErrormessage).subscribe(res=>{
       this.errormessage=res;
     })
@@ -73,15 +73,19 @@ export class PersonlistingComponent implements OnInit {
     const pageIndex = this.paginator.pageIndex;
     const pageSize = this.paginator.pageSize;
     const sortField = this.datasource.sort?.active;
-    const sortDirection = this.datasource.sort?.direction;    
+    const sortDirection = this.datasource.sort?.direction;   
+    const sorts = '[{"property": "'+sortField+',value"'+sortDirection+'"}'; 
     const qfilter = '[{ "property":"apellido:like", "value": "'+ this.filterForm.value.filter+'"}]' ?? "";
-    this.store.dispatch(loadPERSON({offset:pageIndex, limit: pageSize, qfilter: qfilter?.toString()}));
+    this.store.dispatch(loadPERSON({offset:pageIndex, limit: pageSize, qfilter: qfilter?.toString(),sorts}));
   }
   sortData(event: any){
+    const pageIndex = this.paginator.pageIndex;
+    const pageSize = this.paginator.pageSize;    
     const sortField = event.active;
     const sortDirection = event.direction;
-    console.log("sortField: "+sortField);
-    console.log("sortDirection: "+sortDirection)
+    const sorts = '[{"property": "'+sortField+',value"'+sortDirection+'"}'; 
+    const qfilter = '[{ "property":"apellido:like", "value": "'+ this.filterForm.value.filter+'"}]' ?? "";
+    this.store.dispatch(loadPERSON({offset:pageIndex, limit: pageSize, qfilter: qfilter?.toString(),sorts}));
   }  
 
 }
