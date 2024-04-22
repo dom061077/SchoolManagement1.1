@@ -18,7 +18,7 @@ export const GET_PERSON='[PERSON page]get PERSON'
 export const GET_PERSON_SUCCESS='[PERSON page]get PERSON success'
 export const OPEN_POPUP_PERSON='[PERSON page]open popup' 
 
-export const loadPERSON=createAction(LOAD_PERSON,props<{offset:number,limit: number, qfilter:string}>())
+export const loadPERSON=createAction(LOAD_PERSON,props<{offset:number,limit: number, qfilter:string, sorts:string}>())
 export const loadPERSONsuccess=createAction(LOAD_PERSON_SUCCESS,props<{list:Person[]}>())
 export const loadPERSONfail=createAction(LOAD_PERSON_FAIL,props<{errormessage:string}>())
 

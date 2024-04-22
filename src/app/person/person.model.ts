@@ -52,3 +52,4 @@ export interface PersonModel extends EntityState<Person>{
     errormessage:string,
     isloading:boolean
 }
+

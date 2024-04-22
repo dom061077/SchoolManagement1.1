@@ -8,7 +8,7 @@ import { Userinfo } from '../../auth/user.model';
 import { addPERSON, addPERSONsuccess, deletePERSONsuccess, deleteePERSON, getPERSON, getPERSONsuccess, loadPERSON, loadPERSONfail, loadPERSONsuccess, updatePERSON, updatePERSONsuccess } from './person.actions';
 import { Person } from '../person.model';
 import { Update } from '@ngrx/entity';
-import { beginLogin } from '../../auth/store/user.actions';
+
 
 @Injectable()
 export class PersonEffects {
@@ -20,7 +20,7 @@ export class PersonEffects {
         this.actin$.pipe(
             ofType(loadPERSON),
             exhaustMap((action) => {
-                return this.service.getAll(action.offset,action.limit, action.qfilter).pipe(
+                return this.service.getAll(action.offset,action.limit, action.qfilter).data.pipe(
                     map((data) => {
                         return loadPERSONsuccess({ list: data })
                     }),
@@ -64,7 +64,7 @@ export class PersonEffects {
         this.actin$.pipe(
             ofType(addPERSONsuccess),
             switchMap(() => {
-                return of(loadPERSON({offset:0,limit: 5, qfilter: ""}))
+                return of(loadPERSON({offset:0,limit: 5, qfilter: "", sorts:""}))
             })
         )
     )

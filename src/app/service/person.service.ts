@@ -2,8 +2,8 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Person } from '../person/person.model';
 import { config } from './config';
-import { Observable } from 'rxjs';
 import { Userinfo } from '../auth/user.model';
+import { PersonDataSource } from '../person/person.datasource.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +15,22 @@ export class PersonService {
   }
  
   getAll(offset:number, limit: number, qfilter: string) {
+    /*
+          this.dataSource.data = data;
+      this.dataSource.paginator = this.paginator; // Set the paginator
+      this.paginator.length = data.length;
+    
+    */
     let queryParams = new HttpParams();
     queryParams = queryParams.append("offset",offset);
     queryParams = queryParams.append("limit",limit);
     queryParams = queryParams.append("qfilters", qfilter);
-    return this.http.get<Person[]>(this.baseurl+'/list',{params: queryParams}
-    );
+    let personDataSource : PersonDataSource;
+    personDataSource = {
+      data: this.http.get<Person[]>(this.baseurl+'/list',{params: queryParams})
+    }
+    
+    return {data:this.http.get<Person[]>(this.baseurl+'/list',{params: queryParams}), total:10};
   }
 
   Getbycode(code: number) {
