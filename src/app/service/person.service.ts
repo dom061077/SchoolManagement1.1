@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Person } from '../person/person.model';
 import { config } from './config';
@@ -13,9 +13,14 @@ export class PersonService {
   constructor(private http: HttpClient) {
 
   }
-
-  GetAll() {
-    return this.http.get<Person[]>(this.baseurl+'/list?offset=0&limit=10&qfilters=');
+ 
+  getAll(offset:number, limit: number, qfilter: string) {
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append("offset",offset);
+    queryParams = queryParams.append("limit",limit);
+    queryParams = queryParams.append("qfilters", qfilter);
+    return this.http.get<Person[]>(this.baseurl+'/list',{params: queryParams}
+    );
   }
 
   Getbycode(code: number) {
@@ -36,8 +41,6 @@ export class PersonService {
    
     return this.http.post(this.baseurl+'/create', data ,{headers});
   }
-  list(offset:number,limit:number,qfilters:string){
-    return this.http.get()
-  }
+
 }
 

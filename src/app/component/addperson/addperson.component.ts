@@ -93,7 +93,7 @@ export class AddpersonComponent implements OnInit{
   savePerson(){
     if(this.personForm.valid){
       const _obj: Person = {
-        id: 0,
+        id: (this.personForm.value.id ? this.personForm.value.id : 0 ),
         apellido: this.personForm.value.apellido as string,
         apellidoNombre: '',
         nombre: this.personForm.value.nombre as string,

@@ -23,7 +23,7 @@ export class PersonlistingComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  displayedColums: string[] = ["id","apellido"]
+  displayedColums: string[] = ["id","dni","apellido","nombre", "action"]
   constructor(private dialog: MatDialog, private store: Store, private builder: FormBuilder) {
 
   }
@@ -33,7 +33,7 @@ export class PersonlistingComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.store.dispatch(loadPERSON());
+    this.store.dispatch(loadPERSON({offset: 0, limit: 5, qfilter: ""}));
     this.store.select(getErrormessage).subscribe(res=>{
       this.errormessage=res;
     })
@@ -50,7 +50,7 @@ export class PersonlistingComponent implements OnInit {
   }
 
   personEdit(id: number){
-
+    this.openPopup(id,"Modificación")
   }
 
   personDelete(id: number){
@@ -74,10 +74,19 @@ export class PersonlistingComponent implements OnInit {
     const pageSize = this.paginator.pageSize;
     const sortField = this.datasource.sort?.active;
     const sortDirection = this.datasource.sort?.direction;    
-    console.log('Filtro de persona: '+this.filterForm.value.filter);
+    const qfilter = '[{ "property":"apellido:like", "value": "'+ this.filterForm.value.filter+'"}]' ?? "";
+    this.store.dispatch(loadPERSON({offset:pageIndex, limit: pageSize, qfilter: qfilter?.toString()}));
   }
+  sortData(event: any){
+    const sortField = event.active;
+    const sortDirection = event.direction;
+    console.log("sortField: "+sortField);
+    console.log("sortDirection: "+sortDirection)
+  }  
 
 }
+
+
 
 /*
  

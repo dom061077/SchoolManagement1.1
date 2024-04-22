@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { Router } from '@angular/router';
+import { Route, Router } from '@angular/router';
 import { catchError, exhaustMap, map, of, switchMap } from 'rxjs';
 import { PersonService } from '../../service/person.service';
-import { showalert } from '../../common/store/app.action';
+import { emptyaction, showalert } from '../../common/store/app.action';
 import { Userinfo } from '../../auth/user.model';
 import { addPERSON, addPERSONsuccess, deletePERSONsuccess, deleteePERSON, getPERSON, getPERSONsuccess, loadPERSON, loadPERSONfail, loadPERSONsuccess, updatePERSON, updatePERSONsuccess } from './person.actions';
 import { Person } from '../person.model';
 import { Update } from '@ngrx/entity';
+import { beginLogin } from '../../auth/store/user.actions';
 
 @Injectable()
 export class PersonEffects {
-    constructor(private actin$: Actions, private service:PersonService) {
+    constructor(private actin$: Actions, private service:PersonService, private route: Router) {
 
     }
 
@@ -19,7 +20,7 @@ export class PersonEffects {
         this.actin$.pipe(
             ofType(loadPERSON),
             exhaustMap((action) => {
-                return this.service.GetAll().pipe(
+                return this.service.getAll(action.offset,action.limit, action.qfilter).pipe(
                     map((data) => {
                         return loadPERSONsuccess({ list: data })
                     }),
@@ -62,8 +63,8 @@ export class PersonEffects {
     _addedPerson = createEffect(()=>
         this.actin$.pipe(
             ofType(addPERSONsuccess),
-            switchMap((action) => {
-                return of(loadPERSON())
+            switchMap(() => {
+                return of(loadPERSON({offset:0,limit: 5, qfilter: ""}))
             })
         )
     )
@@ -100,6 +101,16 @@ export class PersonEffects {
             })
         )
     )
+    
+    /*_loadPERSONfail = createEffect(() =>
+        this.actin$.pipe(
+            ofType(loadPERSONfail),
+            switchMap(() => {
+                this.route.navigate(['login']);
+                return of(emptyaction());
+            })
+        )
+    )*/
 
 
 

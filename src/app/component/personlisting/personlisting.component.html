@@ -16,16 +16,23 @@
                 <mat-icon>search</mat-icon>
               </button>
         </form>
-        <table *ngIf="!errormessage" matSort mat-table [dataSource]="datasource" class="mat-elevation-z8">
+        <table *ngIf="!errormessage" matSort mat-table [dataSource]="datasource" (matSortChange)="sortData($event)" class="mat-elevation-z8">
             <ng-container matColumnDef="id">
                 <th mat-sort-header mat-header-cell *matHeaderCellDef> ID</th>
                 <td mat-cell *matCellDef="let element">{{element.id}}</td>
               </ng-container>
+              <ng-container matColumnDef="dni">
+                <th mat-sort-header mat-header-cell *matHeaderCellDef> D.N.I</th>
+                <td mat-cell *matCellDef="let element">{{element.dni}}</td>
+              </ng-container>              
             <ng-container matColumnDef="apellido">
                 <th mat-sort-header mat-header-cell *matHeaderCellDef>Apellido</th>
                 <td mat-cell *matCellDef="let element">{{element.apellido}}</td>
             </ng-container>
-
+            <ng-container matColumnDef="nombre">
+                <th mat-sort-header mat-header-cell *matHeaderCellDef>Nombre</th>
+                <td mat-cell *matCellDef="let element">{{element.nombre}}</td>
+            </ng-container>            
 
 
 
