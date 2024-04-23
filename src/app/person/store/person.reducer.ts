@@ -6,7 +6,7 @@ import { Person } from "../person.model";
 
 const _personReducer = createReducer(PersonState,
     on(loadPERSONsuccess, (state, action) => {
-        return personAdapter.setAll(action.list, {
+        return personAdapter.setAll(action.list,   {
             ...state,
             errormessage:''
         });

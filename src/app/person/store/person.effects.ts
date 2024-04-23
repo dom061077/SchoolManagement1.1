@@ -20,9 +20,9 @@ export class PersonEffects {
         this.actin$.pipe(
             ofType(loadPERSON),
             exhaustMap((action) => {
-                return this.service.getAll(action.offset,action.limit, action.qfilter).data.pipe(
+                return this.service.getAll(action.offset,action.limit, action.qfilter).pipe(
                     map((data) => {
-                        return loadPERSONsuccess({ list: data })
+                        return loadPERSONsuccess({ list: data.data, total: data.total });
                     }),
                     catchError((_error) => of(loadPERSONfail({ errormessage: _error.message })))
                 )
@@ -36,7 +36,7 @@ export class PersonEffects {
             exhaustMap((action) => {
                 return this.service.Getbycode(action.id).pipe(
                     map((data) => {
-                        return getPERSONsuccess({ obj: data })
+                         return getPERSONsuccess({ obj: data })
                     }),
                     catchError((_error) => of(showalert({ message: 'Failed to fetch data :' + _error.message, resulttype: 'fail' })))
                 )

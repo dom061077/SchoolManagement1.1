@@ -25,12 +25,9 @@ export class PersonService {
     queryParams = queryParams.append("offset",offset);
     queryParams = queryParams.append("limit",limit);
     queryParams = queryParams.append("qfilters", qfilter);
-    let personDataSource : PersonDataSource;
-    personDataSource = {
-      data: this.http.get<Person[]>(this.baseurl+'/list',{params: queryParams})
-    }
     
-    return {data:this.http.get<Person[]>(this.baseurl+'/list',{params: queryParams}), total:10};
+    
+    return this.http.get<PersonDataSource>(this.baseurl+'/list',{params: queryParams});
   }
 
   Getbycode(code: number) {
