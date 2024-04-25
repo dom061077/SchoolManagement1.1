@@ -20,9 +20,9 @@ export class PersonEffects {
         this.actin$.pipe(
             ofType(loadPERSON),
             exhaustMap((action) => {
-                return this.service.getAll(action.offset,action.limit, action.qfilter).pipe(
-                    map((data) => {
-                        return loadPERSONsuccess({ list: data.data, total: data.total });
+                return this.service.getAll(action.offset,action.limit, action.qfilter,action.sorts).pipe(
+                    map((datax) => {
+                        return loadPERSONsuccess({ list: datax.data, total: datax.total });
                     }),
                     catchError((_error) => of(loadPERSONfail({ errormessage: _error.message })))
                 )

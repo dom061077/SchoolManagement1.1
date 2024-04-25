@@ -14,7 +14,7 @@ export class PersonService {
 
   }
  
-  getAll(offset:number, limit: number, qfilter: string) {
+  getAll(offset:number, limit: number, qfilter: string, sorts: string) {
     /*
           this.dataSource.data = data;
       this.dataSource.paginator = this.paginator; // Set the paginator
@@ -25,6 +25,7 @@ export class PersonService {
     queryParams = queryParams.append("offset",offset);
     queryParams = queryParams.append("limit",limit);
     queryParams = queryParams.append("qfilters", qfilter);
+    queryParams = queryParams.append("sorts",sorts);
     
     
     return this.http.get<PersonDataSource>(this.baseurl+'/list',{params: queryParams});

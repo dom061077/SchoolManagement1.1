@@ -23,7 +23,8 @@ export class AddpersonComponent implements OnInit{
   constructor(private builder: FormBuilder, private ref: MatDialogRef<AddpersonComponent>
     ,@Inject(MAT_DIALOG_DATA) public data:any, private store: Store){
 
-  }
+  } 
+  
 
   ngOnInit(): void {
     this.dialogdata=this.data;
@@ -43,10 +44,10 @@ export class AddpersonComponent implements OnInit{
           dni: this.editdata.dni.toString(),
           padre: this.editdata.padre.toString(),
           madre: this.editdata.madre.toString(),
-          fechaNacimiento: this.editdata.fechaNacimiento.toString(),
-          fechaBautismo: this.editdata.fechaBautismo.toString(),
-          fechaConfirmacion: this.editdata.fechaConfirmacion.toString(),
-          fechaMatrimonio: this.editdata.fechaMatrimonio.toString(),
+          fechaNacimiento: this.editdata.fechaNacimiento,
+          fechaBautismo: this.editdata.fechaBautismo,
+          fechaConfirmacion: this.editdata.fechaConfirmacion,
+          fechaMatrimonio: this.editdata.fechaMatrimonio,
           apellidoPadrinoBaut: this.editdata.apellidoPadrinoBaut,
           nroLibro: this.editdata.nroLibro.toString(),
           nroFolio: this.editdata.nroFolio.toString(),
@@ -69,21 +70,21 @@ export class AddpersonComponent implements OnInit{
     id: this.builder.control(0),
     apellido: this.builder.control('',Validators.required),
     nombre: this.builder.control('',Validators.required),
-    dni: this.builder.control('',Validators.required),
-    padre: this.builder.control('',Validators.required),
-    madre: this.builder.control('',Validators.required),
-    fechaNacimiento: this.builder.control('',Validators.required),
-    fechaBautismo: this.builder.control('',Validators.required),
-    fechaConfirmacion: this.builder.control('',Validators.required),
-    fechaMatrimonio: this.builder.control('',Validators.required),
-    apellidoPadrinoBaut: this.builder.control('',Validators.required),
-    nroLibro: this.builder.control('',Validators.required),
-    nroFolio: this.builder.control('',Validators.required),
-    nombrePadrinoBaut: this.builder.control('',Validators.required),
-    apellidoPadrinoConf: this.builder.control('',Validators.required),
-    nombrePadrinoConf: this.builder.control('',Validators.required),
-    apellidoMatrimonio: this.builder.control('',Validators.required),
-    nombreMatrimonio: this.builder.control('',Validators.required),
+    dni: this.builder.control(''),
+    padre: this.builder.control(''),
+    madre: this.builder.control(''),
+    fechaNacimiento: this.builder.control(new Date()),
+    fechaBautismo: this.builder.control(new Date()),
+    fechaConfirmacion: this.builder.control(new Date()),
+    fechaMatrimonio: this.builder.control(new Date()),
+    apellidoPadrinoBaut: this.builder.control(''),
+    nroLibro: this.builder.control(''),
+    nroFolio: this.builder.control(''),
+    nombrePadrinoBaut: this.builder.control(''),
+    apellidoPadrinoConf: this.builder.control(''),
+    nombrePadrinoConf: this.builder.control(''),
+    apellidoMatrimonio: this.builder.control(''),
+    nombreMatrimonio: this.builder.control(''),
     otrasNotas: this.builder.control(''),
 
 
@@ -100,10 +101,10 @@ export class AddpersonComponent implements OnInit{
         dni: parseInt(this.personForm.value.dni as string) ,
         padre: this.personForm.value.padre as string,
         madre: this.personForm.value.madre as string,
-        fechaNacimiento: new Date(this.personForm.value.fechaNacimiento as string),
-        fechaBautismo: new Date(this.personForm.value.fechaBautismo as string),
-        fechaConfirmacion: new Date(this.personForm.value.fechaConfirmacion as string),
-        fechaMatrimonio: new Date(this.personForm.value.fechaMatrimonio as string),
+        fechaNacimiento: (this.personForm.value.fechaNacimiento?this.personForm.value.fechaNacimiento:new Date(0)),
+        fechaBautismo: (this.personForm.value.fechaBautismo?this.personForm.value.fechaBautismo: new Date(0)),
+        fechaConfirmacion: (this.personForm.value.fechaConfirmacion?this.personForm.value.fechaConfirmacion:new Date(0)),
+        fechaMatrimonio: (this.personForm.value.fechaMatrimonio?this.personForm.value.fechaMatrimonio:new Date(0)),
         nroLibro: parseInt(this.personForm.value.nroLibro as string),
         nroFolio: parseInt(this.personForm.value.nroFolio as string),
         apellidoPadrinoBaut: this.personForm.value.apellidoPadrinoBaut as string,

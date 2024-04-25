@@ -40,9 +40,9 @@
                 <mat-label>Fecha Bautismo</mat-label>
                 <input formControlName="fechaBautismo" [matDatepicker]="pickerFechaBautismo" matInput 
                     class=".align-middle">
-                    <input matInput>
+                    <input [required]="false" matInput>
                     <mat-hint>DD/MM/YYYY</mat-hint>
-                    <mat-datepicker-toggle matIconSuffix [for]="pickerFechaBautismo"></mat-datepicker-toggle>
+                    <mat-datepicker-toggle  matIconSuffix [for]="pickerFechaBautismo"></mat-datepicker-toggle>
                     <mat-datepicker #pickerFechaBautismo></mat-datepicker>                      
             </mat-form-field>  
             <mat-form-field>

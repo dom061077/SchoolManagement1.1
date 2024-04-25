@@ -74,7 +74,7 @@ export class PersonlistingComponent implements OnInit {
     const pageSize = this.paginator.pageSize;
     const sortField = this.datasource.sort?.active;
     const sortDirection = this.datasource.sort?.direction;   
-    const sorts = '[{"property": "'+sortField+',value"'+sortDirection+'"}'; 
+    const sorts = '[{"property": "'+sortField+'","value":"'+sortDirection+'"}'; 
     const qfilter = '[{ "property":"apellido:like", "value": "'+ this.filterForm.value.filter+'"}]' ?? "";
     this.store.dispatch(loadPERSON({offset:pageIndex, limit: pageSize, qfilter: qfilter?.toString(),sorts}));
   }
@@ -83,7 +83,7 @@ export class PersonlistingComponent implements OnInit {
     const pageSize = this.paginator.pageSize;    
     const sortField = event.active;
     const sortDirection = event.direction;
-    const sorts = '[{"property": "'+sortField+',value"'+sortDirection+'"}'; 
+    const sorts = '[{"property": "'+sortField+'","value":"'+sortDirection+'"}'; 
     const qfilter = '[{ "property":"apellido:like", "value": "'+ this.filterForm.value.filter+'"}]' ?? "";
     this.store.dispatch(loadPERSON({offset:pageIndex, limit: pageSize, qfilter: qfilter?.toString(),sorts}));
   }  
