@@ -19,6 +19,7 @@ export class PersonlistingComponent implements OnInit {
   personList!: Person[];
   datasource: any;
   errormessage='';
+  totalRows: number = 100;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -40,6 +41,7 @@ export class PersonlistingComponent implements OnInit {
     this.store.select(getpersonlist).subscribe(item => {
       this.personList = item;
       this.datasource = new MatTableDataSource<Person>(this.personList);
+      this.totalRows = 100;
       this.datasource.paginator = this.paginator;
       this.datasource.sort = this.sort;
     });  
@@ -78,6 +80,7 @@ export class PersonlistingComponent implements OnInit {
     const qfilter = '[{ "property":"apellido:like", "value": "'+ this.filterForm.value.filter+'"}]' ?? "";
     this.store.dispatch(loadPERSON({offset:pageIndex, limit: pageSize, qfilter: qfilter?.toString(),sorts}));
   }
+  
   sortData(event: any){
     const pageIndex = this.paginator.pageIndex;
     const pageSize = this.paginator.pageSize;    
