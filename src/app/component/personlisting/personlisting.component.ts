@@ -9,6 +9,7 @@ import { loadPERSON } from '../../person/store/person.actions';
 import { getErrormessage, getpersonlist } from '../../person/store/person.selectors';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormBuilder } from '@angular/forms';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-personlisting',
@@ -19,13 +20,14 @@ export class PersonlistingComponent implements OnInit {
   personList!: Person[];
   datasource: any;
   errormessage='';
-  totalRows: number = 100;
+  totalRows: number = 50;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   displayedColums: string[] = ["id","dni","apellido","nombre", "action"]
-  constructor(private dialog: MatDialog, private store: Store, private builder: FormBuilder) {
+  constructor(private dialog: MatDialog, private store: Store, private builder: FormBuilder
+    ) {
 
   }
 
@@ -41,9 +43,11 @@ export class PersonlistingComponent implements OnInit {
     this.store.select(getpersonlist).subscribe(item => {
       this.personList = item;
       this.datasource = new MatTableDataSource<Person>(this.personList);
-      this.totalRows = 100;
-      this.datasource.paginator = this.paginator;
+
+      //this.datasource.paginator = this.paginator;
       this.datasource.sort = this.sort;
+      this.totalRows = 12 ;    
+    
     });  
   }
 

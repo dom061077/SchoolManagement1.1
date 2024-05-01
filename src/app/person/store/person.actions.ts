@@ -19,7 +19,7 @@ export const GET_PERSON_SUCCESS='[PERSON page]get PERSON success'
 export const OPEN_POPUP_PERSON='[PERSON page]open popup' 
 
 export const loadPERSON=createAction(LOAD_PERSON,props<{offset:number,limit: number, qfilter:string, sorts:string}>())
-export const loadPERSONsuccess=createAction(LOAD_PERSON_SUCCESS,props<{list:Person[], total: number}>())
+export const loadPERSONsuccess=createAction(LOAD_PERSON_SUCCESS,props<{list:Person[], totalCount: number}>())
 export const loadPERSONfail=createAction(LOAD_PERSON_FAIL,props<{errormessage:string}>())
 
 export const addPERSON=createAction(ADD_PERSON,props<{inputdata:Person}>())

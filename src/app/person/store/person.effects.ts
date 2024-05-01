@@ -22,13 +22,15 @@ export class PersonEffects {
             exhaustMap((action) => {
                 return this.service.getAll(action.offset,action.limit, action.qfilter,action.sorts).pipe(
                     map((datax) => {
-                        return loadPERSONsuccess({ list: datax.data, total: datax.total });
+                        return loadPERSONsuccess({ list: datax.data, totalCount: datax.total });
                     }),
                     catchError((_error) => of(loadPERSONfail({ errormessage: _error.message })))
                 )
             })
         )
-    )
+    );
+
+
 
     _getPERSON = createEffect(() =>
         this.actin$.pipe(
