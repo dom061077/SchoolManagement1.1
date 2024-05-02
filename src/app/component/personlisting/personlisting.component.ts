@@ -86,7 +86,7 @@ export class PersonlistingComponent implements OnInit {
     const sortDirection = this.datasource.sort?.direction;   
     const sorts = '[{"property": "'+sortField+'","value":"'+sortDirection+'"}'; 
     const qfilter = '[{ "property":"apellido:like", "value": "'+ this.filterForm.value.filter+'"}]' ?? "";
-    this.store.dispatch(loadPERSON({offset:pageIndex, limit: pageSize, qfilter: qfilter?.toString(),sorts}));
+    this.store.dispatch(loadPERSON({offset:pageIndex*pageSize, limit: pageSize, qfilter: qfilter?.toString(),sorts}));
   }
   
   sortData(event: any){
@@ -96,7 +96,7 @@ export class PersonlistingComponent implements OnInit {
     const sortDirection = event.direction;
     const sorts = '[{"property": "'+sortField+'","value":"'+sortDirection+'"}'; 
     const qfilter = '[{ "property":"apellido:like", "value": "'+ this.filterForm.value.filter+'"}]' ?? "";
-    this.store.dispatch(loadPERSON({offset:pageIndex, limit: pageSize, qfilter: qfilter?.toString(),sorts}));
+    this.store.dispatch(loadPERSON({offset:pageIndex*pageSize, limit: pageSize, qfilter: qfilter?.toString(),sorts}));
   }  
 
   nextPageEvent(event:any){
@@ -107,7 +107,7 @@ export class PersonlistingComponent implements OnInit {
     const sortDirection = event.direction;
     const sorts = '[{"property": "'+sortField+'","value":"'+sortDirection+'"}'; 
     const qfilter = '[{ "property":"apellido:like", "value": "'+ this.filterForm.value.filter+'"}]' ?? "";
-    this.store.dispatch(loadPERSON({offset:pageIndex, limit: pageSize, qfilter: qfilter?.toString(),sorts}));    
+    this.store.dispatch(loadPERSON({offset:pageIndex*pageSize, limit: pageSize, qfilter: qfilter?.toString(),sorts}));    
   }
 
 }
