@@ -9,7 +9,8 @@ export const personAdapter=createEntityAdapter<Person>({
 
 export const PersonState:PersonModel=personAdapter.getInitialState({
     errormessage:'',
-    isloading:false
+    isloading:false,
+    totalRowsxxxx:0
 });
 
 export function sortbyName(a:Person,b:Person){

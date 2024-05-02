@@ -5,7 +5,7 @@ import { catchError, exhaustMap, map, of, switchMap } from 'rxjs';
 import { PersonService } from '../../service/person.service';
 import { emptyaction, showalert } from '../../common/store/app.action';
 import { Userinfo } from '../../auth/user.model';
-import { addPERSON, addPERSONsuccess, deletePERSONsuccess, deleteePERSON, getPERSON, getPERSONsuccess, loadPERSON, loadPERSONfail, loadPERSONsuccess, updatePERSON, updatePERSONsuccess } from './person.actions';
+import { addPERSON, addPERSONsuccess, deletePERSONsuccess, deleteePERSON, getPERSON, getPERSONsuccess, loadPERSON, loadPERSONfail, loadPERSONsuccess, loadPERSONtotalrows, updatePERSON, updatePERSONsuccess } from './person.actions';
 import { Person } from '../person.model';
 import { Update } from '@ngrx/entity';
 
@@ -30,7 +30,14 @@ export class PersonEffects {
         )
     );
 
-
+    _loadPERSONsuccess = createEffect(() =>
+        this.actin$.pipe(
+            ofType(loadPERSONsuccess),
+            exhaustMap((action) => {
+                return of(loadPERSONtotalrows({totalRows:action.totalCount}));
+            })
+        )
+    )
 
     _getPERSON = createEffect(() =>
         this.actin$.pipe(

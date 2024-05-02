@@ -6,6 +6,7 @@ import { Update } from "@ngrx/entity";
 export const LOAD_PERSON='[PERSON page]load PERSON'
 export const LOAD_PERSON_SUCCESS='[PERSON page]load PERSON success'
 export const LOAD_PERSON_FAIL='[PERSON page]load PERSON fail'
+export const LOAD_PERSON_TOTALROWS='[PERSON page]load PERSON totalrows'
 export const ADD_PERSON='[PERSON page]add PERSON'
 export const ADD_PERSON_SUCCESS='[PERSON page]add PERSON success'
 export const UPDATE_PERSON='[PERSON page]update PERSON'
@@ -21,6 +22,7 @@ export const OPEN_POPUP_PERSON='[PERSON page]open popup'
 export const loadPERSON=createAction(LOAD_PERSON,props<{offset:number,limit: number, qfilter:string, sorts:string}>())
 export const loadPERSONsuccess=createAction(LOAD_PERSON_SUCCESS,props<{list:Person[], totalCount: number}>())
 export const loadPERSONfail=createAction(LOAD_PERSON_FAIL,props<{errormessage:string}>())
+export const loadPERSONtotalrows=createAction(LOAD_PERSON_TOTALROWS,props<{totalRows: number}>())
 
 export const addPERSON=createAction(ADD_PERSON,props<{inputdata:Person}>())
 export const addPERSONsuccess=createAction(ADD_PERSON_SUCCESS,props<{inputdata:Person}>())

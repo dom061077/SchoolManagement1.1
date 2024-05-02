@@ -5,8 +5,8 @@ import { Store } from '@ngrx/store';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Person } from '../../person/person.model';
-import { loadPERSON } from '../../person/store/person.actions';
-import { getErrormessage, getpersonlist } from '../../person/store/person.selectors';
+import { loadPERSON, loadPERSONtotalrows } from '../../person/store/person.actions';
+import { getErrormessage, getTotalRows, getpersonlist } from '../../person/store/person.selectors';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormBuilder } from '@angular/forms';
 import { ChangeDetectorRef } from '@angular/core';
@@ -43,12 +43,16 @@ export class PersonlistingComponent implements OnInit {
     this.store.select(getpersonlist).subscribe(item => {
       this.personList = item;
       this.datasource = new MatTableDataSource<Person>(this.personList);
-
+      
       //this.datasource.paginator = this.paginator;
       this.datasource.sort = this.sort;
-      this.totalRows = 12 ;    
+        
     
     });  
+    this.store.select(getTotalRows).subscribe(tot => {
+      this.totalRows=tot;
+    
+    }); 
   }
 
   addPerson(){
@@ -94,6 +98,17 @@ export class PersonlistingComponent implements OnInit {
     const qfilter = '[{ "property":"apellido:like", "value": "'+ this.filterForm.value.filter+'"}]' ?? "";
     this.store.dispatch(loadPERSON({offset:pageIndex, limit: pageSize, qfilter: qfilter?.toString(),sorts}));
   }  
+
+  nextPageEvent(event:any){
+    console.log('Next page event: ', event);
+    const pageIndex = event.pageIndex;
+    const pageSize = this.paginator.pageSize;    
+    const sortField = event.active;
+    const sortDirection = event.direction;
+    const sorts = '[{"property": "'+sortField+'","value":"'+sortDirection+'"}'; 
+    const qfilter = '[{ "property":"apellido:like", "value": "'+ this.filterForm.value.filter+'"}]' ?? "";
+    this.store.dispatch(loadPERSON({offset:pageIndex, limit: pageSize, qfilter: qfilter?.toString(),sorts}));    
+  }
 
 }
 

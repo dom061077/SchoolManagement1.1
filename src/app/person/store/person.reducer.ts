@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { PersonState, personAdapter } from "./person.state";
-import { deletePERSONsuccess, loadPERSONsuccess, loadPERSONfail, updatePERSONsuccess, addPERSONsuccess } from "./person.actions";
+import { deletePERSONsuccess, loadPERSONsuccess, loadPERSONfail, updatePERSONsuccess, addPERSONsuccess, loadPERSONtotalrows } from "./person.actions";
 import { Person } from "../person.model";
 
 
@@ -8,12 +8,17 @@ const _personReducer = createReducer(PersonState,
     on(loadPERSONsuccess, (state, action) => {
         return personAdapter.setAll(action.list,   {
             ...state,
-            errormessage:''
+            errormessage:'',
+            isloading:false,
+            
         });
     }),
     on(loadPERSONfail, (state, action) => {
         return { ...state, errormessage: action.errormessage }
     }),
+    on(loadPERSONtotalrows, (state, action) => {
+        return { ...state, totalRowsxxxx: action.totalRows }
+    }),    
     on(addPERSONsuccess, (state, action) => {
         /*const _maxid = Math.max(...state.ids.map(item => item as number));
         const _newdata = { ...action.inputdata };

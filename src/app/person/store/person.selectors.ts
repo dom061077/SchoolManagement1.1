@@ -15,3 +15,7 @@ export const getperson = (id: number) => createSelector(selectedentities,     (s
 export const getErrormessage=createSelector(getpersonstate,
     (state)=>state.errormessage
 );
+
+export const getTotalRows =createSelector(getpersonstate,
+    (state)=>state.totalRowsxxxx
+);
