@@ -32,7 +32,9 @@ export class PersonlistingComponent implements OnInit {
   }
 
   filterForm = this.builder.group({
-    filter : ""
+    apellido : "",
+    nombre : "",
+    dni : null,
   });
 
   ngOnInit(): void {
@@ -85,7 +87,8 @@ export class PersonlistingComponent implements OnInit {
     const sortField = this.datasource.sort?.active;
     const sortDirection = this.datasource.sort?.direction;   
     const sorts = '[{"property": "'+sortField+'","value":"'+sortDirection+'"}'; 
-    const qfilter = '[{ "property":"apellido:like", "value": "'+ this.filterForm.value.filter+'"}]' ?? "";
+    const qfilter = '[{ "property":"apellido:like", "value": "'+ this.filterForm.value.apellido+'"},{"property":"nombre:like", "value" : "'
+      +this.filterForm.value.nombre+'"}]' ?? "";
     this.store.dispatch(loadPERSON({offset:pageIndex*pageSize, limit: pageSize, qfilter: qfilter?.toString(),sorts}));
   }
   
@@ -95,7 +98,7 @@ export class PersonlistingComponent implements OnInit {
     const sortField = event.active;
     const sortDirection = event.direction;
     const sorts = '[{"property": "'+sortField+'","value":"'+sortDirection+'"}'; 
-    const qfilter = '[{ "property":"apellido:like", "value": "'+ this.filterForm.value.filter+'"}]' ?? "";
+    const qfilter = '[{ "property":"apellido:like", "value": "'+ this.filterForm.value.apellido+'"}]' ?? "";
     this.store.dispatch(loadPERSON({offset:pageIndex*pageSize, limit: pageSize, qfilter: qfilter?.toString(),sorts}));
   }  
 
@@ -106,7 +109,7 @@ export class PersonlistingComponent implements OnInit {
     const sortField = event.active;
     const sortDirection = event.direction;
     const sorts = '[{"property": "'+sortField+'","value":"'+sortDirection+'"}'; 
-    const qfilter = '[{ "property":"apellido:like", "value": "'+ this.filterForm.value.filter+'"}]' ?? "";
+    const qfilter = '[{ "property":"apellido:like", "value": "'+ this.filterForm.value.apellido+'"}]' ?? "";
     this.store.dispatch(loadPERSON({offset:pageIndex*pageSize, limit: pageSize, qfilter: qfilter?.toString(),sorts}));    
   }
 

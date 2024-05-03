@@ -9,12 +9,20 @@
             <h1>{{errormessage}}</h1>
         </div> 
         <form [formGroup] = "filterForm" (ngSubmit) = "applyFilter()">
-            <mat-form-field>
-                <input matInput formControlName="filter" (keyup)="applyFilter()" placeholder="Filtrar">
-            </mat-form-field>
-            <button mat-fab color="primary" aria-label="Example icon button with a delete icon">
-                <mat-icon>search</mat-icon>
-              </button>
+            <mat-card-content [style.overflow]="'auto'">
+                <mat-form-field>
+                    <input matInput formControlName="apellido" (keyup)="applyFilter()" placeholder="Filtrar por apellido">
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput formControlName="nombre" (keyup)="applyFilter()" placeholder="Filtrar por nombre" >
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput formControlName="dni" type="number" (keyup)="applyFilter()" placeholder="Filtrar por D.N.I">
+                </mat-form-field>
+                <button mat-fab color="primary" aria-label="Example icon button with a delete icon">
+                    <mat-icon>search</mat-icon>
+                </button>
+            </mat-card-content>
         </form>
         <table *ngIf="!errormessage" matSort mat-table [dataSource]="datasource" (matSortChange)="sortData($event)" class="mat-elevation-z8">
             <ng-container matColumnDef="id">
