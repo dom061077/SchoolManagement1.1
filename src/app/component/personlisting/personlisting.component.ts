@@ -10,6 +10,7 @@ import { getErrormessage, getTotalRows, getpersonlist } from '../../person/store
 import { MatTableDataSource } from '@angular/material/table';
 import { FormBuilder } from '@angular/forms';
 import { ChangeDetectorRef } from '@angular/core';
+import { config } from '../../service/config';
 
 @Component({
   selector: 'app-personlisting',
@@ -61,12 +62,17 @@ export class PersonlistingComponent implements OnInit {
     this.openPopup(0,'Agregar Persona');
   }
 
-  personEdit(id: number){
+  personEdit(id: number){ 
+    const url = config.apiUrl+'/api/v1/person/'
     this.openPopup(id,"Modificación")
   }
 
-  personDelete(id: number){
+  personPrintCert(id: number){
 
+  }
+
+  personDelete(id: number){
+    window.open();
   }
 
   openPopup(code: number, title: string){
@@ -86,19 +92,19 @@ export class PersonlistingComponent implements OnInit {
     const pageSize = this.paginator.pageSize;
     const sortField = this.datasource.sort?.active;
     const sortDirection = this.datasource.sort?.direction;   
-    const sorts = '[{"property": "'+sortField+'","value":"'+sortDirection+'"}'; 
+    const sorts = '[{"property": "'+sortField+'","value":"'+sortDirection+'"}]'; 
     const qfilter = '[{ "property":"apellido:like", "value": "'+ this.filterForm.value.apellido+'"},{"property":"nombre:like", "value" : "'
-      +this.filterForm.value.nombre+'"}]' ?? "";
+      +this.filterForm.value.nombre+'"}]' ;
     this.store.dispatch(loadPERSON({offset:pageIndex*pageSize, limit: pageSize, qfilter: qfilter?.toString(),sorts}));
   }
   
   sortData(event: any){
     const pageIndex = this.paginator.pageIndex;
     const pageSize = this.paginator.pageSize;    
-    const sortField = event.active;
-    const sortDirection = event.direction;
-    const sorts = '[{"property": "'+sortField+'","value":"'+sortDirection+'"}'; 
-    const qfilter = '[{ "property":"apellido:like", "value": "'+ this.filterForm.value.apellido+'"}]' ?? "";
+    const sortField = this.datasource.sort?.active;
+    const sortDirection = this.datasource.sort?.direction; 
+    const sorts = '[{"property": "'+sortField+'","value":"'+sortDirection+'"}]'; 
+    const qfilter = '[{ "property":"apellido:like", "value": "'+ this.filterForm.value.apellido+'"}]';
     this.store.dispatch(loadPERSON({offset:pageIndex*pageSize, limit: pageSize, qfilter: qfilter?.toString(),sorts}));
   }  
 
@@ -106,10 +112,13 @@ export class PersonlistingComponent implements OnInit {
     console.log('Next page event: ', event);
     const pageIndex = event.pageIndex;
     const pageSize = this.paginator.pageSize;    
-    const sortField = event.active;
-    const sortDirection = event.direction;
-    const sorts = '[{"property": "'+sortField+'","value":"'+sortDirection+'"}'; 
-    const qfilter = '[{ "property":"apellido:like", "value": "'+ this.filterForm.value.apellido+'"}]' ?? "";
+    const sortField = this.datasource.sort?.active;
+    const sortDirection = this.datasource.sort?.direction; 
+    var sorts = '';
+    if(sortField != undefined && sortDirection!= undefined)
+      sorts = '[{"property": "'+sortField+'","value":"'+sortDirection+'"}]'; 
+
+    const qfilter = '[{ "property":"apellido:like", "value": "'+ this.filterForm.value.apellido+'"}]';
     this.store.dispatch(loadPERSON({offset:pageIndex*pageSize, limit: pageSize, qfilter: qfilter?.toString(),sorts}));    
   }
 
