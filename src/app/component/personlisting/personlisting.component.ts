@@ -94,7 +94,7 @@ export class PersonlistingComponent implements OnInit {
     const sortDirection = this.datasource.sort?.direction;   
     const sorts = '[{"property": "'+sortField+'","value":"'+sortDirection+'"}]'; 
     const qfilter = '[{ "property":"apellido:like", "value": "'+ this.filterForm.value.apellido+'"},{"property":"nombre:like", "value" : "'
-      +this.filterForm.value.nombre+'"}]' ;
+      +this.filterForm.value.nombre+'"},{"property":"dni:eq","value": '+this.filterForm.value?.dni+'}]';
     this.store.dispatch(loadPERSON({offset:pageIndex*pageSize, limit: pageSize, qfilter: qfilter?.toString(),sorts}));
   }
   
