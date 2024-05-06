@@ -12,6 +12,8 @@ import { FormBuilder } from '@angular/forms';
 import { ChangeDetectorRef } from '@angular/core';
 import { config } from '../../service/config';
 import { Observable } from 'rxjs';
+import { getLoading, getPdfReportBlob, getPdfReportError } from '../../common/store/pdfreport.selectors';
+import { pdfREPORTgenerate } from '../../common/store/pdfreport.actions';
 
 @Component({
   selector: 'app-personlisting',
@@ -23,9 +25,9 @@ export class PersonlistingComponent implements OnInit {
   datasource: any;
   errormessage='';
   totalRows: number = 50;
-  loading$: Observable<boolean>;
-  pdfReportError$: Observable<string | null>;
-  pdfReportUrl$: Observable<string | null>;
+  loading$: Observable<boolean> | undefined;
+  pdfReportError$: Observable<string | null> | undefined;
+  pdfReportBlob$: Observable<Blob | null> | undefined;
 
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -44,7 +46,9 @@ export class PersonlistingComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.loading$ = this.store.select(pdf)
+    this.loading$ = this.store.select(getLoading);
+    this.pdfReportError$ = this.store.select(getPdfReportError);
+    this.pdfReportBlob$ = this.store.select(getPdfReportBlob);
 
     this.store.dispatch(loadPERSON({offset: 0, limit: 5, qfilter: "", sorts: ""}));
     this.store.select(getErrormessage).subscribe(res=>{
@@ -74,8 +78,8 @@ export class PersonlistingComponent implements OnInit {
     this.openPopup(id,"Modificación")
   }
 
-  personPrintCert(id: number){
-
+  personPrintCert(personId: number){
+    this.store.dispatch(pdfREPORTgenerate({id:personId}));
   }
 
   personDelete(id: number){
@@ -91,7 +95,7 @@ export class PersonlistingComponent implements OnInit {
         code: code,
         title: title
       }
-    })
+    });
   }
 
   applyFilter(){

@@ -1,5 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { pdfREPORTfailure, pdfREPORTgenerate, pdfREPORTsuccess } from "./pdfreport.actions";
+import { initialPdfReportState } from "./pdfreport.state";
 
 
 const _pdfreportReducer = createReducer(initialPdfReportState,

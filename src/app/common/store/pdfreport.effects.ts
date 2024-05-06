@@ -22,7 +22,7 @@ export class PdfReportEffects{
                     switchMap((data)=>{
                         return of(pdfREPORTsuccess({payload:data}));
                     }),
-                    catchError((_error)=>of(showalert({message: 'Ocurrió un error al descargar el PDF', resulttype:'fail'})))
+                    catchError((_error)=>of(showalert({message: 'Ocurrió un error al descargar el PDF '+_error, resulttype:'fail'})))
                 )
             })
         )
