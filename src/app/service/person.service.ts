@@ -4,6 +4,7 @@ import { Person } from '../person/person.model';
 import { config } from './config';
 import { Userinfo } from '../auth/user.model';
 import { PersonDataSource } from '../person/person.datasource.model';
+import { ɵnormalizeQueryParams } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,12 @@ export class PersonService {
     
     
     return this.http.get<PersonDataSource>(this.baseurl+'/list',{params: queryParams});
+  }
+
+  getPersonCertificate(id:number){
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append("personId",id);
+    return this.http.get<Blob>(this.baseurl+'/certificate',{params:queryParams});
   }
 
   Getbycode(code: number) {

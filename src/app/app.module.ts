@@ -22,6 +22,7 @@ import { AppEffects } from './common/store/app.effects';
 import { UserReducer } from './auth/store/user.reducer';
 import { PERSONreducer } from './person/store/person.reducer';
 import { PersonEffects } from './person/store/person.effects';
+import { PDFREPORTreducer } from './common/store/pdfreport.reducer';
 
 
 @NgModule({
@@ -38,7 +39,7 @@ import { PersonEffects } from './person/store/person.effects';
     MaterialModule,
     HttpClientModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({user:UserReducer,person: PERSONreducer}),
+    StoreModule.forRoot({user:UserReducer,person: PERSONreducer, pdfreport: PDFREPORTreducer}),
     EffectsModule.forRoot([UserEffect,AppEffects,PersonEffects]),
     StoreRouterConnectingModule.forRoot(),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })

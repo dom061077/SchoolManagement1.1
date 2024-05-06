@@ -54,6 +54,7 @@ const _personReducer = createReducer(PersonState,
     on(deletePERSONsuccess, (state, action) => {
         return personAdapter.removeOne(action.code, state);
     })
+
 )
 
 export function PERSONreducer(state: any, action: any) {

@@ -11,6 +11,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { FormBuilder } from '@angular/forms';
 import { ChangeDetectorRef } from '@angular/core';
 import { config } from '../../service/config';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-personlisting',
@@ -22,6 +23,10 @@ export class PersonlistingComponent implements OnInit {
   datasource: any;
   errormessage='';
   totalRows: number = 50;
+  loading$: Observable<boolean>;
+  pdfReportError$: Observable<string | null>;
+  pdfReportUrl$: Observable<string | null>;
+
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -39,6 +44,8 @@ export class PersonlistingComponent implements OnInit {
   });
 
   ngOnInit(): void {
+    this.loading$ = this.store.select(pdf)
+
     this.store.dispatch(loadPERSON({offset: 0, limit: 5, qfilter: "", sorts: ""}));
     this.store.select(getErrormessage).subscribe(res=>{
       this.errormessage=res;
@@ -92,7 +99,9 @@ export class PersonlistingComponent implements OnInit {
     const pageSize = this.paginator.pageSize;
     const sortField = this.datasource.sort?.active;
     const sortDirection = this.datasource.sort?.direction;   
-    const sorts = '[{"property": "'+sortField+'","value":"'+sortDirection+'"}]'; 
+    var sorts = '';
+    if(sortField != undefined && sortDirection!= undefined)
+      sorts = '[{"property": "'+sortField+'","value":"'+sortDirection+'"}]'; 
     const qfilter = '[{ "property":"apellido:like", "value": "'+ this.filterForm.value.apellido+'"},{"property":"nombre:like", "value" : "'
       +this.filterForm.value.nombre+'"},{"property":"dni:eq","value": '+this.filterForm.value?.dni+'}]';
     this.store.dispatch(loadPERSON({offset:pageIndex*pageSize, limit: pageSize, qfilter: qfilter?.toString(),sorts}));
@@ -103,7 +112,9 @@ export class PersonlistingComponent implements OnInit {
     const pageSize = this.paginator.pageSize;    
     const sortField = this.datasource.sort?.active;
     const sortDirection = this.datasource.sort?.direction; 
-    const sorts = '[{"property": "'+sortField+'","value":"'+sortDirection+'"}]'; 
+    var sorts = '';
+    if(sortField != undefined && sortDirection!= undefined)
+      sorts = '[{"property": "'+sortField+'","value":"'+sortDirection+'"}]'; 
     const qfilter = '[{ "property":"apellido:like", "value": "'+ this.filterForm.value.apellido+'"}]';
     this.store.dispatch(loadPERSON({offset:pageIndex*pageSize, limit: pageSize, qfilter: qfilter?.toString(),sorts}));
   }  
