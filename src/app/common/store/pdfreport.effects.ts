@@ -4,7 +4,7 @@ import { PersonService } from "../../service/person.service";
 import { createAction } from "@ngrx/store";
 import { pdfREPORTgenerate, pdfREPORTsuccess } from "./pdfreport.actions";
 import { emptyaction, showalert } from "./app.action";
-import { catchError, exhaustMap, of, switchMap } from "rxjs";
+import { catchError, exhaustMap, map, of, switchMap } from "rxjs";
 import { deletePERSONsuccess, deleteePERSON } from "../../person/store/person.actions";
 
 @Injectable()
@@ -19,10 +19,13 @@ export class PdfReportEffects{
             ofType(pdfREPORTgenerate),
             switchMap((action) => {
                 return this.service.getPersonCertificate(action.id).pipe(
-                    switchMap((data)=>{
+                    switchMap((data: Blob)=>{
                         return of(pdfREPORTsuccess({payload:data}));
                     }),
-                    catchError((_error)=>of(showalert({message: 'Ocurrió un error al descargar el PDF '+_error, resulttype:'fail'})))
+                    catchError((_error)=>{
+                       console.log('Error descargando PDF',_error);
+                       return of(showalert({message: 'Ocurrió un error al descargar el PDF '+_error, resulttype:'fail'}));
+                    })
                 )
             })
         )

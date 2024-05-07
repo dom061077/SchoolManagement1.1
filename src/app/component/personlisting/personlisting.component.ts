@@ -13,7 +13,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import { config } from '../../service/config';
 import { Observable } from 'rxjs';
 import { getLoading, getPdfReportBlob, getPdfReportError } from '../../common/store/pdfreport.selectors';
-import { pdfREPORTgenerate } from '../../common/store/pdfreport.actions';
+import { pdfREPORTgenerate, pdfREPORTsuccess } from '../../common/store/pdfreport.actions';
 
 @Component({
   selector: 'app-personlisting',
@@ -27,7 +27,7 @@ export class PersonlistingComponent implements OnInit {
   totalRows: number = 50;
   loading$: Observable<boolean> | undefined;
   pdfReportError$: Observable<string | null> | undefined;
-  pdfReportBlob$: Observable<Blob | null> | undefined;
+  pdfReportUrl$: Observable<string | null> | undefined;
 
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -46,9 +46,22 @@ export class PersonlistingComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.loading$ = this.store.select(getLoading);
-    this.pdfReportError$ = this.store.select(getPdfReportError);
-    this.pdfReportBlob$ = this.store.select(getPdfReportBlob);
+    this.store.select(getPdfReportBlob).subscribe(res=>{
+      if(!res)
+        return;
+      const resBlob : Blob = (res ? res : new Blob());
+      const a = document.createElement('a');
+      const blobUrl = URL.createObjectURL(resBlob);
+      a.href = blobUrl;
+      a.download = 'report.pdf';
+      a.target = '_blank';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(blobUrl);
+      //window.open(window.URL.createObjectURL(resBlob),'blank');
+      //console.log('El blob resultante es: ',res);
+    })
 
     this.store.dispatch(loadPERSON({offset: 0, limit: 5, qfilter: "", sorts: ""}));
     this.store.select(getErrormessage).subscribe(res=>{
