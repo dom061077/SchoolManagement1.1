@@ -21,7 +21,7 @@ export class MenubarComponent implements DoCheck, OnInit {
     if (localStorage.getItem('userdata') != null) {
       let jsonstring = localStorage.getItem('userdata') as string;
       const _obj = JSON.parse(jsonstring) as Userinfo;
-      this.store.dispatch(fetchmenu({userrole:_obj.role}))
+      this.store.dispatch(fetchmenu());
     }
 
     this.store.select(getmenubyrole).subscribe(item => {

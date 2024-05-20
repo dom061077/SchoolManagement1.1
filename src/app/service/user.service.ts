@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { config } from './config';
 import { Roleaccess, Usercred, Userinfo } from '../auth/user.model';
 import { Observable } from 'rxjs/internal/Observable';
+import { of } from 'rxjs/internal/observable/of';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,8 @@ export class UserService {
       name: '',
       role: '',
       access_token: '',
-      status: false
+      status: false,
+      menu_list: []
     }
     if (localStorage.getItem('userdata') != null) {
       let jsonstring = localStorage.getItem('userdata') as string;
@@ -39,9 +41,11 @@ export class UserService {
 
   }  
 
-  getMenubyRole(userrole: string): Observable<Roleaccess[]> {
-    return this.http.get<Roleaccess[]>(config.apiUrl+'http://localhost:3000/roleaccess?role=' + userrole);
+  getMenubyRole(): Observable<Roleaccess[]> {
+    const _obj:Userinfo = this.getuserdatafromstorage();
+    return of(_obj.menu_list);
   }
+
   haveMenuAccess(userrole: string, menuname: string): Observable<Roleaccess[]> {
     return this.http.get<Roleaccess[]>(config.apiUrl+'http://localhost:3000/roleaccess?role=' + userrole + '&menu=' + menuname);
   }  

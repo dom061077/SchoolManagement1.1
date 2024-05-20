@@ -15,7 +15,7 @@
                     <button mat-button routerLink=""><mat-icon>home</mat-icon>Home</button>
                 </mat-list-item>
                 <mat-list-item *ngFor="let item of menulist">
-                    <button mat-button routerLink="{{item.menu}}"><mat-icon>verified_user</mat-icon>{{item.menu}}</button>
+                    <button mat-button routerLink="{{item.path}}"><mat-icon>verified_user</mat-icon>{{item.description}}</button>
                 </mat-list-item>
                 <!-- <mat-list-item>
                     <button mat-button routerLink="customer"><mat-icon>verified_user</mat-icon>Customer</button>

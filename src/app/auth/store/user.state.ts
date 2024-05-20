@@ -14,6 +14,7 @@ export const UserState: UserModel = UserAdapter.getInitialState({
         name: '',
         role: '',
         access_token: '',
-        status: false
+        status: false,
+        menu_list: []
     }
 });

@@ -25,7 +25,7 @@ export class UserEffect {
                             //if (_userdata.status === true) {
                                 this.service.setUserToLoaclStorage(_userdata);
                                 this.route.navigate([''])
-                                return of(fetchmenu({ userrole: _userdata.role }),
+                                return of(fetchmenu(/*{ userrole: _userdata.role }*/),
                                     showalert({ message: 'Login success.', resulttype: 'pass' }))
                             //} else {
                             //    return of(showalert({ message: 'InActive User.', resulttype: 'fail' }))
@@ -41,6 +41,20 @@ export class UserEffect {
             })
         )
     )  
+
+    _loadmenubyrole = createEffect(() =>
+        this.action$.pipe(
+            ofType(fetchmenu),
+            exhaustMap((action) => {
+                return this.service.getMenubyRole().pipe(
+                    map((data) => {
+                        return fetchmenusuccess({ menulist: data })
+                    }),
+                    catchError((_error) => of(showalert({ message: 'Failed to fetch mmenu list', resulttype: 'fail' })))
+                )
+            })
+        )
+    )    
             /*
     _userregister = createEffect(() =>
         this.action$.pipe(
@@ -79,19 +93,7 @@ export class UserEffect {
 
 
 
-    _loadmenubyrole = createEffect(() =>
-        this.action$.pipe(
-            ofType(fetchmenu),
-            exhaustMap((action) => {
-                return this.service.GetMenubyRole(action.userrole).pipe(
-                    map((data) => {
-                        return fetchmenusuccess({ menulist: data })
-                    }),
-                    catchError((_error) => of(showalert({ message: 'Failed to fetch mmenu list', resulttype: 'fail' })))
-                )
-            })
-        )
-    )
+
 
     _getallusers = createEffect(() =>
         this.action$.pipe(

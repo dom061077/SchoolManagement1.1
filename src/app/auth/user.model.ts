@@ -23,7 +23,8 @@ export interface Userinfo{
     email:string,
     role:string,
     access_token:string,
-    status:boolean
+    status:boolean,
+    menu_list:any
 }
 
 export interface Roles{
@@ -37,8 +38,9 @@ export interface Menus{
 }
 
 export interface Roleaccess{
-    role:string,
-    menu:string
+    id:number,
+    description:string,
+    path: string
 }
 
 export interface UserModel extends EntityState<Users>{
