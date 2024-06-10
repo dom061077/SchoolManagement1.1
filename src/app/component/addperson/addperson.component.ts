@@ -3,7 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef,MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Person } from '../../person/person.model';
 import { Store } from '@ngrx/store';
-import { addPERSON } from '../../person/store/person.actions';
+import { addPERSON, updatePERSON } from '../../person/store/person.actions';
 import { showalert } from '../../common/store/app.action';
 import { getperson } from '../../person/store/person.selectors';
 
@@ -115,7 +115,10 @@ export class AddpersonComponent implements OnInit{
         nombreMatrimonio: this.personForm.value.nombreMatrimonio as string,
         otrasNotas: this.personForm.value.otrasNotas as string        
       }
-      this.store.dispatch(addPERSON({inputdata:_obj}));
+      if(this.editcode>0)
+        this.store.dispatch(updatePERSON({inputdata: _obj}));
+      else
+        this.store.dispatch(addPERSON({inputdata:_obj}));
     }else{
       this.store.dispatch(showalert({message:'Por favor, ingrese los datos obligatorios',resulttype:'fail'}));
     }
