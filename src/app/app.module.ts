@@ -1,4 +1,4 @@
-import { NgModule, isDevMode } from '@angular/core';
+import { APP_INITIALIZER, NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -24,7 +24,12 @@ import { PERSONreducer } from './person/store/person.reducer';
 import { PersonEffects } from './person/store/person.effects';
 import { PDFREPORTreducer } from './common/store/pdfreport.reducer';
 import { PdfReportEffects } from './common/store/pdfreport.effects';
+import { KeycloakService } from './keycloak/keycloak.service';
 
+
+export function kcFactory(kcService: KeycloakService){
+  return () => kcService.init();
+}
 
 @NgModule({
   declarations: [
@@ -48,7 +53,13 @@ import { PdfReportEffects } from './common/store/pdfreport.effects';
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'es' },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi:true },
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    {
+      provide: APP_INITIALIZER,
+      deps: [KeycloakService],
+      useFactory: kcFactory,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
