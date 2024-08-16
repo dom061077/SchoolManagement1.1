@@ -6,7 +6,7 @@
         </button>
         <span>NGRX</span>
         <span class="example-spacer"></span>
-        <button mat-button routerLink="/login">Logout</button>
+        <button mat-button (click)= "logout">Logout</button>
     </mat-toolbar>
     <mat-drawer-container autosize>
         <mat-drawer #drawer opened="true" mode="side" position="start">

@@ -3,7 +3,7 @@ import { Roleaccess, Userinfo } from '../../auth/user.model';
 import { getmenubyrole } from '../../auth/store/user.selectors';
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { fetchmenu } from '../../auth/store/user.actions';
+import { beginLogout, fetchmenu } from '../../auth/store/user.actions';
 //import { fetchmenu } from 'src/app/Store/User/User.action';
 
 @Component({
@@ -35,6 +35,10 @@ export class MenubarComponent implements DoCheck, OnInit {
     } else {
       this.ismenuvisible = true;
     }
+  }
+
+  logout():void {
+    this.store.dispatch(beginLogout());
   }
 
 }

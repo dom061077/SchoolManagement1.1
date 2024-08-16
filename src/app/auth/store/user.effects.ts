@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { UserService } from "../../service/user.service";
 import { beginLogin, beginLogout, beginRegister, duplicateUser, duplicateUserSuccess, fetchmenu, fetchmenusuccess, getroles, getrolesuccess, getuserbycode, getuserbycodesuccess, getusers, getuserssuccess, updateuserrole } from "./user.actions";
 import { exhaustMap, map, catchError, of, switchMap } from 'rxjs'
-import { showalert } from "../../common/store/app.action";
+import { emptyaction, showalert } from "../../common/store/app.action";
 import { Router } from "@angular/router";
 import { Userinfo } from "../user.model";
 
@@ -45,8 +45,9 @@ export class UserEffect {
     _userlogout = createEffect(()=>
         this.action$.pipe(
             ofType(beginLogout),
-            exhaustMap((action)=>{
-                return this.
+            switchMap((action)=>{
+                this.service.userLogout();
+                return of(emptyaction());
             })
         )
     )

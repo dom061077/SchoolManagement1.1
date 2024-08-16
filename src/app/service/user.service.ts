@@ -17,7 +17,9 @@ export class UserService {
     return this.http.post<Userinfo>(config.apiUrl+"/api/v1/auth/authenticate",{email:user.username,password: user.password})
   }
 
-  userLogout()
+  userLogout(){
+    return this.keycloakService.keycloak.logout();
+  }
 
   setUserToLoaclStorage(userdata: Userinfo) {
     localStorage.setItem('userdata', JSON.stringify(userdata))
