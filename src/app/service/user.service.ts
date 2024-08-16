@@ -4,17 +4,20 @@ import { config } from './config';
 import { Roleaccess, Usercred, Userinfo } from '../auth/user.model';
 import { Observable } from 'rxjs/internal/Observable';
 import { of } from 'rxjs/internal/observable/of';
+import { KeycloakService } from '../keycloak/keycloak.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private keycloakService: KeycloakService) { }
 
   userLogin(user: Usercred): Observable<Userinfo>{
     return this.http.post<Userinfo>(config.apiUrl+"/api/v1/auth/authenticate",{email:user.username,password: user.password})
   }
+
+  userLogout()
 
   setUserToLoaclStorage(userdata: Userinfo) {
     localStorage.setItem('userdata', JSON.stringify(userdata))

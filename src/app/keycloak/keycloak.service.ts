@@ -8,7 +8,7 @@ export class KeycloakService {
 
   private _keycloak: Keycloak | undefined;
 
-  get keycload(){
+  get keycloak(){
     if (!this._keycloak){
       this._keycloak = new Keycloak({
         url: 'http://localhost:9090/',
@@ -23,7 +23,7 @@ export class KeycloakService {
 
   async init(){
     console.log('Authenticating the user...');
-    const authenticated = await this.keycload?.init({
+    const authenticated = await this.keycloak?.init({
       onLoad: 'login-required'
     });
     if(authenticated){

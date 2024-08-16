@@ -3,6 +3,7 @@ import { Menus, Roleaccess, Roles, Usercred, Userinfo, Users } from "../user.mod
 
 export const BEGIN_REGISTER='[auth] begin register'
 export const BEGIN_LOGIN='[auth] begin login'
+export const BEGIN_LOGOUT='[auth] begin logout'
 export const DUPLICATE_USER='[user] duplicate user'
 export const DUPLICATE_USER_SUCC='[user] duplicate user succ'
 export const FETCH_MENU='[user] fetch menu'
@@ -19,6 +20,7 @@ export const UPDATE_ROLE='[user] update role'
 
 export const beginRegister=createAction(BEGIN_REGISTER,props<{userdata:Users}>())
 export const beginLogin=createAction(BEGIN_LOGIN,props<{usercred:Usercred}>())
+export const beginLogout=createAction(BEGIN_LOGOUT)
 export const duplicateUser=createAction(DUPLICATE_USER,props<{username:string}>())
 export const duplicateUserSuccess=createAction(DUPLICATE_USER_SUCC,props<{isduplicate:boolean}>())
 export const fetchmenu=createAction(FETCH_MENU/*,props<{userrole:string}>()*/)
