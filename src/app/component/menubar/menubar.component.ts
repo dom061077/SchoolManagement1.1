@@ -37,7 +37,7 @@ export class MenubarComponent implements DoCheck, OnInit {
     }
   }
 
-  logout():void {
+  async logout() { 
     this.store.dispatch(beginLogout());
   }
 
