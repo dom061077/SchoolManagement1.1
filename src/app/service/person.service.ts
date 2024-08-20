@@ -49,13 +49,9 @@ export class PersonService {
     return this.http.put(this.baseurl + '/' + data.id, data);
   }
   Create(data: Person) {
-    let jsonstring = localStorage.getItem('userdata') as string;
-    const _obj = JSON.parse(jsonstring) as Userinfo; 
 
-    const headers = new HttpHeaders()
-    .set('Authorization',  `Bearer ${_obj.access_token}`);
    
-    return this.http.post(this.baseurl+'/create', data ,{headers});
+    return this.http.post(this.baseurl+'/create', data );
   }
 
 }
