@@ -4,6 +4,7 @@ import { getmenubyrole } from '../../auth/store/user.selectors';
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { beginLogout, fetchmenu } from '../../auth/store/user.actions';
+import { KeycloakService } from '../../keycloak/keycloak.service';
 //import { fetchmenu } from 'src/app/Store/User/User.action';
 
 @Component({
@@ -14,7 +15,7 @@ import { beginLogout, fetchmenu } from '../../auth/store/user.actions';
 export class MenubarComponent implements DoCheck, OnInit {
   ismenuvisible = false;
   menulist !: Roleaccess[]
-  constructor(private router: Router, private store: Store) {
+  constructor(private router: Router, private store: Store, private ks: KeycloakService) {
 
   }
   ngOnInit(): void {
@@ -37,8 +38,8 @@ export class MenubarComponent implements DoCheck, OnInit {
     }
   }
 
-  async logout() { 
+ /* async logout() { 
     this.store.dispatch(beginLogout());
-  }
+  }*/
 
 }
