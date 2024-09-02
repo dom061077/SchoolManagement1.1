@@ -47,12 +47,32 @@ export class UserService {
   }  
 
   getMenubyRole(): Observable<Roleaccess[]> {
-    const _obj:Userinfo = this.getuserdatafromstorage();
-    return of(_obj.menu_list);
+    return this.http.get<Roleaccess[]>(config.keycloakUrl);
   }
 
   haveMenuAccess(userrole: string, menuname: string): Observable<Roleaccess[]> {
     return this.http.get<Roleaccess[]>(config.apiUrl+'http://localhost:3000/roleaccess?role=' + userrole + '&menu=' + menuname);
   }  
+  private startTokenMonitoring(): void {
+    const keycloak = this.keycloakService.keycloak;
 
+    keycloak.onTokenExpired = () => {
+      this.handleSessionTimeout();
+    };
+
+    setInterval(() => {
+      keycloak.updateToken(10).then(refreshed => {
+        if (!refreshed) {
+          this.handleSessionTimeout();
+        }
+      }).catch(() => {
+        this.handleSessionTimeout();
+      });
+    }, 5000); // Check every 5 seconds
+  }
+
+  private handleSessionTimeout(): void {
+    alert('Your session has expired. You will be redirected to the login page.');
+    this.keycloakService.keycloak.logout();
+  }
 }

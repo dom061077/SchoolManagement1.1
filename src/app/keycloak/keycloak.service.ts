@@ -30,7 +30,7 @@ export class KeycloakService {
     });
     if (authenticated) {
       this._profile = (await this.keycloak.loadUserProfile()) as UserProfile;
-      this._profile.token = this.keycloak.token || '';
+
       console.log('Token Parsed: ',this.keycloak.tokenParsed?.realm_access?.roles);
     }
   }

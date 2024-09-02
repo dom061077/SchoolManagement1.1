@@ -31,15 +31,15 @@ export class MenubarComponent implements DoCheck, OnInit {
   }
   ngDoCheck(): void {
     const currentroute = this.router.url;
-    if (currentroute === '/login' || currentroute === '/register') {
-      this.ismenuvisible = false
+    if (this.ks.keycloak.authenticated) {
+      this.ismenuvisible = true
     } else {
-      this.ismenuvisible = true;
+      this.ismenuvisible = false;
     }
   }
 
- /* async logout() { 
+ async logout() { 
     this.store.dispatch(beginLogout());
-  }*/
+  }
 
 }
