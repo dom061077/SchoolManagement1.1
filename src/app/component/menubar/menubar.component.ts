@@ -39,6 +39,7 @@ export class MenubarComponent implements DoCheck, OnInit {
   }
 
  async logout() { 
+    console.log("Cerrando sesión");
     this.store.dispatch(beginLogout());
   }
 

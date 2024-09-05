@@ -13,7 +13,7 @@ export class UserEffect {
 
     }
 
-    _userlogin = createEffect(() =>
+    /*_userlogin = createEffect(() =>
         this.action$.pipe(
             ofType(beginLogin),
             switchMap((action) => {
@@ -25,7 +25,7 @@ export class UserEffect {
                             //if (_userdata.status === true) {
                                 this.service.setUserToLoaclStorage(_userdata);
                                 this.route.navigate([''])
-                                return of(fetchmenu(/*{ userrole: _userdata.role }*/),
+                                return of(fetchmenu(),
                                     showalert({ message: 'Login success.', resulttype: 'pass' }))
                             //} else {
                             //    return of(showalert({ message: 'InActive User.', resulttype: 'fail' }))
@@ -40,7 +40,7 @@ export class UserEffect {
                 )
             })
         )
-    )  
+    )  */
 
     _userlogout = createEffect(()=>
         this.action$.pipe(
