@@ -16,7 +16,7 @@ import { config } from '../service/config';
 import { Userinfo } from './user.model';
 import { Router } from '@angular/router';
 import { loadPERSONfail } from '../person/store/person.actions';
-import { KeycloakService } from '../keycloak/keycloak.service';
+import { KeycloakService } from './keycloak/keycloak.service';
 //import * as fromApp from '../store/app.reducer';
 /**
  * 

@@ -4,7 +4,7 @@ import { getmenubyrole } from '../../auth/store/user.selectors';
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { beginLogout, fetchmenu } from '../../auth/store/user.actions';
-import { KeycloakService } from '../../keycloak/keycloak.service';
+import { KeycloakService } from '../../auth/keycloak/keycloak.service';
 //import { fetchmenu } from 'src/app/Store/User/User.action';
 
 @Component({

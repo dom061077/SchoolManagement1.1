@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import Keycloak from 'keycloak-js';
-import { UserProfile } from './user.profile';
+import { UserProfile } from '../user.profile';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,7 @@ export class KeycloakService {
     return this._keycloak;
   }
 
-  constructor() { }
+  
 
   async init(){
     console.log('Authenticating the user...');
@@ -30,7 +30,7 @@ export class KeycloakService {
     });
     if (authenticated) {
       this._profile = (await this.keycloak.loadUserProfile()) as UserProfile;
-
+      this._profile.token = this.keycloak.token || '';
       console.log('Token Parsed: ',this.keycloak.tokenParsed?.realm_access?.roles);
     }
   }

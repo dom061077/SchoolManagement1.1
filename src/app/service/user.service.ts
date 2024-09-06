@@ -4,7 +4,7 @@ import { config } from './config';
 import { Roleaccess, Usercred, Userinfo } from '../auth/user.model';
 import { Observable } from 'rxjs/internal/Observable';
 import { of } from 'rxjs/internal/observable/of';
-import { KeycloakService } from '../keycloak/keycloak.service';
+import { KeycloakService } from '../auth/keycloak/keycloak.service';
 
 @Injectable({
   providedIn: 'root'

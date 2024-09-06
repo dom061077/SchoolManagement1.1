@@ -24,7 +24,7 @@ import { PERSONreducer } from './person/store/person.reducer';
 import { PersonEffects } from './person/store/person.effects';
 import { PDFREPORTreducer } from './common/store/pdfreport.reducer';
 import { PdfReportEffects } from './common/store/pdfreport.effects';
-import { KeycloakService } from './keycloak/keycloak.service';
+import { KeycloakService } from './auth/keycloak/keycloak.service';
 
 
 export function kcFactory(kcService: KeycloakService){

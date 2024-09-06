@@ -6,10 +6,11 @@ import { exhaustMap, map, catchError, of, switchMap } from 'rxjs'
 import { emptyaction, showalert } from "../../common/store/app.action";
 import { Router } from "@angular/router";
 import { Userinfo } from "../user.model";
+import { KeycloakService } from "../keycloak/keycloak.service";
 
 @Injectable()
 export class UserEffect {
-    constructor(private action$: Actions, private service: UserService, private route: Router) {
+    constructor(private action$: Actions, private service: UserService, private klservice: KeycloakService, private route: Router) {
 
     }
 

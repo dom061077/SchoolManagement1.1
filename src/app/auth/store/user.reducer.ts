@@ -7,13 +7,13 @@ const _userReducer = createReducer(UserState,
         return { ...state, isDuplicate: action.isduplicate }
     }),
     on(fetchmenusuccess, (state, action) => {
-        return { ...state, menulist: action.menulist }
+        return { ...state/*, menulist: action.menulist */}
     }),
     on(getuserssuccess, (state, action) => {
         return UserAdapter.setAll(action.userlist, state)
     }),
     on(getrolesuccess, (state, action) => {
-        return { ...state, roles: action.rolelist }
+        return { ...state/*, roles: action.rolelist*/ }
     }),
     on(getuserbycodesuccess, (state, action) => {
         return { ...state, userinfo: action.userinfo }

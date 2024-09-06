@@ -1,20 +1,7 @@
 import { createEntityAdapter } from "@ngrx/entity";
 import { UserModel, Users } from "../user.model";
+import { UserProfile } from "../user.profile";
 
-export const UserAdapter = createEntityAdapter<Users>();
+export const UserAdapter = createEntityAdapter<UserProfile>();
 
-export const UserState: UserModel = UserAdapter.getInitialState({
-    isDuplicate: false,
-    menulist:[],
-    roles:[],
-    userinfo:{
-        id:0,
-        username: '',
-        email: '',
-        name: '',
-        role: '',
-        access_token: '',
-        status: false,
-        menu_list: []
-    }
-});
+export const UserState = UserAdapter.getInitialState();

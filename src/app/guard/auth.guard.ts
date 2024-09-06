@@ -2,7 +2,7 @@ import { CanActivateFn, Router } from '@angular/router';
 import { UserService } from '../service/user.service';
 import { inject } from '@angular/core';
 import { Userinfo } from '../auth/user.model';
-import {KeycloakService} from '../keycloak/keycloak.service';
+import {KeycloakService} from '../auth/keycloak/keycloak.service';
 
 /*
 export const authGuard: CanActivateFn = (route, state) => {
