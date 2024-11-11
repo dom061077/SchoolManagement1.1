@@ -1,4 +1,4 @@
 export const config = {
-    apiUrl: 'http://localhost:8080',
+    apiUrl: 'http://schoolmanagement-api:8088',
     keycloakUrl: 'http:localhost:9090'
 }
