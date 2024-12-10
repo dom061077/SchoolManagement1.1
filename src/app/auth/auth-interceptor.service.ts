@@ -4,7 +4,8 @@ import {
   HttpRequest,
   HttpHandler,
   HttpParams,
-  HttpEvent
+  HttpEvent,
+  HttpHeaders
 } from '@angular/common/http';
 import { take, exhaustMap, map, catchError } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
@@ -15,6 +16,7 @@ import { config } from '../service/config';
 import { Userinfo } from './user.model';
 import { Router } from '@angular/router';
 import { loadPERSONfail } from '../person/store/person.actions';
+import { KeycloakService } from './keycloak/keycloak.service';
 //import * as fromApp from '../store/app.reducer';
 /**
  * 
@@ -25,9 +27,11 @@ import { loadPERSONfail } from '../person/store/person.actions';
 
 @Injectable()
 export class AuthInterceptorService implements HttpInterceptor {
-  constructor( private store: Store, private route: Router) {}
-
-   intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+  //constructor( private store: Store, private route: Router) {}
+  constructor(
+    private keycloakService: KeycloakService
+  ) {}
+   /*intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     if (config.apiUrl && 
         req.url.startsWith(config.apiUrl)) {
         if(localStorage.getItem('userdata') != null){
@@ -61,5 +65,21 @@ export class AuthInterceptorService implements HttpInterceptor {
         }
     }
     return next.handle(req);
-  }
-}
+  }*/
+  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+      const token = this.keycloakService.keycloak.token;
+      if (token) {
+
+        const authReq = request.clone({
+          setHeaders: {
+            Authorization: `Bearer ${token}`
+          }         
+        });        
+        console.log('Request: '+authReq);
+        return next.handle(authReq);
+      }
+      return next.handle(request);
+    }
+  } 
+  
+

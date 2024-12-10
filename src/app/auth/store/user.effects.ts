@@ -1,19 +1,20 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { UserService } from "../../service/user.service";
-import { beginLogin, beginRegister, duplicateUser, duplicateUserSuccess, fetchmenu, fetchmenusuccess, getroles, getrolesuccess, getuserbycode, getuserbycodesuccess, getusers, getuserssuccess, updateuserrole } from "./user.actions";
+import { beginLogin, beginLogout, beginRegister, duplicateUser, duplicateUserSuccess, fetchmenu, fetchmenusuccess, getroles, getrolesuccess, getuserbycode, getuserbycodesuccess, getusers, getuserssuccess, updateuserrole } from "./user.actions";
 import { exhaustMap, map, catchError, of, switchMap } from 'rxjs'
-import { showalert } from "../../common/store/app.action";
+import { emptyaction, showalert } from "../../common/store/app.action";
 import { Router } from "@angular/router";
 import { Userinfo } from "../user.model";
+import { KeycloakService } from "../keycloak/keycloak.service";
 
 @Injectable()
 export class UserEffect {
-    constructor(private action$: Actions, private service: UserService, private route: Router) {
+    constructor(private action$: Actions, private service: UserService, private klservice: KeycloakService, private route: Router) {
 
     }
 
-    _userlogin = createEffect(() =>
+    /*_userlogin = createEffect(() =>
         this.action$.pipe(
             ofType(beginLogin),
             switchMap((action) => {
@@ -25,7 +26,7 @@ export class UserEffect {
                             //if (_userdata.status === true) {
                                 this.service.setUserToLoaclStorage(_userdata);
                                 this.route.navigate([''])
-                                return of(fetchmenu(/*{ userrole: _userdata.role }*/),
+                                return of(fetchmenu(),
                                     showalert({ message: 'Login success.', resulttype: 'pass' }))
                             //} else {
                             //    return of(showalert({ message: 'InActive User.', resulttype: 'fail' }))
@@ -40,7 +41,18 @@ export class UserEffect {
                 )
             })
         )
-    )  
+    )  */
+
+    _userlogout = createEffect(()=>
+        this.action$.pipe(
+            ofType(beginLogout),
+            switchMap((action)=>{
+                this.service.userLogout();
+                return of(emptyaction());
+            })
+        )
+    )
+    
 
     _loadmenubyrole = createEffect(() =>
         this.action$.pipe(

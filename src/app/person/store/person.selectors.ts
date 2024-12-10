@@ -17,5 +17,5 @@ export const getErrormessage=createSelector(getpersonstate,
 );
 
 export const getTotalRows =createSelector(getpersonstate,
-    (state)=>state.totalRowsxxxx
+    (state)=>state.totalRows
 );

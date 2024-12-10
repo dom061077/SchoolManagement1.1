@@ -1,12 +1,37 @@
 
 <div *ngIf="ismenuvisible">
-    <mat-toolbar color="primary" class="mat-elevation-z8">
+    <mat-toolbar  color="primary" class="mat-elevation-z4">
         <button (click)="drawer.toggle()" mat-icon-button>
             <mat-icon>menu</mat-icon>
         </button>
         <span>NGRX</span>
         <span class="example-spacer"></span>
-        <button mat-button routerLink="/login">Logout</button>
+       
+        <button [matMenuTriggerFor]="dropdownMenu"  mat-icon-button  ><mat-icon >account_circle</mat-icon></button>
+        <mat-menu #dropdownMenu x-position="before"> <!-- Menu is positioned before the button -->
+
+            <mat-card class="example-card" appearance="outlined">
+                <mat-card-header>
+                  <mat-card-title>Chihuahua</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                  <p>Perfil de usuario</p>
+                </mat-card-content>
+
+              </mat-card>
+              
+            <!-- Logout menu item -->
+            <a mat-menu-item  (click)="logout()" >
+              <mat-icon>exit_to_app</mat-icon>
+              <span>Cerrar sesión</span>
+            </a>
+            
+            <!-- About menu item -->
+            <a mat-menu-item href="" routerLink="/about">
+              <mat-icon>info_outline</mat-icon>
+              <span>About</span>
+            </a>
+          </mat-menu>        
     </mat-toolbar>
     <mat-drawer-container autosize>
         <mat-drawer #drawer opened="true" mode="side" position="start">
@@ -35,3 +60,4 @@
 <div style="text-align: center;min-height: 600px;" *ngIf="!ismenuvisible">
     <router-outlet></router-outlet>
 </div>
+

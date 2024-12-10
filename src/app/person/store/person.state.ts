@@ -10,7 +10,7 @@ export const personAdapter=createEntityAdapter<Person>({
 export const PersonState:PersonModel=personAdapter.getInitialState({
     errormessage:'',
     isloading:false,
-    totalRowsxxxx:0
+    totalRows:0
 
 });
 

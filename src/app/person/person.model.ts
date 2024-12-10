@@ -51,6 +51,6 @@ export interface Person{
 export interface PersonModel extends EntityState<Person>{
     errormessage:string,
     isloading:boolean,
-    totalRowsxxxx:number
+    totalRows:number
 }
 

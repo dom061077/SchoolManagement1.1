@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Usercred } from '../../auth/user.model';
 import { beginLogin } from '../../auth/store/user.actions';
+import {KeycloakService} from '../../auth/keycloak/keycloak.service';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,8 @@ import { beginLogin } from '../../auth/store/user.actions';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
+ 
+/*
   constructor(private builder: FormBuilder, private store: Store) {
 
   }
@@ -36,5 +38,14 @@ export class LoginComponent implements OnInit {
   resetlogin() {
     this.loginform.reset();
   }
+*/
+constructor(
+  private ss: KeycloakService
+) {
+}
 
+async ngOnInit(): Promise<void> {
+  await this.ss.init();
+  await this.ss.login();
+}
 }
