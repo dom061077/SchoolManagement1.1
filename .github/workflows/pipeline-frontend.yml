@@ -34,7 +34,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: docker/frontend/Dockerfile
+          file: docker/dockerfile
           push: true
           platforms: linux/amd64
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/sm-ui:latest,${{ secrets.DOCKERHUB_USERNAME }}/sm-ui:${{ steps.extract_version.outputs.VERSION }}
