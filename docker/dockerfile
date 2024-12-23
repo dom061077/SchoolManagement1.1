@@ -18,4 +18,4 @@ COPY --from=build-stage /app/dist/school-management1.1/browser /usr/share/nginx/
 
 EXPOSE 80
 
-#docker build -t sm-ui/sm-ui:1.0.1 -f path_to_Dockerfile .
+#docker build -t dom061077/sm-ui:1.0.1 -f path_to_Dockerfile .
