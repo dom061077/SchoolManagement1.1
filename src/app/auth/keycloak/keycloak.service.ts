@@ -14,7 +14,7 @@ export class KeycloakService {
     if (!this._keycloak){
       this._keycloak = new Keycloak({
         
-        url: 'http://keycloak-sm:8080/',
+        url: 'http://149.50.130.196:8080/',
         realm: 'book-social-network',
         clientId: 'bsn'
       });
