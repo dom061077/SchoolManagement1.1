@@ -1,4 +1,4 @@
 export const config = {
-    apiUrl: 'http://localhost:8088',
+    apiUrl: 'http://149.50.130.196:8088',
     keycloakUrl: 'http:keyloak-sm:8080'
 }
