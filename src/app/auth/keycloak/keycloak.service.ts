@@ -14,7 +14,7 @@ export class KeycloakService {
     if (!this._keycloak){
       this._keycloak = new Keycloak({
         
-        url: "http://keycloak-sm:8080/auth",
+        url: "http://warriorit.site:8080/",
         realm: 'book-social-network',
         clientId: 'bsn'
       });
