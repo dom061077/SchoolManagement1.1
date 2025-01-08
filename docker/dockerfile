@@ -1,4 +1,4 @@
-FROM node:20 as build-stage
+FROM node:20 AS build-stage
 
 WORKDIR /app
 
@@ -10,21 +10,17 @@ COPY . .
 
 RUN npm run build --prod
 
-# Check for certificate existence on host VPS (using shell scripting)
-COPY --from=0 /home/gitrunner-ui/warriorit.site.crt ./warriorit.site.crt 
-COPY --from=0 /home/gitrunner-ui/warriorit.site.key ./warriorit.site.key
-
 FROM nginx:alpine
 
 # Create /etc/nginx/ssl directory (optional, but recommended)
 RUN mkdir -p /etc/nginx/ssl
 
+# Mount the directory containing certificates (adjust path)
+VOLUME ["/home/gitrunner-ui"]
 
-
-# Copy certificates from context directory (if they exist)
-COPY warriorit.site.crt /etc/nginx/ssl/warriorit.site.crt
-COPY warriorit.site.key /etc/nginx/ssl/warriorit.site.key
-
+# Copy certificates from volume (if they exist)
+COPY /home/gitrunner-ui/warriorit.site.crt /etc/nginx/ssl/warriorit.site.crt
+COPY /home/gitrunner-ui/warriorit.site.key /etc/nginx/ssl/warriorit.site.key
 
 COPY nginx.conf /etc/nginx/nginx.conf
 
@@ -32,4 +28,4 @@ COPY --from=build-stage /app/dist/school-management1.1/browser /usr/share/nginx/
 
 EXPOSE 80
 
-#docker build -t dom061077/sm-ui:1.0.1 -f path_to_Dockerfile .
+#docker build -t dom061077/sm-ui:1.0.1 -f path/to/your/Dockerfile .
