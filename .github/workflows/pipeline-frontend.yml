@@ -27,8 +27,8 @@ jobs:
       
       - name: Copy certificates from VPS
         run: |
-          scp user@your-vps:/home/gitrunner-ui/warriorit.site.crt .
-          scp user@your-vps:/home/gitrunner-ui/warriorit.site.key .
+          scp user@149.50.130.196:/home/gitrunner-ui/warriorit.site.crt .
+          scp user@149.50.130.196:/home/gitrunner-ui/warriorit.site.key .
 
       - name: Login to DockerHub
         uses: docker/login-action@v3
