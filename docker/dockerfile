@@ -15,12 +15,9 @@ FROM nginx:alpine
 # Create /etc/nginx/ssl directory (optional, but recommended)
 RUN mkdir -p /etc/nginx/ssl
 
-# Mount the directory containing certificates (adjust path)
-VOLUME ["/home/gitrunner-ui"]
-
-# Copy certificates from volume (if they exist)
-COPY /home/gitrunner-ui/warriorit.site.crt /etc/nginx/ssl/warriorit.site.crt
-COPY /home/gitrunner-ui/warriorit.site.key /etc/nginx/ssl/warriorit.site.key
+# Copy certificates (they will be downloaded via GitHub Actions)
+COPY warriorit.site.crt /etc/nginx/ssl/warriorit.site.crt
+COPY warriorit.site.key /etc/nginx/ssl/warriorit.site.key
 
 COPY nginx.conf /etc/nginx/nginx.conf
 
