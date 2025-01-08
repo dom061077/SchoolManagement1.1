@@ -10,14 +10,20 @@ COPY . .
 
 RUN npm run build --prod
 
+# Check for certificate existence on host VPS (using shell scripting)
+COPY --from=0 /home/gitrunner-ui/warriorit.site.crt ./warriorit.site.crt 
+COPY --from=0 /home/gitrunner-ui/warriorit.site.key ./warriorit.site.key
+
 FROM nginx:alpine
 
 # Create /etc/nginx/ssl directory (optional, but recommended)
 RUN mkdir -p /etc/nginx/ssl
 
-# Check for certificate existence on host VPS (using shell scripting)
-COPY --from=0 /home/gitrunner-ui/warriorit.site.crt /etc/nginx/ssl/warriorit.site.crt 
-COPY --from=0 /home/gitrunner-ui/warriorit.site.key /etc/nginx/ssl/warriorit.site.key
+
+
+# Copy certificates from context directory (if they exist)
+COPY warriorit.site.crt /etc/nginx/ssl/warriorit.site.crt
+COPY warriorit.site.key /etc/nginx/ssl/warriorit.site.key
 
 
 COPY nginx.conf /etc/nginx/nginx.conf
