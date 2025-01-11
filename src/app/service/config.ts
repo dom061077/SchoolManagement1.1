@@ -1,4 +1,4 @@
 export const config = {
-    apiUrl: 'www.warriorit.site',
+    apiUrl: '',
     keycloakUrl: 'http:keyloak-sm:8080'
 }
