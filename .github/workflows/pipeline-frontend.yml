@@ -27,8 +27,8 @@ jobs:
       
       - name: Copy certificates from VPS
         run: |
-          scp  ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }}:/home/gitrunner-ui/warriorit.site.crt .
-          scp  ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }}:/home/gitrunner-ui/warriorit.site.key .
+          scp  ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }}:/home/gitrunner-ui/warriorit.site.crt ./warriorit.site.crt
+          scp  ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }}:/home/gitrunner-ui/warriorit.site.key ./warriorit.site.key
 
       - name: Login to DockerHub
         uses: docker/login-action@v3
