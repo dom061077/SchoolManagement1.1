@@ -18,6 +18,14 @@ export class KeycloakService {
         realm: 'book-social-network',
         clientId: 'bsn'
       });
+      this._keycloak.init({ onLoad: 'check-sso', silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html' })
+      .then(authenticated => {
+        if (authenticated) {
+          setInterval(() => {
+            this._keycloak.updateToken(30).catch(() => this._keycloak.login());
+          }, 20000); // Check every 20s
+        }
+      });      
     }
     return this._keycloak;
   }
