@@ -55,4 +55,40 @@ export class KeycloakService {
     // this.keycloak.accountManagement();
     return this.keycloak.logout({redirectUri: 'http://localhost:4200'});
   }  
+
+  /*
+
+  async init() {
+    return this.keycloak.init({
+      onLoad: 'login-required',
+      checkLoginIframe: false,
+    }).then((authenticated) => {
+      if (authenticated) {
+        this.scheduleTokenRefresh();
+      }
+    }).catch((err) => {
+      console.error('Keycloak initialization failed', err);
+    });
+  }
+
+  private scheduleTokenRefresh() {
+    // Refresh the token every 30 seconds before expiration
+    this.tokenRefreshInterval = setInterval(() => {
+      this.keycloak.updateToken(30).then((refreshed) => {
+        if (refreshed) {
+          console.log('Token successfully refreshed');
+        }
+      }).catch(() => {
+        console.error('Failed to refresh token');
+        this.logout();
+      });
+    }, 60000); // Run every 60 seconds
+  }
+
+  logout() {
+    clearInterval(this.tokenRefreshInterval);
+    this.keycloak.logout();
+  }
+
+  */
 }
