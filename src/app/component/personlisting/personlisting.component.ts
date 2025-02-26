@@ -112,8 +112,8 @@ export class PersonlistingComponent implements OnInit {
   }
 
   applyFilter(){
-    const pageIndex = this.paginator.pageIndex;
-    const pageSize = this.paginator.pageSize;
+    const pageIndex = this.paginator?.pageIndex;
+    const pageSize = this.paginator?.pageSize;
     const sortField = this.datasource.sort?.active;
     const sortDirection = this.datasource.sort?.direction;   
     var sorts = '';
