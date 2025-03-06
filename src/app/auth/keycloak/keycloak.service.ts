@@ -60,6 +60,7 @@ export class KeycloakService {
       if (authenticated == true) {
         this._profile = ( this.keycloak.loadUserProfile()) as UserProfile;
         this._profile.token = this.keycloak.token || '';
+        console.log('User profile: '+this._profile);
         console.log('Token Parsed: ', this.keycloak.tokenParsed?.realm_access?.roles);        
         this.keycloak.onAuthLogout = () => {
             console.log("User logged out");  

@@ -15,6 +15,7 @@ export const GET_ROLE_SUCC='[role] get role succ'
 export const GET_USERBYCODE='[user] get userbycode'
 export const GET_USERBYCODE_SUCC='[user] get userbycode succ'
 export const UPDATE_ROLE='[user] update role'
+export const GET_USER_PROFILE = '[user] get profile'
 
 
 
@@ -32,3 +33,5 @@ export const getrolesuccess=createAction(GET_ROLE_SUCC,props<{rolelist:Roles[]}>
 export const getuserbycode=createAction(GET_USERBYCODE,props<{username:string}>())
 export const getuserbycodesuccess=createAction(GET_USERBYCODE_SUCC,props<{userinfo:Userinfo}>())
 export const updateuserrole=createAction(UPDATE_ROLE,props<{userrole:string,userid:number}>())
+
+//export const getperfil = createAction(GET_USER_PROFILE);
