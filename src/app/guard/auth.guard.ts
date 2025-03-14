@@ -45,6 +45,8 @@ export const authGuard: CanActivateFn = () => {
   if (tokenService.keycloak.isTokenExpired()) {
     router.navigate(['login']);
     return false;
+  }else{
+    verificar roles antes del routing
   }
   return true;
 };
