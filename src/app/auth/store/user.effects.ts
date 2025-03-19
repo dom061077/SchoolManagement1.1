@@ -1,11 +1,10 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { UserService } from "../../service/user.service";
-import { beginLogin, beginLogout, beginRegister, duplicateUser, duplicateUserSuccess, fetchmenu, fetchmenusuccess, getroles, getrolesuccess, getuserbycode, getuserbycodesuccess, getusers, getuserssuccess, updateuserrole } from "./user.actions";
+import { beginLogout, fetchmenu, fetchmenusuccess } from "./user.actions";
 import { exhaustMap, map, catchError, of, switchMap } from 'rxjs'
 import { emptyaction, showalert } from "../../common/store/app.action";
 import { Router } from "@angular/router";
-import { Userinfo } from "../user.model";
 import { KeycloakService } from "../keycloak/keycloak.service";
 
 @Injectable()
