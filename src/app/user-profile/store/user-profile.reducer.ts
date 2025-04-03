@@ -5,7 +5,7 @@ import { initialPdfReportState } from '../../common/store/pdfreport.state';
 import { initialUserProfileState } from './user-profile.state';
 
 
-export const profileReducer = createReducer(
+export const _userProfileReducer = createReducer(
     initialUserProfileState,
     
     on(UserProfileActions.loadProfile, (state) => ({
@@ -24,3 +24,7 @@ export const profileReducer = createReducer(
         error
     }))
 );
+
+export function USER_PROFILEreducer(state: any, action: any){
+    return _userProfileReducer
+}

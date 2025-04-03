@@ -5,6 +5,10 @@ import { Component, DoCheck, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { beginLogout, fetchmenu } from '../../auth/store/user.actions';
 import { KeycloakService } from '../../auth/keycloak/keycloak.service';
+import { UserProfile } from '../../auth/user.profile';
+import { Observable } from 'rxjs';
+import { selectProfile } from '../../user-profile/store/user-profile.selectors';
+import * as UserProfileActions from '../../user-profile/store/user-profile.actions';
 //import { fetchmenu } from 'src/app/Store/User/User.action';
 
 @Component({
@@ -13,12 +17,14 @@ import { KeycloakService } from '../../auth/keycloak/keycloak.service';
   styleUrls: ['./menubar.component.css']
 })
 export class MenubarComponent implements DoCheck, OnInit {
+  profile$: Observable<UserProfile | null>;
   ismenuvisible = false;
   menulist !: Roleaccess[]
   constructor(private router: Router, private store: Store, private ks: KeycloakService) {
-
+    this.profile$ = this.store.select(selectProfile);
   }
   ngOnInit(): void {
+    
     if (localStorage.getItem('userdata') != null) {
       let jsonstring = localStorage.getItem('userdata') as string;
       const _obj = JSON.parse(jsonstring) as Userinfo;
@@ -42,5 +48,9 @@ export class MenubarComponent implements DoCheck, OnInit {
     console.log("Cerrando sesión");
     this.store.dispatch(beginLogout());
   }
+
+  showProfile() {
+    this.store.dispatch(UserProfileActions.loadProfile());
+  }  
 
 }

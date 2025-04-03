@@ -25,6 +25,8 @@ import { PersonEffects } from './person/store/person.effects';
 import { PDFREPORTreducer } from './common/store/pdfreport.reducer';
 import { PdfReportEffects } from './common/store/pdfreport.effects';
 import { KeycloakService } from './auth/keycloak/keycloak.service';
+import { USER_PROFILEreducer } from './user-profile/store/user-profile.reducer';
+import { UserProfileEffects } from './user-profile/store/user-profile.effects';
 
 
 export function kcFactory(kcService: KeycloakService){
@@ -45,8 +47,8 @@ export function kcFactory(kcService: KeycloakService){
     MaterialModule,
     HttpClientModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({user:UserReducer,person: PERSONreducer, pdfreport: PDFREPORTreducer}),
-    EffectsModule.forRoot([UserEffect,AppEffects,PersonEffects,PdfReportEffects]),
+    StoreModule.forRoot({user:UserReducer, userprofile: USER_PROFILEreducer,person: PERSONreducer, pdfreport: PDFREPORTreducer}),
+    EffectsModule.forRoot([UserEffect,AppEffects,PersonEffects,PdfReportEffects, UserProfileEffects]),
     StoreRouterConnectingModule.forRoot(),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })
   ],
