@@ -6,8 +6,7 @@ export const LOAD_PROFILE_SUCCESS = '[Profile] Load Success';
 export const LOAD_PROFILE_FAILURE = '[Profile] Load Profile Failure';
 
 
-export const loadProfile = createAction(LOAD_PROFILE, props<{profile: UserProfile}>()
-);
+export const loadProfile = createAction(LOAD_PROFILE);
 
 export const loadProfileSuccess = createAction(LOAD_PROFILE_SUCCESS, props<{profile: UserProfile}>());
 

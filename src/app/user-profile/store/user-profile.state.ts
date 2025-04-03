@@ -3,7 +3,7 @@ import { UserProfile } from "../user-profile.model";
 export interface UserProfileState{
     profile: UserProfile | null;
     loading: boolean;
-    error: null; 
+    error: string | null;
 }
 
 export const initialUserProfileState: UserProfileState = {
