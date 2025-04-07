@@ -5,7 +5,7 @@ import { Component, DoCheck, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { beginLogout, fetchmenu } from '../../auth/store/user.actions';
 import { KeycloakService } from '../../auth/keycloak/keycloak.service';
-import { UserProfile } from '../../auth/user.profile';
+import { UserProfile } from '../../user-profile/user-profile.model';
 import { Observable } from 'rxjs';
 import { selectProfile } from '../../user-profile/store/user-profile.selectors';
 import * as UserProfileActions from '../../user-profile/store/user-profile.actions';
@@ -30,9 +30,10 @@ export class MenubarComponent implements DoCheck, OnInit {
       const _obj = JSON.parse(jsonstring) as Userinfo;
       this.store.dispatch(fetchmenu());
     }
-    this.store.select(selectProfile).subscribe(profile => {
+    /*this.store.select(selectProfile).subscribe(profile => {
       console.log('Profile data:', profile);
     });
+    */
 
 
 

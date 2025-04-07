@@ -30,5 +30,5 @@ export const _userProfileReducer = createReducer(
 );
 
 export function USER_PROFILEreducer(state: any, action: any){
-    return _userProfileReducer
+    return _userProfileReducer(state, action);
 }

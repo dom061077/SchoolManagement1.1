@@ -47,7 +47,12 @@ export function kcFactory(kcService: KeycloakService){
     MaterialModule,
     HttpClientModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({user:UserReducer, userprofile: USER_PROFILEreducer,person: PERSONreducer
+    StoreModule.forRoot({user:UserReducer, userprofile: (state, action) =>{
+        console.log('User reducer caugth action: ',action);
+        return USER_PROFILEreducer(state, action);
+      },
+      
+      USER_PROFILEreducer,person: PERSONreducer
       , pdfreport: PDFREPORTreducer
       
     }),
