@@ -30,10 +30,12 @@ export class MenubarComponent implements DoCheck, OnInit {
       const _obj = JSON.parse(jsonstring) as Userinfo;
       this.store.dispatch(fetchmenu());
     }
+    this.store.select(selectProfile).subscribe(profile => {
+      console.log('Profile data:', profile);
+    });
 
-    this.store.select(getmenubyrole).subscribe(item => {
-      this.menulist = item;
-    })
+
+
   }
   ngDoCheck(): void {
     const currentroute = this.router.url;
@@ -50,6 +52,7 @@ export class MenubarComponent implements DoCheck, OnInit {
   }
 
   showProfile() {
+    console.log('ShowProfile event!!!');
     this.store.dispatch(UserProfileActions.loadProfile());
   }  
 

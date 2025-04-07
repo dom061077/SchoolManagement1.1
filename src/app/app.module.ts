@@ -47,8 +47,11 @@ export function kcFactory(kcService: KeycloakService){
     MaterialModule,
     HttpClientModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({user:UserReducer, userprofile: USER_PROFILEreducer,person: PERSONreducer, pdfreport: PDFREPORTreducer}),
-    EffectsModule.forRoot([UserEffect,AppEffects,PersonEffects,PdfReportEffects, UserProfileEffects]),
+    StoreModule.forRoot({user:UserReducer, userprofile: USER_PROFILEreducer,person: PERSONreducer
+      , pdfreport: PDFREPORTreducer
+      
+    }),
+    EffectsModule.forRoot([UserProfileEffects,UserEffect,AppEffects,PersonEffects,PdfReportEffects, UserProfileEffects]),
     StoreRouterConnectingModule.forRoot(),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })
   ],

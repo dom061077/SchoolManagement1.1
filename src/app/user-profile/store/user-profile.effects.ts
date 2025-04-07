@@ -17,7 +17,7 @@ export class UserProfileEffects {
 
         this.action$.pipe(
             ofType(UserProfileActions.loadProfile),
-            exhaustMap(()=>{
+            switchMap(()=>{
                 return this.service.getUserProfile().pipe(map((profile:any)=>
                      UserProfileActions.loadProfileSuccess({profile})
                 ))

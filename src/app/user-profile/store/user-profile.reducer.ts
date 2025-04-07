@@ -13,11 +13,15 @@ export const _userProfileReducer = createReducer(
         loading: true,
         error: null
     })),
-    on(UserProfileActions.loadProfileSuccess, (state, {profile}) =>({
-        ...state,
-        loading:false,
-        profile
-    })),
+    on(UserProfileActions.loadProfileSuccess, (state, {profile}) =>{
+            console.log('Reducer received profile: ', profile);
+            return ({
+            ...state,
+            loading:false,
+            profile
+            });
+        }
+    ),
     on(UserProfileActions.loadProfileFailure,(state,{error})=>({
         ...state,
         loading: false,
