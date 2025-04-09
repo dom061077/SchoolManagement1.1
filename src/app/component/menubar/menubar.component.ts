@@ -24,7 +24,7 @@ export class MenubarComponent implements DoCheck, OnInit {
     this.profile$ = this.store.select(selectProfile);
   }
   ngOnInit(): void {
-    
+    this.store.dispatch(UserProfileActions.loadProfile());
     if (localStorage.getItem('userdata') != null) {
       let jsonstring = localStorage.getItem('userdata') as string;
       const _obj = JSON.parse(jsonstring) as Userinfo;
@@ -34,7 +34,9 @@ export class MenubarComponent implements DoCheck, OnInit {
       console.log('Profile data:', profile);
     });
     */
-
+    this.profile$.subscribe(profile=>{
+      console.log('Profile data: ',profile);
+    })
 
 
   }
