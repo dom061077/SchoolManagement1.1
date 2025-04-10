@@ -46,7 +46,7 @@ export const authGuard: CanActivateFn = () => {
     router.navigate(['login']);
     return false;
   }else{
-    verificar roles antes del routing
+    //verificar roles antes del routing
   }
   return true;
 };

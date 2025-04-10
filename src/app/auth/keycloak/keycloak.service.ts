@@ -35,6 +35,10 @@ export class KeycloakService {
   async init(...args: []) {
     console.log('Authenticating the user...');
 
+    this.keycloak.onAuthSuccess = () => {
+      console.log('Token successfully refreshed');
+    };
+
     this.keycloak.onTokenExpired = () => {
       if (this.isRefreshing) return; // Avoid duplicate refresh calls
     
