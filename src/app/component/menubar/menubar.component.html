@@ -1,9 +1,9 @@
 
 <div *ngIf="ismenuvisible">
     <mat-toolbar  color="primary" class="mat-elevation-z4">
-        <!-- button  (click)="(drawer.toggle())" mat-icon-button>
+        <button  (click)="(drawer.toggle())" mat-icon-button>
             <mat-icon>menu</mat-icon>
-        </button -->
+        </button>
         <span>Menú</span>
         <span class="example-spacer"></span>
        
@@ -38,34 +38,31 @@
 
         </mat-menu>        
     </mat-toolbar>
-    <div class="sidebar" [class.sidebar-close]="!openSidebar">
-        <div class="logo-details">
-          <div class="logo"></div>
-        </div>
-        <ul class="nav-links" id="nav-links">
-          <li *ngFor="let item of menuSidebar" #itemEl routerLinkActive="active">
-            <div *ngIf="item.sub_menu.length == 0" class="dropdown-title">
-              <a [routerLink]="[item.link]">
-                <i [class]="item.icon"></i>
-                <span class="link_name">{{item.link_name}}</span>
-              </a>
+    <mat-drawer-container autosize>
+        <mat-drawer #drawer opened="true" mode="side" position="start">
+            <mat-nav-list>
+                <div *ngIf="(profile$ | async) as profile">
+                    <mat-list-item>
+                        <button mat-button routerLink=""><mat-icon>home</mat-icon>Home</button>
+                    </mat-list-item>
+                    <mat-list-item *ngFor="let item of profile.menus">
+                        <button mat-button routerLink="{{item.menuPath}}"><mat-icon>verified_user</mat-icon>{{item.menuDescription  }}</button>
+                    </mat-list-item>
+                    <!-- <mat-list-item>
+                        <button mat-button routerLink="customer"><mat-icon>verified_user</mat-icon>Customer</button>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <button mat-button routerLink="user"><mat-icon>verified_user</mat-icon>User</button>
+                    </mat-list-item> -->
+                </div>
+            </mat-nav-list>
+        </mat-drawer>
+        <mat-drawer-content>
+            <div style="text-align: center;min-height: 600px;">
+                <router-outlet></router-outlet>
             </div>
-            <div *ngIf="item.sub_menu.length > 0" class="dropdown-title" (click)="showSubmenu(itemEl)">
-              <a>
-                <i [class]="item.icon"></i>
-                <span class="link_name">{{item.link_name}}XXXX</span>
-              </a>
-              <i class='bx bxs-chevron-down arrow'></i>
-            </div>
-            <ul class="sub-menu" [class.blank]="item.sub_menu.length == 0">
-              <li><a class="link_name">{{item.link_name}}</a></li>
-              <li *ngFor="let item_sub of item.sub_menu" routerLinkActive="active">
-                <a [routerLink]="[item_sub.link]">{{item_sub.link_name}}</a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
+        </mat-drawer-content>
+    </mat-drawer-container>
 </div>
 <div style="text-align: center;min-height: 600px;" *ngIf="!ismenuvisible">
     <router-outlet></router-outlet>
