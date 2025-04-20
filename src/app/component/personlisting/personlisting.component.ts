@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Person } from '../../person/person.model';
-import { loadPERSON, loadPERSONtotalrows } from '../../person/store/person.actions';
+import { deleteePERSON, loadPERSON, loadPERSONtotalrows } from '../../person/store/person.actions';
 import { getErrormessage, getTotalRows, getpersonlist } from '../../person/store/person.selectors';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormBuilder } from '@angular/forms';
@@ -95,8 +95,8 @@ export class PersonlistingComponent implements OnInit {
     this.store.dispatch(pdfREPORTgenerate({id:personId}));
   }
 
-  personDelete(id: number){
-    window.open();
+  personDelete(personId: number){
+    this.store.dispatch(deleteePERSON({code: personId}));
   }
 
   openPopup(code: number, title: string){
