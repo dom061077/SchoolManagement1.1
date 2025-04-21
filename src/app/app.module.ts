@@ -27,7 +27,7 @@ import { PdfReportEffects } from './common/store/pdfreport.effects';
 import { KeycloakService } from './auth/keycloak/keycloak.service';
 import { USER_PROFILEreducer } from './user-profile/store/user-profile.reducer';
 import { UserProfileEffects } from './user-profile/store/user-profile.effects';
-import { StudentModule } from './student/student.module';
+//import { StudentModule } from './student/student.module';
 
 
 export function kcFactory(kcService: KeycloakService){
@@ -35,7 +35,7 @@ export function kcFactory(kcService: KeycloakService){
 }
 
 @NgModule({
-  declarations: [
+  declarations: [ 
     AppComponent,
     AddpersonComponent,
     PersonlistingComponent,
@@ -48,7 +48,7 @@ export function kcFactory(kcService: KeycloakService){
     MaterialModule,
     HttpClientModule,
     ReactiveFormsModule,
-    StudentModule,
+    //StudentModule,
     StoreModule.forRoot({user:UserReducer, userprofile: (state, action) =>{
         console.log('User reducer caugth action: ',action);
         return USER_PROFILEreducer(state, action);
