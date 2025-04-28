@@ -27,6 +27,7 @@ import { PdfReportEffects } from './common/store/pdfreport.effects';
 import { KeycloakService } from './auth/keycloak/keycloak.service';
 import { USER_PROFILEreducer } from './user-profile/store/user-profile.reducer';
 import { UserProfileEffects } from './user-profile/store/user-profile.effects';
+import { StudentModule } from './student/student.module';
 //import { StudentModule } from './student/student.module';
 
 
