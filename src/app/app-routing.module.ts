@@ -6,7 +6,9 @@ import { LoginComponent } from './component/login/login.component';
 const routes: Routes = [
   {path: '',component: PersonlistingComponent},
   {path:'login',component:LoginComponent},
-  {path:'listperson', component: PersonlistingComponent}
+  {path:'listperson', component: PersonlistingComponent},
+  { path: 'student', loadChildren: () => import('./student/student.module').then(m => m.StudentModule) }, // Lazy load the StudentModule
+  
 ];
 
 @NgModule({
