@@ -21,8 +21,8 @@ jobs:
       - name: Extract project version
         id: extract_version
         run: |
-          echo "VERSION=$(jq -r '.version' package.json)" >> $GITHUB_OUTPUT
-          echo $GITHUB_OUTPUT
+          VERSION=$(jq -r '.version' package.json)
+          echo "VERSION=$VERSION" >> "$GITHUB_OUTPUT"
 
       
 #      - name: Copy certificates from VPS
