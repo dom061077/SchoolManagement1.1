@@ -25,25 +25,25 @@ jobs:
           echo $GITHUB_OUTPUT
 
       
-      - name: Copy certificates from VPS
-        run: |
-          scp  ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }}:/home/gitrunner-ui/warriorit.site.crt ./warriorit.site.crt
-          scp  ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }}:/home/gitrunner-ui/warriorit.site.key ./warriorit.site.key
+#      - name: Copy certificates from VPS
+#        run: |
+#          scp  ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }}:/home/gitrunner-ui/warriorit.site.crt ./warriorit.site.crt
+#          scp  ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }}:/home/gitrunner-ui/warriorit.site.key ./warriorit.site.key
 
-      - name: Login to DockerHub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+#      - name: Login to DockerHub
+#        uses: docker/login-action@v3
+#        with:
+#          username: ${{ secrets.DOCKERHUB_USERNAME }}
+#          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build & Push to DockerHub
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: docker/dockerfile
-          push: true
-          platforms: linux/amd64
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/sm-ui:latest,${{ secrets.DOCKERHUB_USERNAME }}/sm-ui:${{ steps.extract_version.outputs.VERSION }}
+#      - name: Build & Push to DockerHub
+#        uses: docker/build-push-action@v5
+#        with:
+#          context: .
+#          file: docker/dockerfile
+#          push: true
+#          platforms: linux/amd64
+#          tags: ${{ secrets.DOCKERHUB_USERNAME }}/sm-ui:latest,${{ secrets.DOCKERHUB_USERNAME }}/sm-ui:${{ steps.extract_version.outputs.VERSION }}
 
 #  health-check:
 #    name: UI Health Check
