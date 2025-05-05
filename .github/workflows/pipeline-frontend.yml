@@ -14,16 +14,14 @@ jobs:
     name: Build FE Docker image
     runs-on: self-hosted
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Extract project version
-        id: extract_version
+      - name: Show runner info
         run: |
-          VERSION=$(jq -r '.version' package.json)
-          echo "VERSION=$VERSION" >> "$GITHUB_OUTPUT"
-
+          echo "USER: $(whoami)"
+          echo "PWD: $(pwd)"
+          echo "FILES:"
+          ls -la
+          which jq || echo "jq not installed"
+          jq --version || echo "jq error"
       
 #      - name: Copy certificates from VPS
 #        run: |
