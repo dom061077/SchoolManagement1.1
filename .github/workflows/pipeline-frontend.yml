@@ -18,10 +18,7 @@ jobs:
         run: |
           echo "USER: $(whoami)"
           echo "PWD: $(pwd)"
-          echo "FILES:"
-          ls -la
-          which jq || echo "jq not installed"
-          jq --version || echo "jq error"
+
       
 #      - name: Copy certificates from VPS
 #        run: |
