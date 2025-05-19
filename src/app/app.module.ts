@@ -25,6 +25,10 @@ import { PersonEffects } from './person/store/person.effects';
 import { PDFREPORTreducer } from './common/store/pdfreport.reducer';
 import { PdfReportEffects } from './common/store/pdfreport.effects';
 import { KeycloakService } from './auth/keycloak/keycloak.service';
+import { USER_PROFILEreducer } from './user-profile/store/user-profile.reducer';
+import { UserProfileEffects } from './user-profile/store/user-profile.effects';
+import { StudentModule } from './student/student.module';
+//import { StudentModule } from './student/student.module';
 
 
 export function kcFactory(kcService: KeycloakService){
@@ -32,7 +36,7 @@ export function kcFactory(kcService: KeycloakService){
 }
 
 @NgModule({
-  declarations: [
+  declarations: [ 
     AppComponent,
     AddpersonComponent,
     PersonlistingComponent,
@@ -45,8 +49,17 @@ export function kcFactory(kcService: KeycloakService){
     MaterialModule,
     HttpClientModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({user:UserReducer,person: PERSONreducer, pdfreport: PDFREPORTreducer}),
-    EffectsModule.forRoot([UserEffect,AppEffects,PersonEffects,PdfReportEffects]),
+    //StudentModule,
+    StoreModule.forRoot({user:UserReducer, userprofile: (state, action) =>{
+        console.log('User reducer caugth action: ',action);
+        return USER_PROFILEreducer(state, action);
+      },
+      
+      USER_PROFILEreducer,person: PERSONreducer
+      , pdfreport: PDFREPORTreducer
+      
+    }),
+    EffectsModule.forRoot([UserProfileEffects,UserEffect,AppEffects,PersonEffects,PdfReportEffects, UserProfileEffects]),
     StoreRouterConnectingModule.forRoot(),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })
   ],

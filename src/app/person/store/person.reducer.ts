@@ -17,7 +17,7 @@ const _personReducer = createReducer(PersonState,
         return { ...state, errormessage: action.errormessage }
     }),
     on(loadPERSONtotalrows, (state, action) => {
-        return { ...state, totalRowsxxxx: action.totalRows }
+        return { ...state, totalRows: action.totalRows }
     }),    
     on(addPERSONsuccess, (state, action) => {
         /*const _maxid = Math.max(...state.ids.map(item => item as number));
