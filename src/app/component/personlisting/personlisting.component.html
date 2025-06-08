@@ -52,15 +52,6 @@
                     <button (click)="personEdit(element.id)" mat-raised-button color="primary">Modificar</button>
                     <button (click)="personDelete(element.id)" mat-raised-button color="accent">Eliminar</button>
                     <button (click)="personPrintCert(element.id)" mat-raised-button color="accent">Certificado</button>
-                    <button
-                        mat-raised-button
-                        color="warn"
-                        appConfirmDialog
-                        [message]="'Delete this item?'"
-                        (confirmed)="personDelete(element.id)">
-                        Eliminar
-                    </button>
-
                 </td>
                
             </ng-container>
