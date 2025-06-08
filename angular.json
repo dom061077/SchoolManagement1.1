@@ -4,15 +4,6 @@
   "newProjectRoot": "projects",
   "projects": {
     "SchoolManagement1.1": {
-      "i18n": {
-        "sourceLocale": "en-US",
-        "locales": {
-          "es-AR": {
-            "translation": "src/locale/messages.en-AR.xlf"
-          }
-
-        }
-      },
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -32,9 +23,6 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "localize": [
-              "es-AR"
-            ],            
             "outputPath": "dist/school-management1.1",
             "index": "src/index.html",
             "browser": "src/main.ts",
