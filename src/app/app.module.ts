@@ -28,6 +28,8 @@ import { KeycloakService } from './auth/keycloak/keycloak.service';
 import { USER_PROFILEreducer } from './user-profile/store/user-profile.reducer';
 import { UserProfileEffects } from './user-profile/store/user-profile.effects';
 import { StudentModule } from './student/student.module';
+import { ConfirmDialogDirective } from './directive/confirm-dialog.directive';
+import { ConfirmationDialogComponent } from './component/dialog/confirm-dialog/confirm-dialog.component';
 //import { StudentModule } from './student/student.module';
 
 
@@ -41,7 +43,9 @@ export function kcFactory(kcService: KeycloakService){
     AddpersonComponent,
     PersonlistingComponent,
     LoginComponent,
-    MenubarComponent
+    MenubarComponent,
+    ConfirmDialogDirective,
+    ConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,
