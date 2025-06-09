@@ -30,11 +30,16 @@ import { UserProfileEffects } from './user-profile/store/user-profile.effects';
 import { StudentModule } from './student/student.module';
 import { ConfirmDialogDirective } from './directive/confirm-dialog.directive';
 import { ConfirmationDialogComponent } from './component/dialog/confirm-dialog/confirm-dialog.component';
-//import { StudentModule } from './student/student.module';
-
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient } from '@angular/common/http';
 
 export function kcFactory(kcService: KeycloakService){
   return () => kcService.init();
+}
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 @NgModule({
@@ -65,7 +70,15 @@ export function kcFactory(kcService: KeycloakService){
     }),
     EffectsModule.forRoot([UserProfileEffects,UserEffect,AppEffects,PersonEffects,PdfReportEffects, UserProfileEffects]),
     StoreRouterConnectingModule.forRoot(),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+    TranslateModule.forRoot({
+      defaultLanguage: 'en',
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),    
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'es' },
