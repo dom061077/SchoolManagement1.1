@@ -62,7 +62,7 @@ export class PersonEffects {
                 return this.service.Create(action.inputdata).pipe(
                     switchMap((data) => {
                         return of(addPERSONsuccess({ inputdata: action.inputdata }),
-                            showalert({ message: this.translate.instant( 'CREATED_SUCCESSFULLY'), resulttype: 'pass' }))                        
+                            showalert({ message: this.translate.instant( 'PERSON.CREATED_SUCCESSFULLY'), resulttype: 'pass' }))                        
                         //return of(loadPERSON(),
                         //    showalert({ message: 'Created successfully.', resulttype: 'pass' }))
                     }),
