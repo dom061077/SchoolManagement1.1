@@ -30,16 +30,17 @@ import { UserProfileEffects } from './user-profile/store/user-profile.effects';
 import { StudentModule } from './student/student.module';
 import { ConfirmDialogDirective } from './directive/confirm-dialog.directive';
 import { ConfirmationDialogComponent } from './component/dialog/confirm-dialog/confirm-dialog.component';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
+import { config } from './service/config';
 
 export function kcFactory(kcService: KeycloakService){
   return () => kcService.init();
 }
 
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+  return new TranslateHttpLoader(http, config.apiUrl+'/api/v1/translation/messages/', '');
 }
 
 @NgModule({
@@ -72,7 +73,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     StoreRouterConnectingModule.forRoot(),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     TranslateModule.forRoot({
-      defaultLanguage: 'en',
+      defaultLanguage: 'es',
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,

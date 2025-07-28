@@ -34,11 +34,11 @@
                 <td mat-cell *matCellDef="let element">{{element.dni}}</td>
               </ng-container>              
             <ng-container matColumnDef="apellido">
-                <th mat-sort-header mat-header-cell *matHeaderCellDef>Apellido</th>
+                <th mat-sort-header mat-header-cell *matHeaderCellDef>{{'PERSON.LAST_NAME' | translate}}</th>
                 <td mat-cell *matCellDef="let element">{{element.apellido}}</td>
             </ng-container>
             <ng-container matColumnDef="nombre">
-                <th mat-sort-header mat-header-cell *matHeaderCellDef>Nombre</th>
+                <th mat-sort-header mat-header-cell *matHeaderCellDef>{{'PERSON.FIRST_NAME' | translate}}</th>
                 <td mat-cell *matCellDef="let element">{{element.nombre}}</td>
             </ng-container>            
 

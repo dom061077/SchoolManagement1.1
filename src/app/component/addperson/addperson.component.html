@@ -5,11 +5,11 @@
         </mat-card-header>
         <mat-card-content [style.overflow]="'auto'" [style.height.px]="'300'">
             <mat-form-field>
-                <mat-label>Apellido</mat-label>
+                <mat-label>{{'PERSON.LAST_NAME' | translate}}</mat-label>
                 <input formControlName="apellido" matInput class=".align-middle">
             </mat-form-field>
             <mat-form-field>
-                <mat-label>{{'PERSON.NOMBRE' | translate}}</mat-label>
+                <mat-label>{{'PERSON.FIRST_NAME' | translate}}</mat-label>
                 <input formControlName="nombre" matInput class=".align-middle">
             </mat-form-field>            
             <mat-form-field>

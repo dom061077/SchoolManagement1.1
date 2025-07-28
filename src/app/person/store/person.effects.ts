@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Route, Router } from '@angular/router';
 import { catchError, exhaustMap, map, of, switchMap } from 'rxjs';
@@ -13,8 +13,11 @@ import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export class PersonEffects {
+    
+
     constructor(private actin$: Actions, private service:PersonService, private route: Router
-        , private translate: TranslateService) {
+        , private translate: TranslateService
+    ) {
 
     }
 
@@ -62,7 +65,7 @@ export class PersonEffects {
                 return this.service.Create(action.inputdata).pipe(
                     switchMap((data) => {
                         return of(addPERSONsuccess({ inputdata: action.inputdata }),
-                            showalert({ message: this.translate.instant( 'PERSON.CREATED_SUCCESSFULLY'), resulttype: 'pass' }))                        
+                            showalert({ message: "this.translate.instant( 'PERSON.CREATED_SUCCESSFULLY')", resulttype: 'pass' }))                        
                         //return of(loadPERSON(),
                         //    showalert({ message: 'Created successfully.', resulttype: 'pass' }))
                     }),
