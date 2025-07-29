@@ -14,6 +14,7 @@ import { config } from '../../service/config';
 import { Observable } from 'rxjs';
 import { getLoading, getPdfReportBlob, getPdfReportError } from '../../common/store/pdfreport.selectors';
 import { pdfREPORTgenerate, pdfREPORTsuccess } from '../../common/store/pdfreport.actions';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-personlisting',
@@ -30,11 +31,13 @@ export class PersonlistingComponent implements OnInit {
   pdfReportUrl$: Observable<string | null> | undefined;
 
 
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   displayedColums: string[] = ["id","dni","apellido","nombre", "action"]
-  constructor(private dialog: MatDialog, private store: Store, private builder: FormBuilder
+  displayedHeaderColumns: string[] = ["PERSON.ID","PERSON.DNI","PERSON.APELLIDO","PERSON.NOMBRE", "COMMON.GRID_ACTION"]
+  constructor(private translate: TranslateService, private dialog: MatDialog, private store: Store, private builder: FormBuilder
     ) {
 
   }

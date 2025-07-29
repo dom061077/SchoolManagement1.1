@@ -34,6 +34,8 @@ import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-transla
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
 import { config } from './service/config';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { CustomPaginatorIntlService } from './service/common/custom-paginator-intl.service';
 
 export function kcFactory(kcService: KeycloakService){
   return () => kcService.init();
@@ -84,6 +86,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'es' },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi:true },
+    { provide: MatPaginatorIntl, useClass: CustomPaginatorIntlService },
     provideAnimationsAsync(),
     {
       provide: APP_INITIALIZER,

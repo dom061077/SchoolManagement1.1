@@ -1,17 +1,18 @@
 <mat-card style="min-height: 500px;">
     <mat-card-header>
-        <h1>Listado de Personas</h1>
-        <button (click)="addPerson()" mat-raised-button color="primary" style="margin-left: 70%;">Agregar Persona
+        <h1>{{'PERSON.TITULO_LISTADO' | translate}}</h1>
+        <button (click)="addPerson()" mat-raised-button color="primary" style="margin-left: 70%;">{{'PERSON.ADD_OPTION' | translate}}
             (+)</button>
     </mat-card-header>
     <mat-card-content>
         <div *ngIf="errormessage">
             <h1>{{errormessage}}</h1>
+            
         </div> 
         <form [formGroup] = "filterForm" (ngSubmit) = "applyFilter()">
             <mat-card-content [style.overflow]="'auto'">
                 <mat-form-field>
-                    <input matInput formControlName="apellido" (keyup)="applyFilter()" placeholder="Filtrar por apellido">
+                    <input matInput formControlName="apellido" (keyup)="applyFilter()" placeholder="{{'PERSON.FILTRO_APELLIDO' | translate}}">
                 </mat-form-field>
                 <mat-form-field>
                     <input matInput formControlName="nombre" (keyup)="applyFilter()" placeholder="Filtrar por nombre" >
@@ -26,11 +27,11 @@
         </form>
         <table *ngIf="!errormessage" matSort mat-table [dataSource]="datasource" (matSortChange)="sortData($event)" class="mat-elevation-z8">
             <ng-container matColumnDef="id">
-                <th mat-sort-header mat-header-cell *matHeaderCellDef> ID</th>
+                <th mat-sort-header mat-header-cell *matHeaderCellDef> {{'PERSON.ID' | translate}}</th>
                 <td mat-cell *matCellDef="let element">{{element.id}}</td>
               </ng-container>
               <ng-container matColumnDef="dni">
-                <th mat-sort-header mat-header-cell *matHeaderCellDef> D.N.I</th>
+                <th mat-sort-header mat-header-cell *matHeaderCellDef> {{'PERSON.DNI' | translate}}</th>
                 <td mat-cell *matCellDef="let element">{{element.dni}}</td>
               </ng-container>              
             <ng-container matColumnDef="apellido">
@@ -47,18 +48,17 @@
 
 
             <ng-container matColumnDef="action">
-                <th mat-header-cell *matHeaderCellDef>Action</th>
+                <th mat-header-cell *matHeaderCellDef>{{'COMMON.GRID_ACTIONS' | translate}}</th>
                 <td mat-cell *matCellDef="let element">
-                    <button (click)="personEdit(element.id)" mat-raised-button color="primary">Modificar</button>
-                    <button (click)="personDelete(element.id)" mat-raised-button color="accent">Eliminar</button>
-                    <button (click)="personPrintCert(element.id)" mat-raised-button color="accent">Certificado</button>
+                    <button (click)="personEdit(element.id)" mat-raised-button color="primary">{{'COMMON.UPDATE_OPTION' | translate}}</button>
+                    <button (click)="personPrintCert(element.id)" mat-raised-button color="accent">{{'COMMON.CERTIFICADO' | translate}}</button>
                     <button
                         mat-raised-button
                         color="warn"
                         appConfirmDialog
-                        [message]="'Delete this item?'"
+                        [message]="'COMMON.CONFIRM_DELETE_MESSAGE' | translate"
                         (confirmed)="personDelete(element.id)">
-                        Eliminar
+                        {{'COMMON.DELETE_OPTION' | translate}}
                     </button>
 
                 </td>

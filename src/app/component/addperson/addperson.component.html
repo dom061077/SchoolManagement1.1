@@ -13,19 +13,19 @@
                 <input formControlName="nombre" matInput class=".align-middle">
             </mat-form-field>            
             <mat-form-field>
-                <mat-label>D.N.I</mat-label>
+                <mat-label>{{'PERSON.DNI' | translate}}</mat-label>
                 <input formControlName="dni" type="number" matInput class=".align-middle">
             </mat-form-field>  
             <mat-form-field>
-                <mat-label>Padre</mat-label>
+                <mat-label>{{'PERSON.PADRE' | translate}}</mat-label>
                 <input formControlName="padre" matInput class=".align-middle">
             </mat-form-field>  
             <mat-form-field>
-                <mat-label>Madre</mat-label>
+                <mat-label>{{'PERSON.MADRE' | translate}}</mat-label>
                 <input formControlName="madre" matInput class=".align-middle">
             </mat-form-field>  
             <mat-form-field>
-                <mat-label>Fecha Nacimiento</mat-label>
+                <mat-label>{{'PERSON.FECHA_NACIMIENTO' | translate}}</mat-label>
                 <input formControlName="fechaNacimiento" [matDatepicker]="pickerFechaNacimiento" matInput  
                     class=".align-middle">
               
@@ -37,7 +37,7 @@
               
             </mat-form-field>  
             <mat-form-field> 
-                <mat-label>Fecha Bautismo</mat-label>
+                <mat-label>{{'PERSON.FECHA_BAUTISMO' | translate}}</mat-label>
                 <input formControlName="fechaBautismo" [matDatepicker]="pickerFechaBautismo" matInput 
                     class=".align-middle">
                     <input [required]="false" matInput>
@@ -46,7 +46,7 @@
                     <mat-datepicker #pickerFechaBautismo></mat-datepicker>                      
             </mat-form-field>  
             <mat-form-field>
-                <mat-label>Fecha Confirmación</mat-label>
+                <mat-label>{{'PERSON.FECHA_CONFIRMACION' | translate}}</mat-label>
                 <input formControlName="fechaConfirmacion" [matDatepicker]="pickerFechaConfirmacion" matInput 
                     class=".align-middle">
                     <input matInput>
@@ -55,7 +55,7 @@
                     <mat-datepicker #pickerFechaConfirmacion></mat-datepicker>                      
             </mat-form-field>  
             <mat-form-field>
-                <mat-label>Fecha Matrimonio</mat-label>
+                <mat-label>{{'PERSON.FECHA_NACIMIENTO' | translate}}</mat-label>
                 <input formControlName="fechaMatrimonio" [matDatepicker]="pickerFechaMatrimonio" matInput 
                     class=".align-middle">
                     <input matInput>
@@ -64,46 +64,46 @@
                     <mat-datepicker #pickerFechaMatrimonio></mat-datepicker>                      
             </mat-form-field>  
             <mat-form-field>
-                <mat-label>N° de Libro</mat-label>
+                <mat-label>{{'PERSON.NUMERO_LIBRO' | translate}}</mat-label>
                 <input formControlName="nroLibro" type="number" matInput class=".align-middle">
             </mat-form-field>  
             <mat-form-field>
-                <mat-label>N° de Folio</mat-label>
+                <mat-label>{{'PERSON.NUMERO_FOLIO' | translate}}</mat-label>
                 <input formControlName="nroFolio" type="number" matInput class=".align-middle">
             </mat-form-field>  
             <mat-form-field>
-                <mat-label>Apellido del Padrino Bautismo</mat-label>
+                <mat-label>{{'PERSON.APELLIDO_PADRINO_BAUTISMO' | translate}}</mat-label>
                 <input formControlName="apellidoPadrinoBaut" matInput class=".align-middle">
             </mat-form-field>  
             <mat-form-field>
-                <mat-label>Nombre del Padrino Bautismo</mat-label>
+                <mat-label>{{'PERSON.NOMBRE_PADRINO_BAUTISMO' | translate}}</mat-label>
                 <input formControlName="nombrePadrinoBaut" matInput class=".align-middle">
             </mat-form-field>  
             <mat-form-field>
-                <mat-label>Apellido del Padrino Confirmación</mat-label>
+                <mat-label>{{'PERSON.APELLIDO_PADRINO_CONFIRMACION' | translate}}</mat-label>
                 <input formControlName="apellidoPadrinoConf" matInput class=".align-middle">
             </mat-form-field>  
             
                 <mat-form-field>
-                    <mat-label>Nombre del Padrino Confirmación</mat-label>
+                    <mat-label>{{'PERSON.NOMBRE_PADRINO_CONFIRMACION' | translate}}</mat-label>
                     <input formControlName="nombrePadrinoConf" matInput class=".align-middle">
                 </mat-form-field>  
                 <mat-form-field>
-                    <mat-label>Apellido Matrimonio</mat-label>
+                    <mat-label>{{'PERSON.APELLIDO_MATRIMONIO' | translate}}</mat-label>
                     <input formControlName="apellidoMatrimonio" matInput class=".align-middle">
                 </mat-form-field>  
                 <mat-form-field>
-                    <mat-label>Nombre Matrimonio</mat-label>
+                    <mat-label>{{'PERSON.NOMBRE_MATRIMONIO' | translate}}</mat-label>
                     <input formControlName="nombreMatrimonio" matInput class=".align-middle">
                 </mat-form-field>  
             <mat-form-field>
-                <mat-label>Otras Notas</mat-label>
+                <mat-label>{{'PERSON.OTRAS_NOTAS' | translate}}</mat-label>
                 <input formControlName="otrasNotas" matInput class=".align-middle">
             </mat-form-field>                                                                                                                                                              
         </mat-card-content>
         <mat-card-actions>
-            <button mat-raised-button color="primary" type="submit">Save</button>
-            <a (click)="closePopup()" mat-raised-button color="accent" >Close</a>
+            <button mat-raised-button color="primary" type="submit">{{'COMMON.SAVE' | translate}}</button>
+            <a (click)="closePopup()" mat-raised-button color="accent" >{{'COMMON.CLOSE' | translate}}</a>
         </mat-card-actions>        
     </mat-card>
 </form>
