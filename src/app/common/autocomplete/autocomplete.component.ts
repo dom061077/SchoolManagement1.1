@@ -32,7 +32,7 @@ export class AutocompleteComponent implements OnInit {
     this.control.valueChanges
       .pipe(debounceTime(300), distinctUntilChanged())
       .subscribe((value) => {
-        this.store.dispatch(this.searchAction(value));
+        this.store.dispatch(this.searchAction(value ?? ""));
       });
   }
 
