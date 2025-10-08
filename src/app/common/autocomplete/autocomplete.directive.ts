@@ -47,8 +47,8 @@ export class AutocompletePanelComponent {
   standalone: true,
 })
 export class AutocompleteDirective implements OnInit, OnDestroy {
-  @Input() searchAction!: (query: string) => any;
-  @Input() results$!: Observable<any[]>;
+  @Input() searchAction!: (query: string) => any;// Action creator
+  @Input() results$!: Observable<any[]>;// Observable from NgRx selector
   @Output() optionSelected = new EventEmitter<any>();
 
   control = new FormControl('');
