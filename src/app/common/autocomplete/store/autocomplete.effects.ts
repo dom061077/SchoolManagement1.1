@@ -12,7 +12,7 @@ export class AutocompleteEffects {
       ofType(AutocompleteActions.searchItems),
       mergeMap(({ query }) =>
         this.service.search(query).pipe(
-          map((results) =>
+          map((results: any[]) =>
             AutocompleteActions.searchItemsSuccess({ results })
           ),
           catchError((error) =>
