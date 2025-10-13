@@ -1,4 +1,4 @@
-import { StudentModule } from "../student.module";
+import { StudentModule } from "../../student/student.module";
 
 /*
     String apellido

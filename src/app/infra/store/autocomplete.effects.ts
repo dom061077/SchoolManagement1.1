@@ -1,8 +1,8 @@
 // autocomplete.effects.ts
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { AutocompleteService } from '../../autocomplete/autocomplete.service';
-import * as AutocompleteActions from './autocomplete.actions';
+import { AutocompleteService } from '../../infra/api/autocomplete.service';
+import * as AutocompleteActions from '../../core/state/autocomplete/autocomplete.actions';
 import { catchError, map, mergeMap, of } from 'rxjs';
 
 @Injectable()
@@ -12,7 +12,7 @@ export class AutocompleteEffects {
       ofType(AutocompleteActions.searchItems),
       mergeMap(({ query }) =>
         this.service.search(query).pipe(
-          map((results: any[]) =>
+          map((results) =>
             AutocompleteActions.searchItemsSuccess({ results })
           ),
           catchError((error) =>

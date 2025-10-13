@@ -1,6 +1,6 @@
 
 import { createEntityAdapter, EntityState } from '@ngrx/entity';
-import { Student } from '../student.model';
+import { Student } from '../../model/student.model';
 
 export interface StudentState extends EntityState<Student> {
     errormessage: string;
