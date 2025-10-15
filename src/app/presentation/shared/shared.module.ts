@@ -5,7 +5,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatOptionModule } from '@angular/material/core';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { PortalModule } from '@angular/cdk/portal';
-import { AutocompleteDirective, AutocompletePanelComponent } from '../../presentation/shared/autocomplete.directive';
+import { AutocompleteDirective, AutocompletePanelComponent } from './directives/autocomplete.directive';
 
 @NgModule({
   declarations: [AutocompletePanelComponent],

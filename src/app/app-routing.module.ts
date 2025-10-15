@@ -7,7 +7,7 @@ const routes: Routes = [
   {path: '',component: PersonlistingComponent},
   {path:'login',component:LoginComponent},
   {path:'listperson', component: PersonlistingComponent},
-  { path: 'student', loadChildren: () => import('./student/student.module').then(m => m.StudentModule) }, // Lazy load the StudentModule
+  { path: 'student', loadChildren: () => import('./presentation/student/student.module').then(m => m.StudentModule) }, // Lazy load the StudentModule
   
 ];
 
