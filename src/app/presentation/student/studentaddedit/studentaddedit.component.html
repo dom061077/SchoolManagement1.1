@@ -1,3 +1,34 @@
-<form [formGroup]="student"> 
+<form [formGroup]="student" (ngSubmit)="saveStudent" >
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title class="white-text  ">{{title}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content [style.overflow]="'auto'" [style.height.px]="'300'">
+            <mat-form-field>
+                <mat-label>{{'STUDENT.LEGAJO' | translate}}</mat-label>
+                <input formControlName="legajo" matInput class=".align-middle">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>{{'STUDENT.CURSO' | translate}}</mat-label>
+                <input formControlName="curso" matInput class=".align-middle">
+            </mat-form-field>            
+            <mat-form-field>
+                <mat-label>{{'STUDENT.SECCION' | translate}}</mat-label>
+                <input formControlName="seccion" matInput class=".align-middle">
+            </mat-form-field>  
+            <mat-form-field>
+                <mat-label>{{'STUDENT.PERSONA' | translate}}</mat-label>
+                <mat-select formControlName="personaId" >
+                    <mat-option *ngFor="let person of persons" [value]="person.id">
+                        {{person.apellido}}, {{person.nombre}} - {{person.dni}}
+                    </mat-option>
+                </mat-select> 
+            </mat-form-field>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button color="primary" type="submit">{{'COMMON.SAVE_OPTION' | translate}}</button>
+            <button mat-raised-button color="accent" routerLink="/students">{{'COMMON.BACK_OPTION' | translate}}</button>
+        </mat-card-actions>
+    </mat-card>
 
 </form>

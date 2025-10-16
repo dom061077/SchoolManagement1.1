@@ -1,4 +1,5 @@
-import { StudentModule } from "../../presentation/student/student.module";
+import { EntityAdapter } from "@ngrx/entity";
+
 
 /*
     String apellido
@@ -81,4 +82,10 @@ export interface Student {
     parentescoTutor?: string; // Assuming ParentescoTutor is a string for simplicity
     
 
+}
+
+export interface StudentModel extends EntityAdapter<Student>{
+    errormessage: string,
+    isloading: boolean,
+    totalRows: number
 }
