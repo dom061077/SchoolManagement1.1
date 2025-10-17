@@ -1,8 +1,9 @@
 import { Observable } from "rxjs";
+import { DataSource } from "../model/datasource.model";
 
 
 export interface IPersistencePort<T, ID = number, Q = string, S = string>{
-    list(offset: number, limit: number, query: string, qfilter: string, qsort: string): Observable<T[]>;
+    list(offset: number, limit: number,  qfilter: string, qsort: string): Observable<DataSource<T>>;
     getById(id: ID): Observable<T>;
     save(entity: T): Observable<T>;
     update(id: ID, entity: T): Observable<T>;

@@ -3,10 +3,10 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { StudentService } from "../api/student.service";
 import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
-import { loadSTUDENT } from "../../core/state/student/student.actions";
-import { exhaustMap } from "rxjs";
+import { catchError, exhaustMap, map, of } from "rxjs";
 import { IPersistencePort } from "../../core/ports/persistence-port";
 import { Student } from "../../core/model/student.model";
+import { loadStudents, loadStudentsSuccess, loadStudentFail } from "../../core/state/student/student.actions";
 
 
 @Injectable()
@@ -15,15 +15,21 @@ export class StudentEffects {
 
     }
 
-    loadStudent$ = createEffect(()=>
+    loadStudents$ = createEffect(()=>
         this.action$.pipe(
-            ofType(loadSTUDENT),
+            ofType(loadStudents),
             exhaustMap((action)=>{
-                return this.service.list(action.limit,action.offset, action.qfilter).pipe(
-                    //map(data=> loadSTUDENTsuccess({list:data})),
-                    //catchError((error)=> of(loadSTUDENTfail({errormessage:error.message})))
+                return this.service.list(action.offset,action.limit, action.qfilter,action.sorts).pipe(
+                    map(dataSource=> loadStudentsSuccess({list:dataSource.data, totalCount: dataSource.total})),
+                    catchError((error)=> of(loadStudentFail({errormessage:error.message})))
                 )
             })
+        )
+    );
+
+    getStudent$ = createEffect(()=>
+        this.action$.pipe(
+            //ofType(getS)
         )
     );
 
