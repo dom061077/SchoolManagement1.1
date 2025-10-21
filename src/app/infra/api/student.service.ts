@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { IPersistencePort } from '../../core/ports/persistence-port';
 import { Student } from '../../core/model/student.model';
 import { Observable } from 'rxjs';
+import { DataSource } from '../../core/model/datasource.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,10 +12,13 @@ import { Observable } from 'rxjs';
 export class StudentService implements IPersistencePort<Student, number, string, any> {
   baseurl = config.apiUrl+'/api/v1/student';
   constructor(private http: HttpClient) { }
-  list(query: string): Observable<Student[]> {
+  list(offset: number, limit: number,  qfilter: string, qsort: string): Observable<DataSource<Student>>{
     throw new Error('Method not implemented.');
   }
-  save(entity: Student): Observable<Student> {
+  getById(id: number): Observable<Student>{
+    throw new Error('Method not implemented.');
+  }
+  create(entity: Student): Observable<Student> {
     throw new Error('Method not implemented.');
   }
   update(id: number, entity: Student): Observable<Student> {

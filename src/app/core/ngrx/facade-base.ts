@@ -1,27 +1,30 @@
 // core/ngrx/facade-base.ts
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { CrudActions, CrudState } from './reducer-factory';
 
-export abstract class BaseFacade<T extends { id?: string | number }> {
+export abstract class BaseFacade<T> {
+  items$: Observable<T[]>;
+  loading$: Observable<boolean>;
+
   constructor(
-    protected store: Store,
-    private actions: any,
-    private selectors: any
-  ) {}
-
-  all$ = this.store.select(this.selectors.selectAll);
-  loading$ = this.store.select(this.selectors.selectLoading);
-  error$ = this.store.select(this.selectors.selectError);
-
-  load() {
-    this.store.dispatch(this.actions.load());
+    protected store: Store<{ state: CrudState<T> }>,
+    protected actions: CrudActions<T>
+  ) {
+    this.items$ = this.store.select(state => state['items']);
+    this.loading$ = this.store.select(state => state['loading']);
   }
 
-  create(data: T) {
-    this.store.dispatch(this.actions.create({ data }));
+  loadAll() {
+    this.store.dispatch(this.actions.loadAll());
   }
 
-  update(data: T) {
-    this.store.dispatch(this.actions.update({ data }));
+  create(item: T) {
+    this.store.dispatch(this.actions.create({ item }));
+  }
+
+  update(item: T) {
+    this.store.dispatch(this.actions.update({ item }));
   }
 
   delete(id: string | number) {

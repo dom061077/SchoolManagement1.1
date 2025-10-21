@@ -1,21 +1,23 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, mergeMap, of } from 'rxjs';
+import { catchError, exhaustMap, map, mergeMap, of } from 'rxjs';
+import { IPersistencePort } from '../ports/persistence-port';
+import { DataSource } from '../model/datasource.model';
 
 @Injectable()
 export class CrudEffects<T> {
   constructor(
     private actions$: Actions,
     private actions: any,
-    private service: { list: () => any; create: (data: T) => any }
+    private service: IPersistencePort<T>
   ) {}
 
   load$ = createEffect(() =>
     this.actions$.pipe(
       ofType(this.actions.load),
-      mergeMap(() =>
-        this.service.list().pipe(
-          map((data: T[]) => this.actions.loadSuccess({ data })),
+      exhaustMap((action) =>
+        this.service.list(action.offset, action.limit,  action.qfilter, action.qsort).pipe(
+          map((data: DataSource<T>) => this.actions.loadSuccess({ data })),
           catchError(error => of(this.actions.loadFailure({ error })))
         )
       )

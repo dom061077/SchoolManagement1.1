@@ -1,8 +1,8 @@
 import { createEntityReducer } from '../../ngrx/reducer-factory';
-import { StudentAction } from '../student/student.actions';
+import { StudentActions } from './student-actions';
 import { Student } from '../../model/student.model';
 
-const { reducer, adapter } = createEntityReducer<Student>(StudentAction);
+const { reducer, adapter } = createEntityReducer<Student>(StudentActions);
 
 export const studentReducer = reducer;
 export const studentAdapter = adapter;

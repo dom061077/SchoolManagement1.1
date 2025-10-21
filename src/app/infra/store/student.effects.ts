@@ -6,7 +6,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { catchError, exhaustMap, map, of } from "rxjs";
 import { IPersistencePort } from "../../core/ports/persistence-port";
 import { Student } from "../../core/model/student.model";
-import { loadStudents, loadStudentsSuccess, loadStudentFail } from "../../core/state/student/student.actions";
+import { loadStudents, loadStudentsSuccess, loadStudentFail } from "../../core/state/student/student-actions";
 
 
 @Injectable()
