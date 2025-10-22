@@ -1,7 +1,8 @@
-// core/ngrx/facade-base.ts
+/// core/ngrx/facade-base.ts
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { CrudActions, CrudState } from './reducer-factory';
+import { CrudActions } from './action-factory';
+import { CrudState } from './reducer-factory';
 
 export abstract class BaseFacade<T> {
   items$: Observable<T[]>;
