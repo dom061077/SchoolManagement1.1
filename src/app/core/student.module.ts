@@ -5,6 +5,7 @@ import { studentReducer } from './state/student/student-reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { StudentEffects } from '../infra/store/student.effects';
 import { StudentService } from '../infra/api/student.service';
+import { StudentFacade } from './state/student/student-facade';
 
 
 
@@ -15,6 +16,6 @@ import { StudentService } from '../infra/api/student.service';
     StoreModule.forFeature('students', studentReducer),
     EffectsModule.forFeature([StudentEffects])
   ],
-  providers: [StudentService, StudenFacade]
+  providers: [StudentService, StudentFacade]
 })
 export class StudentModule { }

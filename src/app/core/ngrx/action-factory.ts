@@ -1,19 +1,18 @@
-// core/ngrx/action-factory.ts
 import { createAction, props } from '@ngrx/store';
 
 export interface CrudActions<T> {
-  loadAll: ReturnType<typeof createAction>;
-  loadAllSuccess: ReturnType<typeof createAction>;
-  loadAllFailure: ReturnType<typeof createAction>;
-  create: ReturnType<typeof createAction>;
-  createSuccess: ReturnType<typeof createAction>;
-  createFailure: ReturnType<typeof createAction>;
-  update: ReturnType<typeof createAction>;
-  updateSuccess: ReturnType<typeof createAction>;
-  updateFailure: ReturnType<typeof createAction>;
-  delete: ReturnType<typeof createAction>;
-  deleteSuccess: ReturnType<typeof createAction>;
-  deleteFailure: ReturnType<typeof createAction>;
+  loadAll: any;
+  loadAllSuccess: any;
+  loadAllFailure: any;
+  create: any;
+  createSuccess: any;
+  createFailure: any;
+  update: any;
+  updateSuccess: any;
+  updateFailure: any;
+  delete: any;
+  deleteSuccess: any;
+  deleteFailure: any;
 }
 
 export function createCrudActions<T>(entity: string): CrudActions<T> {

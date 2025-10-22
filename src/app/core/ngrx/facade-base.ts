@@ -1,19 +1,19 @@
-/// core/ngrx/facade-base.ts
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { CrudActions } from './action-factory';
 import { CrudState } from './reducer-factory';
+import { CrudActions } from './action-factory';
 
 export abstract class BaseFacade<T> {
   items$: Observable<T[]>;
   loading$: Observable<boolean>;
 
   constructor(
-    protected store: Store<{ state: CrudState<T> }>,
-    protected actions: CrudActions<T>
+    protected store: Store<{ [key: string]: CrudState<T> }>,
+    protected actions: CrudActions<T>,
+    protected featureKey: string
   ) {
-    this.items$ = this.store.select(state => state['items']);
-    this.loading$ = this.store.select(state => state['loading']);
+    this.items$ = this.store.select(state => state[this.featureKey]?.items || []);
+    this.loading$ = this.store.select(state => state[this.featureKey]?.loading || false);
   }
 
   loadAll() {
