@@ -1,36 +1,27 @@
 import { createAction, props } from '@ngrx/store';
 
-export interface CrudActions<T> {
-  loadAll: any;
-  loadAllSuccess: any;
-  loadAllFailure: any;
-  create: any;
-  createSuccess: any;
-  createFailure: any;
-  update: any;
-  updateSuccess: any;
-  updateFailure: any;
-  delete: any;
-  deleteSuccess: any;
-  deleteFailure: any;
-}
+/**
+ * Factory for CRUD actions.
+ * Uses createAction for full type safety and no literal-type restriction.
+ */
+export function createCrudActions<T>(entity: string) {
+  const prefix = `[${entity}]`;
 
-export function createCrudActions<T>(entity: string): CrudActions<T> {
   return {
-    loadAll: createAction(`[${entity}] Load All`),
-    loadAllSuccess: createAction(`[${entity}] Load All Success`, props<{ items: T[] }>()),
-    loadAllFailure: createAction(`[${entity}] Load All Failure`, props<{ error: any }>()),
+    loadAll: createAction(`${prefix} Load All`, props<{offset:number,limit: number, qfilter:string, sorts:string}>),
+    loadAllSuccess: createAction(`${prefix} Load All Success`, props<{ items: T[] }>()),
+    loadAllFailure: createAction(`${prefix} Load All Failure`, props<{ error: any }>()),
 
-    create: createAction(`[${entity}] Create`, props<{ item: T }>()),
-    createSuccess: createAction(`[${entity}] Create Success`, props<{ item: T }>()),
-    createFailure: createAction(`[${entity}] Create Failure`, props<{ error: any }>()),
+    create: createAction(`${prefix} Create`, props<{ item: T }>()),
+    createSuccess: createAction(`${prefix} Create Success`, props<{ item: T }>()),
+    createFailure: createAction(`${prefix} Create Failure`, props<{ error: any }>()),
 
-    update: createAction(`[${entity}] Update`, props<{ item: T }>()),
-    updateSuccess: createAction(`[${entity}] Update Success`, props<{ item: T }>()),
-    updateFailure: createAction(`[${entity}] Update Failure`, props<{ error: any }>()),
+    update: createAction(`${prefix} Update`, props<{ item: T }>()),
+    updateSuccess: createAction(`${prefix} Update Success`, props<{ item: T }>()),
+    updateFailure: createAction(`${prefix} Update Failure`, props<{ error: any }>()),
 
-    delete: createAction(`[${entity}] Delete`, props<{ id: string | number }>()),
-    deleteSuccess: createAction(`[${entity}] Delete Success`, props<{ id: string | number }>()),
-    deleteFailure: createAction(`[${entity}] Delete Failure`, props<{ error: any }>()),
+    delete: createAction(`${prefix} Delete`, props<{ id: string | number }>()),
+    deleteSuccess: createAction(`${prefix} Delete Success`, props<{ id: string | number }>()),
+    deleteFailure: createAction(`${prefix} Delete Failure`, props<{ error: any }>()),
   };
 }

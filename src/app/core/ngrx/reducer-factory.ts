@@ -1,38 +1,52 @@
 import { createReducer, on } from '@ngrx/store';
-import { CrudActions } from './action-factory';
+import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 
-export interface CrudState<T> {
-  items: T[];
+export interface CrudState<T> extends EntityState<T> {
   loading: boolean;
-  error?: any;
+  error: any;
 }
 
-export function createEntityReducer<T extends { id: string | number }>(actions: CrudActions<T>) {
-  const initialState: CrudState<T> = {
-    items: [],
-    loading: false
-  };
+export function createEntityReducer<T extends { id: string | number }>(actions: any) {
+  const adapter: EntityAdapter<T> = createEntityAdapter<T>({
+    selectId: (entity) => entity.id.toString(),
+  });
 
-  return createReducer(
+  const initialState: CrudState<T> = adapter.getInitialState({
+    loading: false,
+    error: null,
+  });
+
+  const reducer = createReducer(
     initialState,
 
-    on(actions.loadAll, state => ({ ...state, loading: true })),
-    on(actions.loadAllSuccess, (state, { items }) => ({ ...state, loading: false, items })),
+    // LOAD ALL
+    on(actions.loadAll, (state) => ({ ...state, loading: true })),
+    on(actions.loadAllSuccess, (state, { items }) =>
+      adapter.setAll(items, { ...state, loading: false })
+    ),
     on(actions.loadAllFailure, (state, { error }) => ({ ...state, loading: false, error })),
 
-    on(actions.createSuccess, (state, { item }) => ({
-      ...state,
-      items: [...state.items, item]
-    })),
+    // CREATE
+    on(actions.create, (state) => ({ ...state, loading: true })),
+    on(actions.createSuccess, (state, { item }) =>
+      adapter.addOne(item, { ...state, loading: false })
+    ),
+    on(actions.createFailure, (state, { error }) => ({ ...state, loading: false, error })),
 
-    on(actions.updateSuccess, (state, { item }) => ({
-      ...state,
-      items: state.items.map(i => (i.id === item.id ? item : i))
-    })),
+    // UPDATE
+    on(actions.update, (state) => ({ ...state, loading: true })),
+    on(actions.updateSuccess, (state, { item }) =>
+      adapter.upsertOne(item, { ...state, loading: false })
+    ),
+    on(actions.updateFailure, (state, { error }) => ({ ...state, loading: false, error })),
 
-    on(actions.deleteSuccess, (state, { id }) => ({
-      ...state,
-      items: state.items.filter(i => i.id !== id)
-    }))
+    // DELETE
+    on(actions.delete, (state) => ({ ...state, loading: true })),
+    on(actions.deleteSuccess, (state, { id }) =>
+      adapter.removeOne(id.toString(), { ...state, loading: false })
+    ),
+    on(actions.deleteFailure, (state, { error }) => ({ ...state, loading: false, error }))
   );
+
+  return { reducer, adapter, initialState };
 }

@@ -61,7 +61,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MaterialModule,
     HttpClientModule,
     ReactiveFormsModule,
-    //StudentModule,
+    StudentModule,
     StoreModule.forRoot({user:UserReducer, userprofile: (state, action) =>{
         console.log('User reducer caugth action: ',action);
         return USER_PROFILEreducer(state, action);

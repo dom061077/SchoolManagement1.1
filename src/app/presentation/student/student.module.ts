@@ -4,6 +4,10 @@ import { StudentlistingComponent } from './studentlisting/studentlisting.compone
 import { StudentRoutingModule } from './student-routing.module';
 import { MaterialModule } from '../../material.module';
 import { StudentaddeditComponent } from './studentaddedit/studentaddedit.component';
+import { StoreModule } from '@ngrx/store';
+import { studentFeature } from '../../core/state/student/student-reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { StudentEffects } from '../../core/state/student/student-effects';
 
 
 
@@ -14,6 +18,8 @@ import { StudentaddeditComponent } from './studentaddedit/studentaddedit.compone
   ],
   imports: [
     CommonModule,
+    StoreModule.forFeature(studentFeature.name, studentFeature.reducer),
+    EffectsModule.forFeature([StudentEffects])  ,  
     MaterialModule,
     StudentRoutingModule
   ]

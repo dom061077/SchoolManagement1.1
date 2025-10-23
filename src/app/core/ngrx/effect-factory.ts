@@ -1,29 +1,28 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
-import { mergeMap, map, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
-import { CrudActions } from './action-factory';
+import { catchError, map, mergeMap, of } from 'rxjs';
+import { IPersistencePort } from '../ports/persistence-port';
 
-@Injectable()
-export class CrudEffects<T> {
+
+export class EffectFactory<T> {
   constructor(
     private actions$: Actions,
-    private service: {
+    private crudActions: any,
+    private service: IPersistencePort<T>/*{
       list: () => any;
       create: (item: T) => any;
       update: (item: T) => any;
       delete: (id: string | number) => any;
-    },
-    private actions: CrudActions<T>
+    }*/
   ) {}
 
   loadAll$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(this.actions.loadAll),
-      mergeMap(() =>
-        this.service.list().pipe(
-          map(items => this.actions.loadAllSuccess({ items })),
-          catchError(error => of(this.actions.loadAllFailure({ error })))
+      ofType(this.crudActions.loadAll),
+      mergeMap((action) =>
+        this.service.list(action.offset,action.limit, action.qfilter,action.sorts).pipe(
+          map((items) => this.crudActions.loadAllSuccess({ items })),
+          catchError((error) => of(this.crudActions.loadAllFailure({ error })))
         )
       )
     )
@@ -31,11 +30,11 @@ export class CrudEffects<T> {
 
   create$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(this.actions.create),
+      ofType(this.crudActions.create),
       mergeMap(({ item }) =>
         this.service.create(item).pipe(
-          map(created => this.actions.createSuccess({ item: created })),
-          catchError(error => of(this.actions.createFailure({ error })))
+          map((created) => this.crudActions.createSuccess({ item: created })),
+          catchError((error) => of(this.crudActions.createFailure({ error })))
         )
       )
     )
@@ -43,11 +42,11 @@ export class CrudEffects<T> {
 
   update$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(this.actions.update),
+      ofType(this.crudActions.update),
       mergeMap(({ item }) =>
-        this.service.update(item).pipe(
-          map(updated => this.actions.updateSuccess({ item: updated })),
-          catchError(error => of(this.actions.updateFailure({ error })))
+        this.service.update(item.id, item).pipe(
+          map((updated) => this.crudActions.updateSuccess({ item: updated })),
+          catchError((error) => of(this.crudActions.updateFailure({ error })))
         )
       )
     )
@@ -55,11 +54,11 @@ export class CrudEffects<T> {
 
   delete$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(this.actions.delete),
+      ofType(this.crudActions.delete),
       mergeMap(({ id }) =>
         this.service.delete(id).pipe(
-          map(() => this.actions.deleteSuccess({ id })),
-          catchError(error => of(this.actions.deleteFailure({ error })))
+          map(() => this.crudActions.deleteSuccess({ id })),
+          catchError((error) => of(this.crudActions.deleteFailure({ error })))
         )
       )
     )
