@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+import { StudentFacade } from '../../../core/state/student/student.facade';
 //import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -19,7 +20,8 @@ export class StudentlistingComponent implements OnInit, OnDestroy {
   filterForm: FormGroup;
   private subscriptions: Subscription[] = [];
 
-  constructor(private store: Store, private fb: FormBuilder) {
+  constructor(public facade: StudentFacade, private fb: FormBuilder) {
+    this.facade.loadAll();
     this.filterForm = this.fb.group({
       name: [''],
       age: [''],
