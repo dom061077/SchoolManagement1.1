@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { EntityState } from '@ngrx/entity';
 
-@Injectable()
+
 export class FacadeBase<T> {
   items$: Observable<T[]>;
   loading$: Observable<boolean>;

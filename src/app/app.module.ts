@@ -33,7 +33,7 @@ import { ConfirmationDialogComponent } from './component/dialog/confirm-dialog/c
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
-import { config } from './service/config';
+import { config } from './infra/api/config';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { CustomPaginatorIntlService } from './service/common/custom-paginator-intl.service';
 

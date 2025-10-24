@@ -10,7 +10,7 @@ import { getErrormessage, getTotalRows, getpersonlist } from '../../person/store
 import { MatTableDataSource } from '@angular/material/table';
 import { FormBuilder } from '@angular/forms';
 import { ChangeDetectorRef } from '@angular/core';
-import { config } from '../../service/config';
+import { config } from '../../infra/api/config';
 import { Observable } from 'rxjs';
 import { getLoading, getPdfReportBlob, getPdfReportError } from '../../common/store/pdfreport.selectors';
 import { pdfREPORTgenerate, pdfREPORTsuccess } from '../../common/store/pdfreport.actions';

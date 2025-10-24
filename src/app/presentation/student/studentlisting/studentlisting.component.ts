@@ -12,7 +12,7 @@ import { StudentFacade } from '../../../core/state/student/student.facade';
   styleUrl: './studentlisting.component.css'
 })
 export class StudentlistingComponent implements OnInit, OnDestroy {
-  displayedColumns: string[] = ['id', 'name', 'age', 'grade', 'actions'];
+  displayedColumns: string[] = ['id', 'lastName', 'firstName', 'dni', 'action'];
   dataSource : any;
   errormessage : string = '';
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
@@ -23,9 +23,9 @@ export class StudentlistingComponent implements OnInit, OnDestroy {
   constructor(public facade: StudentFacade, private fb: FormBuilder) {
     this.facade.loadAll();
     this.filterForm = this.fb.group({
-      name: [''],
-      age: [''],
-      grade: ['']
+      lastName: [''],
+      firstName: [''],
+      dni: ['']
     });
   }
 

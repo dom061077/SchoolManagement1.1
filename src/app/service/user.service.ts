@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { config } from './config';
+import { config } from '../infra/api/config';
 import { Roleaccess, Usercred, Userinfo } from '../auth/user.model';
 import { Observable } from 'rxjs/internal/Observable';
 import { of } from 'rxjs/internal/observable/of';

@@ -12,7 +12,7 @@ import { Store } from '@ngrx/store';
 
 
 import { Observable, throwError } from 'rxjs';
-import { config } from '../service/config';
+import { config } from '../infra/api/config';
 import { Userinfo } from './user.model';
 import { Router } from '@angular/router';
 import { loadPERSONfail } from '../person/store/person.actions';

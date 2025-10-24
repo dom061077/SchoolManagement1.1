@@ -1,30 +1,18 @@
 import { Injectable } from '@angular/core';
-import { config } from '../../service/config';
-import { HttpClient } from '@angular/common/http';
+import { config } from './config';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { IPersistencePort } from '../../core/ports/persistence-port';
 import { Student } from '../../core/model/student.model';
 import { Observable } from 'rxjs';
 import { DataSource } from '../../core/model/datasource.model';
+import { PersistenceService } from '../../core/ports/persistence.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class StudentService implements IPersistencePort<Student, number, string, any> {
-  baseurl = config.apiUrl+'/api/v1/student';
-  constructor(private http: HttpClient) { }
-  list(offset: number, limit: number,  qfilter: string, qsort: string): Observable<DataSource<Student>>{
-    throw new Error('Method not implemented.');
-  }
-  getById(id: number): Observable<Student>{
-    throw new Error('Method not implemented.');
-  }
-  create(entity: Student): Observable<Student> {
-    throw new Error('Method not implemented.');
-  }
-  update(id: number, entity: Student): Observable<Student> {
-    throw new Error('Method not implemented.');
-  }
-  delete(id: number): Observable<void> {
-    throw new Error('Method not implemented.');
-  }
+export class StudentService extends PersistenceService<Student> {
+  
+
+
+
 }

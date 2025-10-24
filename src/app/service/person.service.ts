@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Person } from '../person/person.model';
-import { config } from './config';
+import { config } from '../infra/api/config';
 import { Userinfo } from '../auth/user.model';
 import { PersonDataSource } from '../person/person.datasource.model';
 import { ɵnormalizeQueryParams } from '@angular/common';
