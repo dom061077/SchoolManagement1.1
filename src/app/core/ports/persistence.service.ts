@@ -10,8 +10,7 @@ import { Injectable } from "@angular/core";
   providedIn: 'root'
 })
 export class PersistenceService<T> implements IPersistencePort<T, number, string, any> {
-    protected baseurl = config.apiUrl+'/api/v1/student';
-
+    protected baseUrl!: string;
     constructor(private http: HttpClient){
 
     }
@@ -36,7 +35,7 @@ export class PersistenceService<T> implements IPersistencePort<T, number, string
         queryParams = queryParams.append("sorts",qsort);
     
     
-        return this.http.get<DataSource<T>>(this.baseurl+'/list',{params: queryParams});
+        return this.http.get<DataSource<T>>(this.baseUrl+'/list',{params: queryParams});
     }
     
 }

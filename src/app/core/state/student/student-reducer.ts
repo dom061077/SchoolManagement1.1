@@ -30,3 +30,5 @@ export const studentSelectors = {
   selectLoading,
   selectError,
 };
+
+export { adapter };

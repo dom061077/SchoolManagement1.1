@@ -4,6 +4,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { StudentFacade } from '../../../core/state/student/student.facade';
+import { studentSelectors } from '../../../core/state/student/student-selectors';
+import { MatSort } from '@angular/material/sort';
 //import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -16,12 +18,12 @@ export class StudentlistingComponent implements OnInit, OnDestroy {
   dataSource : any;
   errormessage : string = '';
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
-  
+  @ViewChild(MatSort) sort!: MatSort;  
   filterForm: FormGroup;
   private subscriptions: Subscription[] = [];
 
-  constructor(public facade: StudentFacade, private fb: FormBuilder) {
-    this.facade.loadAll();
+  constructor(public facade: StudentFacade, private store: Store, private fb: FormBuilder) {
+    
     this.filterForm = this.fb.group({
       lastName: [''],
       firstName: [''],
@@ -31,11 +33,27 @@ export class StudentlistingComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadStudents();
-    /*this.subscriptions.push(
-      this.store.select(selectStudents).subscribe((students) => {
-        this.dataSource.data = students;
-      })
-    );*/
+    this.store.select(studentSelectors.selectAll).subscribe((students: any) => {
+        this.dataSource = students;
+      });
+
+  }
+
+  applyFilter(){
+      this.paginator?.firstPage();
+    const pageIndex = this.paginator?.pageIndex;
+    const pageSize = this.paginator?.pageSize;
+    const sortField = this.dataSource.sort?.active;
+    const sortDirection = this.dataSource.sort?.direction;   
+    var sorts = '';
+    if(sortField != undefined && sortDirection!= undefined)
+      sorts = '[{"property": "'+sortField+'","value":"'+sortDirection+'"}]'; 
+    const qfilter = '[{ "property":"lastName:like", "value": "'+ this.filterForm.value.lastName+'"},{"property":"firstName:like", "value" : "'
+      +this.filterForm.value.firstName+'"},{"property":"dni:eq","value": '+this.filterForm.value?.dni+'}]';
+    //this.store.dispatch(loadStudents({offset:pageIndex*pageSize, limit: pageSize, qfilter: qfilter?.toString(),sorts}));
+    const offset = (pageIndex ?? 0) * (pageSize ?? 5);
+    const limit = pageSize ?? 5;
+    this.facade.loadAll(offset, limit, qfilter?.toString(), sorts);
   }
 
   ngOnDestroy(): void {
@@ -44,11 +62,7 @@ export class StudentlistingComponent implements OnInit, OnDestroy {
 
   loadStudents() {
     //this.store.dispatch(loadStudents());
-  }
-
-  applyFilter() {
-    const filterValue = this.filterForm.value;
-    //this.store.dispatch(filterStudents({ filterValue }));
+    this.facade.loadAll(0, 5, "a", "a");
   }
 
   clearFilter() {
@@ -65,8 +79,6 @@ export class StudentlistingComponent implements OnInit, OnDestroy {
   }
 
   sortData(event: any) {
-    const sortField = event.active;
-    const sortDirection = event.direction;
-    //this.store.dispatch(sortStudents({ sortField, sortDirection }));
+    this.applyFilter();
   }
 }

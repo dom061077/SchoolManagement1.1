@@ -12,7 +12,7 @@ export class FacadeBase<T> {
   constructor(
     private store: Store<{ feature: EntityState<T> }>,
     private actions: {
-      loadAll: () => any;
+      loadAll: (payload: { offset: number; limit: number; qfilter: string; sorts: string }) => any;
       create: (payload: { item: T }) => any;
       update: (payload: { item: T }) => any;
       delete: (payload: { id: string | number }) => any;
@@ -28,8 +28,8 @@ export class FacadeBase<T> {
     this.error$ = this.store.select(this.selectors.selectError);
   }
 
-  loadAll(): void {
-    this.store.dispatch(this.actions.loadAll());
+  loadAll(offset: number, limit: number, qfilter: string, sorts: string): void {
+    this.store.dispatch(this.actions.loadAll({ offset, limit, qfilter, sorts }));
   }
 
   create(item: T): void {

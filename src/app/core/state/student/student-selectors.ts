@@ -1,4 +1,4 @@
 import { createEntitySelectors } from '../../ngrx/selectors-factory';
-import { studentAdapter, STUDENT_FEATURE_KEY } from '../../state/student/student-reducer';
+import { adapter, studentFeature } from '../../state/student/student-reducer';
 
-export const StudentSelectors = createEntitySelectors(STUDENT_FEATURE_KEY, studentAdapter);
+export const studentSelectors = createEntitySelectors(studentFeature.name, adapter);

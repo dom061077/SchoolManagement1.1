@@ -1,3 +1,4 @@
+import { DataSource } from '@angular/cdk/collections';
 import { createAction, props } from '@ngrx/store';
 
 /**
@@ -8,7 +9,7 @@ export function createCrudActions<T>(entity: string) {
   const prefix = `[${entity}]`;
 
   return {
-    loadAll: createAction(`${prefix} Load All`, props<{offset:number,limit: number, qfilter:string, sorts:string}>),
+    loadAll: createAction(`${prefix} Load All`, props<{offset:number,limit: number, qfilter?:string, sorts?:string}>()),
     loadAllSuccess: createAction(`${prefix} Load All Success`, props<{ items: T[] }>()),
     loadAllFailure: createAction(`${prefix} Load All Failure`, props<{ error: any }>()),
 
