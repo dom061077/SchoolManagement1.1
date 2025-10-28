@@ -8,6 +8,8 @@ import { studentSelectors } from '../../../core/state/student/student-selectors'
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Student } from '../../../core/model/student.model';
+import { MatDialog } from '@angular/material/dialog';
+import { StudentaddeditComponent } from '../studentaddedit/studentaddedit.component';
 //import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -25,7 +27,8 @@ export class StudentlistingComponent implements OnInit, OnDestroy {
   filterForm: FormGroup;
   private subscriptions: Subscription[] = [];
 
-  constructor(public facade: StudentFacade, private store: Store, private fb: FormBuilder) {
+  constructor(public facade: StudentFacade, private store: Store
+      , private fb: FormBuilder, private dialog: MatDialog) {
     
     this.filterForm = this.fb.group({
       lastName: [''],
@@ -82,7 +85,21 @@ export class StudentlistingComponent implements OnInit, OnDestroy {
     // Open delete confirmation dialog
   }
 
-  sortData(event: any) {
-    this.applyFilter();
+  sortData(event: any) {this.applyFilter();
   }
+
+  ngAfterViewInit() {
+    if (this.sort) { // 👈 Check if it exists before assigning
+        this.dataSource.sort = this.sort;
+    } else {
+        console.error('MatSort is undefined! Check the HTML template and module imports.');
+    }
+  }
+
+  addStudent(){
+    this.dialog.open(StudentaddeditComponent,{
+    });
+  }
+
+
 }

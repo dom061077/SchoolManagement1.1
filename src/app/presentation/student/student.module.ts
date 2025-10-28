@@ -26,7 +26,7 @@ import { HttpLoaderFactory } from '../../app.module';
     MaterialModule,
     StudentRoutingModule,
     TranslateModule.forRoot({
-      defaultLanguage: 'es',
+      //defaultLanguage: 'en',
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
