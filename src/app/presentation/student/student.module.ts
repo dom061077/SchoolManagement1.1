@@ -11,7 +11,8 @@ import { StudentEffects } from '../../core/state/student/student-effects';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpLoaderFactory } from '../../app.module';
-
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 
 
 @NgModule({
@@ -21,6 +22,8 @@ import { HttpLoaderFactory } from '../../app.module';
   ],
   imports: [
     CommonModule,
+    MatTableModule,
+    MatSortModule,
     StoreModule.forFeature(studentFeature.name, studentFeature.reducer),
     EffectsModule.forFeature([StudentEffects])  ,  
     MaterialModule,

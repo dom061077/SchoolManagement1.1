@@ -37,8 +37,10 @@ export class StudentlistingComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadStudents();
+    this.dataSource.sort = this.sort;
     this.store.select(studentSelectors.selectAll).subscribe((students: any) => {
         this.dataSource.data = students;
+        
       });
 
   }
@@ -85,4 +87,12 @@ export class StudentlistingComponent implements OnInit, OnDestroy {
   sortData(event: any) {
     this.applyFilter();
   }
+
+  ngAfterViewInit() {
+    if (this.sort) { // 👈 Check if it exists before assigning
+        this.dataSource.sort = this.sort;
+    } else {
+        console.error('MatSort is undefined! Check the HTML template and module imports.');
+    }
+  }  
 }
