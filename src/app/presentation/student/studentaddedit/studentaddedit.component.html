@@ -1,27 +1,131 @@
-<form [formGroup]="studentForm" (ngSubmit)="saveStudent" >
-    <mat-card>
-        <mat-card-header>
-            <mat-card-title class="white-text  ">{{title}}</mat-card-title>
-        </mat-card-header>
-        <mat-card-content [style.overflow]="'auto'" [style.height.px]="'300'">
-            <mat-form-field>
-                <mat-label>{{'STUDENT.LEGAJO' | translate}}</mat-label>
-                <input formControlName="legajo" matInput class=".align-middle">
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>{{'STUDENT.CURSO' | translate}}</mat-label>
-                <input formControlName="curso" matInput class=".align-middle">
-            </mat-form-field>            
-            <mat-form-field>
-                <mat-label>{{'STUDENT.SECCION' | translate}}</mat-label>
-                <input formControlName="seccion" matInput class=".align-middle">
-            </mat-form-field>  
 
-        </mat-card-content>
-        <mat-card-actions>
-            <button mat-raised-button color="primary" type="submit">{{'COMMON.SAVE_OPTION' | translate}}</button>
-            <button mat-raised-button color="accent" routerLink="/students">{{'COMMON.BACK_OPTION' | translate}}</button>
-        </mat-card-actions>
-    </mat-card>
+<mat-card-header>
+        <mat-card-title class="white-text  ">{{title}}</mat-card-title>
+</mat-card-header>
 
-</form>
+<mat-stepper linear #stepper>
+
+    <mat-step [stepControl]="personalDataForm" errorMessage="Name is required.">
+        <form [formGroup]="personalDataForm"  >
+            <ng-template matStepLabel> {{'STUDENT.STEP_PERSONAL_DATA' | translate}}  </ng-template>
+            <mat-card>
+                    <mat-card-content [style.overflow]="'auto'" >
+                        <mat-form-field>
+                            <mat-label>{{'STUDENT.DNI' | translate}}</mat-label>
+                            <input formControlName="dni" matInput class=".align-middle">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>{{'STUDENT.LAST_NAME' | translate}}</mat-label>
+                            <input formControlName="lastName" matInput class=".align-middle">
+                        </mat-form-field>            
+                        <mat-form-field>
+                            <mat-label>{{'STUDENT.FIRST_NAME' | translate}}</mat-label>
+                            <input formControlName="firstName" matInput class=".align-middle">
+                        </mat-form-field>  
+
+                        <mat-form-field>    
+                            <mat-label>{{'STUDENT.BIRTHDATE' | translate}} </mat-label>
+                            <input formControlName="birthDate" matInput class=".align-middle">
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label>{{'STUDENT.DNI' | translate}}</mat-label>
+                            <input formControlName="dni" matInput class=".align-middle">
+                        </mat-form-field>
+
+                    </mat-card-content>
+                    <div>
+                        <p>Go to a different step to see the error state</p>
+                        <button matButton matStepperNext>Next</button>
+                    </div>                    
+            </mat-card>
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="personDocForm" >
+        <form [formGroup]="personDocForm"  >
+            <ng-template matStepLabel> {{'STUDENT.STEP_DOCUMENTATION' | translate}}  </ng-template>
+            <mat-card>
+                    <mat-card-content [style.overflow]="'auto'" >
+                        <mat-form-field>
+                            <mat-label>{{'STUDENT.FOTO_DNI' | translate}}</mat-label>
+                            <input formControlName="fotoDni" matInput class=".align-middle">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>{{'STUDENT.CONSTANCIA_CUIL' | translate}}</mat-label>
+                            <input formControlName="constanciaCuil" matInput class=".align-middle">
+                        </mat-form-field>            
+                        <mat-form-field>
+                            <mat-label>{{'STUDENT.FIRST_NAME' | translate}}</mat-label>
+                            <input formControlName="constancia6grado" matInput class=".align-middle">
+                        </mat-form-field>  
+
+                        <mat-form-field>    
+                            <mat-label>{{'STUDENT.ACTA_NAC' | translate}} </mat-label>
+                            <input formControlName="actaNacimiento" matInput class=".align-middle">
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label>{{'STUDENT.CONSTANCIA_REG' | translate}}</mat-label>
+                            <input formControlName="constanciaRegular" matInput class=".align-middle">
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label>{{'STUDENT.FOTO_4X4' | translate}}</mat-label>
+                            <input formControlName="foto4x4" matInput class=".align-middle">
+                        </mat-form-field>
+                    </mat-card-content>
+                    <div>
+                        <p>Go to a different step to see the error state</p>
+                        <button matButton matStepperPrevious>Back</button>
+                        <button matButton matStepperNext>Next</button>
+                    </div>
+            </mat-card>
+        </form>
+    </mat-step>
+
+    <mat-step [stepControl]="additionalDocForm">
+        <div class="step-content-scroll">
+        <form [formGroup]="additionalDocForm">
+            <mat-card>
+                <mat-card-content >
+                        <mat-form-field>
+                            <mat-label>{{'STUDENT.CARNET_VAC' | translate}}</mat-label>
+                            <input formControlName="fotoCarnetVac" matInput class=".align-middle">
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label>{{'STUDENT.FICHA_MEDIC' | translate}}</mat-label>
+                            <input formControlName="fichaMedica" matInput class=".align-middle">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>{{'STUDENT.APTITUD_FISICA' | translate}}</mat-label>
+                            <input formControlName="aptitudFisica" matInput class=".align-middle">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>{{'STUDENT.GRUPO_SANG' | translate}}</mat-label>
+                            <input formControlName="grupoSanguineo" matInput class=".align-middle">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>{{'STUDENT.FICHA_INS' | translate}}</mat-label>
+                            <input formControlName="fichaInscripcion" matInput class=".align-middle">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>{{'STUDENT.LIBRETA_6GRADO' | translate}}</mat-label>
+                            <input formControlName="libreta6grado" matInput class=".align-middle">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>{{'STUDENT.LIBRO_MATRIZ' | translate}}</mat-label>
+                            <input formControlName="fotocopiaLibroMatriz" matInput class=".align-middle">
+                        </mat-form-field>
+                        <div>
+                            <p>Go to a different step to see the error state</p>
+                            <button matButton matStepperPrevious>Back</button>
+                            <button matButton matStepperNext>Next</button>
+                        </div>
+                </mat-card-content>
+            </mat-card>
+        </form>
+        </div> 
+    </mat-step>
+</mat-stepper>
+

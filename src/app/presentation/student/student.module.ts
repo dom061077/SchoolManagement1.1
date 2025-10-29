@@ -11,6 +11,7 @@ import { StudentEffects } from '../../core/state/student/student-effects';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpLoaderFactory } from '../../app.module';
+import { MatStepperModule } from '@angular/material/stepper';
 
 
 
@@ -24,9 +25,10 @@ import { HttpLoaderFactory } from '../../app.module';
     StoreModule.forFeature(studentFeature.name, studentFeature.reducer),
     EffectsModule.forFeature([StudentEffects])  ,  
     MaterialModule,
+    MatStepperModule,
     StudentRoutingModule,
     TranslateModule.forRoot({
-      //defaultLanguage: 'en',
+      defaultLanguage: 'es',
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,

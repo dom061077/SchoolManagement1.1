@@ -97,9 +97,22 @@ export class StudentlistingComponent implements OnInit, OnDestroy {
   }
 
   addStudent(){
-    this.dialog.open(StudentaddeditComponent,{
-    });
+    this.openPopup(0, 'STUDENT.ADD_STUDENT');
   }
 
+
+  openPopup(code: number, title: string){
+    this.dialog.open(StudentaddeditComponent,{
+      enterAnimationDuration: '1000ms',
+      exitAnimationDuration: '1000ms',
+      width: '80vw', // 80% of the viewport width
+      height: '80vh',      
+      data: {
+        code: code,
+        title: title
+      }      
+    });
+    
+  }
 
 }
