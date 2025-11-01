@@ -12,13 +12,13 @@
         <form [formGroup] = "filterForm" (ngSubmit) = "applyFilter()">
             <mat-card-content [style.overflow]="'auto'">
                 <mat-form-field>
-                    <input matInput formControlName="apellido" (keyup)="applyFilter()" placeholder="{{'PERSON.FILTRO_APELLIDO' | translate}}">
+                    <input matInput formControlName="apellido" (keyup)="applyFilter()" placeholder="{{'PERSON.FILTER_APELLIDO' | translate}}">
                 </mat-form-field>
                 <mat-form-field>
-                    <input matInput formControlName="nombre" (keyup)="applyFilter()" placeholder="Filtrar por nombre" >
+                    <input matInput formControlName="nombre" (keyup)="applyFilter()" placeholder="{{'PERSON.FILTER_NOMBRE' | translate}}" >
                 </mat-form-field>
                 <mat-form-field>
-                    <input matInput formControlName="dni" type="number" (keyup)="applyFilter()" placeholder="Filtrar por D.N.I">
+                    <input matInput formControlName="dni" type="number" (keyup)="applyFilter()" placeholder="{{'PERSON.FILTER_DNI' | translate}}">
                 </mat-form-field>
                 <button mat-fab color="primary" aria-label="Example icon button with a delete icon">
                     <mat-icon>search</mat-icon>

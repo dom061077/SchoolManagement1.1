@@ -44,31 +44,29 @@ import { EntityAdapter } from "@ngrx/entity";
 
 */
 export interface Student {
+    //Datos Personales
     id: number;
-    apellido: string;
-    nombre: string;
-    apellidoNombre: string;
-    fechaNacimiento: Date;
+    lastName: string;
+    firstName: string;
+    birthDate: Date;
     dni: number;
     cuil?: string;
     direccion?: string;
     planSocial?: boolean;
     trabaja?: boolean;      
-    apellidoTutor?: string;
-    nombreTutor?: string;
-    estudioPrimarioTutor?: string;
-    estudioSecundarioTutor?: string;
-    estudioTerUnivTutor?: string;
-    dniTutor?: number;
-    cuilTutor?: string;
+    localidad?: string; // Assuming Localidad is a string for simplicity
     telefono1?: string;
-    telefono2?: string;
+    telefono2?: string;    
+
+    //Documentación personal
     fotoDni?: boolean;
     constanciaCuil?: boolean;
     constancia6grado?: boolean;
     actaNacimiento?: boolean;
     constanciaRegular?: boolean;
     foto4x4?: boolean;
+
+    //Documentacion adicional
     fotoCarnetVac?: boolean;
     fichaMedica?: boolean;
     aptitudFisica?: boolean;    
@@ -76,10 +74,24 @@ export interface Student {
     fichaInscripcion?: boolean;
     libreta6grado?: boolean;
     fotocopiaLibroMatriz?: boolean;
+
+
+
+
+    //Datos Tutor
+    apellidoTutor?: string;
+    nombreTutor?: string;
+    estudioPrimarioTutor?: string;
+    estudioSecundarioTutor?: string;
+    estudioTerUnivTutor?: string;
+    dniTutor?: number;
+    cuilTutor?: string;
     fotocopiaDniTutor?: boolean;
     constanciaCuilTutor?: boolean;
-    localidad?: string; // Assuming Localidad is a string for simplicity
     parentescoTutor?: string; // Assuming ParentescoTutor is a string for simplicity
+
+
+
     
 
 }

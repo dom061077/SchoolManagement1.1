@@ -8,6 +8,8 @@ import { studentSelectors } from '../../../core/state/student/student-selectors'
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Student } from '../../../core/model/student.model';
+import { MatDialog } from '@angular/material/dialog';
+import { StudentaddeditComponent } from '../studentaddedit/studentaddedit.component';
 //import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -25,7 +27,8 @@ export class StudentlistingComponent implements OnInit, OnDestroy {
   filterForm: FormGroup;
   private subscriptions: Subscription[] = [];
 
-  constructor(public facade: StudentFacade, private store: Store, private fb: FormBuilder) {
+  constructor(public facade: StudentFacade, private store: Store
+      , private fb: FormBuilder, private dialog: MatDialog) {
     
     this.filterForm = this.fb.group({
       lastName: [''],
@@ -84,8 +87,7 @@ export class StudentlistingComponent implements OnInit, OnDestroy {
     // Open delete confirmation dialog
   }
 
-  sortData(event: any) {
-    this.applyFilter();
+  sortData(event: any) {this.applyFilter();
   }
 
   ngAfterViewInit() {
@@ -94,5 +96,25 @@ export class StudentlistingComponent implements OnInit, OnDestroy {
     } else {
         console.error('MatSort is undefined! Check the HTML template and module imports.');
     }
-  }  
+  }
+
+  addStudent(){
+    this.openPopup(0, 'STUDENT.ADD_STUDENT');
+  }
+
+
+  openPopup(code: number, title: string){
+    this.dialog.open(StudentaddeditComponent,{
+      enterAnimationDuration: '1000ms',
+      exitAnimationDuration: '1000ms',
+      width: '80vw', // 80% of the viewport width
+      height: '80vh',      
+      data: {
+        code: code,
+        title: title
+      }      
+    });
+    
+  }
+
 }

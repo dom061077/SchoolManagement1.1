@@ -11,8 +11,8 @@ import { StudentEffects } from '../../core/state/student/student-effects';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpLoaderFactory } from '../../app.module';
-import { MatTableModule } from '@angular/material/table';
-import { MatSortModule } from '@angular/material/sort';
+import { MatStepperModule } from '@angular/material/stepper';
+
 
 
 @NgModule({
@@ -27,6 +27,7 @@ import { MatSortModule } from '@angular/material/sort';
     StoreModule.forFeature(studentFeature.name, studentFeature.reducer),
     EffectsModule.forFeature([StudentEffects])  ,  
     MaterialModule,
+    MatStepperModule,
     StudentRoutingModule,
     TranslateModule.forRoot({
       defaultLanguage: 'es',
