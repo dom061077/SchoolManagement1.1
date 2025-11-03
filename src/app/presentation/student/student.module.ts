@@ -22,8 +22,7 @@ import { MatStepperModule } from '@angular/material/stepper';
   ],
   imports: [
     CommonModule,
-    MatTableModule,
-    MatSortModule,
+
     StoreModule.forFeature(studentFeature.name, studentFeature.reducer),
     EffectsModule.forFeature([StudentEffects])  ,  
     MaterialModule,

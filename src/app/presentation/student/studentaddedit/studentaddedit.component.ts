@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Student } from '../../../core/model/student.model';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
@@ -20,11 +20,11 @@ export class StudentaddeditComponent implements OnInit {
     personalDataForm = this.builder.group({
 
       id: [''],
-      lastName: [''],
-      firstName: [''],
-      birthDate: [''],
-      dni: [''],
-      cuil: [''],
+      lastName: ['',Validators.required],
+      firstName: ['', Validators.required],
+      birthDate: ['', Validators.required],
+      dni: ['', Validators.required],
+      //cuil: [''],
       direccion: [''],
       planSocial: [''],
       trabaja: [''],

@@ -21,26 +21,5 @@ button{
   margin: 2px;
 }
 
-/* Using ::ng-deep to target global styles */
-::ng-deep .mat-horizontal-stepper-wrapper {
-  height: 80vh; /* Example: 80% of viewport height */
-  display: flex; /* Ensure content stretches */
-  flex-direction: column;
-}
 
-::ng-deep .mat-horizontal-content-container {
-  flex: 1; /* Allow content to take remaining height */
-  height: 100%; /* Ensure content fills its container */
-}
 
-::ng-deep .mat-horizontal-stepper-content {
-  height: 70%; /* Ensure the individual step content fills */
-}
-
-.mat-card {
-    overflow-y: auto;
-}
-
-.mdc-dialog__surface {
-overflow-y: hidden !important;
-}

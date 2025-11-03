@@ -3,12 +3,12 @@
         <mat-card-title class="white-text  ">{{title}}</mat-card-title>
 </mat-card-header>
 
-<mat-stepper linear #stepper>
-
+<mat-dialog-content class="dialog-container">
+<mat-stepper orientation="vertical" [linear]="true" #stepper>
     <mat-step [stepControl]="personalDataForm" errorMessage="Name is required.">
         <form [formGroup]="personalDataForm"  >
             <ng-template matStepLabel> {{'STUDENT.STEP_PERSONAL_DATA' | translate}}  </ng-template>
-            <mat-card>
+ 
                     <mat-card-content [style.overflow]="'auto'" >
                         <mat-form-field>
                             <mat-label>{{'STUDENT.DNI' | translate}}</mat-label>
@@ -23,32 +23,33 @@
                             <input formControlName="firstName" matInput class=".align-middle">
                         </mat-form-field>  
 
-                        <mat-form-field>    
-                            <mat-label>{{'STUDENT.BIRTHDATE' | translate}} </mat-label>
-                            <input formControlName="birthDate" matInput class=".align-middle">
-                        </mat-form-field>
 
-                        <mat-form-field>
-                            <mat-label>{{'STUDENT.DNI' | translate}}</mat-label>
-                            <input formControlName="dni" matInput class=".align-middle">
-                        </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>{{'STUDENT.BIRTHDATE' | translate}}</mat-label>
+                        <input formControlName="birthDate" [matDatepicker]="pickerBirthDate" matInput 
+                            class=".align-middle">
+                            <input matInput>
+                            <mat-hint>DD/MM/YYYY</mat-hint>
+                            <mat-datepicker-toggle matIconSuffix [for]="pickerBirthDate"></mat-datepicker-toggle>
+                            <mat-datepicker #pickerBirthDate></mat-datepicker>                      
+                    </mat-form-field>
 
                     </mat-card-content>
                     <div>
-                        <p>Go to a different step to see the error state</p>
-                        <button matButton matStepperNext>Next</button>
+                        
+                        <button mat-raised-button color="primary" matStepperNext>{{'COMMON.NEXT_BTN' | translate}}</button>
                     </div>                    
-            </mat-card>
+
         </form>
     </mat-step>
     <mat-step [stepControl]="personDocForm" >
         <form [formGroup]="personDocForm"  >
             <ng-template matStepLabel> {{'STUDENT.STEP_DOCUMENTATION' | translate}}  </ng-template>
-            <mat-card>
+
                     <mat-card-content [style.overflow]="'auto'" >
                         <mat-form-field>
                             <mat-label>{{'STUDENT.FOTO_DNI' | translate}}</mat-label>
-                            <input formControlName="fotoDni" matInput class=".align-middle">
+                            <input type="number" formControlName="fotoDni" matInput class=".align-middle">
                         </mat-form-field>
                         <mat-form-field>
                             <mat-label>{{'STUDENT.CONSTANCIA_CUIL' | translate}}</mat-label>
@@ -76,17 +77,16 @@
                     </mat-card-content>
                     <div>
                         <p>Go to a different step to see the error state</p>
-                        <button matButton matStepperPrevious>Back</button>
-                        <button matButton matStepperNext>Next</button>
+                        <button mat-raised-button color="primary" matStepperPrevious>{{'COMMON.BACK_BTN' | translate}}</button>
+                        <button mat-raised-button color="primary" matStepperNext>{{'COMMON.NEXT_BTN' | translate}}</button>
                     </div>
-            </mat-card>
+
         </form>
     </mat-step>
 
     <mat-step [stepControl]="additionalDocForm">
-        <div class="step-content-scroll">
         <form [formGroup]="additionalDocForm">
-            <mat-card>
+            <ng-template matStepLabel> {{'STUDENT.STEP_ADDITIONAL_DOCS' | translate}}  </ng-template>
                 <mat-card-content >
                         <mat-form-field>
                             <mat-label>{{'STUDENT.CARNET_VAC' | translate}}</mat-label>
@@ -119,13 +119,12 @@
                         </mat-form-field>
                         <div>
                             <p>Go to a different step to see the error state</p>
-                            <button matButton matStepperPrevious>Back</button>
-                            <button matButton matStepperNext>Next</button>
+                            <button mat-raised-button color="primary" matStepperPrevious>{{'COMMON.BACK_BTN' | translate}}</button>
+                            <button mat-raised-button color="primary" matStepperNext>{{'COMMON.NEXT_BTN' | translate}}</button>
                         </div>
                 </mat-card-content>
-            </mat-card>
+
         </form>
-        </div> 
     </mat-step>
 </mat-stepper>
-
+</mat-dialog-content>
