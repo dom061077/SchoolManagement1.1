@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Student } from '../../../core/model/student.model';
-import { FormBuilder, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
@@ -55,14 +55,17 @@ export class StudentaddeditComponent implements OnInit {
 
     });
 
+  get lastNameControl() : AbstractControl | null{
+    return this.personalDataForm.get('lastName');
+  }
 
-
-   constructor(private builder: FormBuilder, private translate: TranslateService, private ref: MatDialogRef<StudentaddeditComponent>
+  constructor(private builder: FormBuilder, private translate: TranslateService, private ref: MatDialogRef<StudentaddeditComponent>
      ,@Inject(MAT_DIALOG_DATA) public data:any, private store: Store){
       this.title = this.translate.instant(this.title);
       
    }  
 
+  
   ngOnInit(): void {
     this.dialogdata = this.data;
     this.title = this.translate.instant(this.dialogdata.title);

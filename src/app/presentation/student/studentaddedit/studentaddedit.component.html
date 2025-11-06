@@ -17,6 +17,13 @@
                         <mat-form-field>
                             <mat-label>{{'STUDENT.LAST_NAME' | translate}}</mat-label>
                             <input formControlName="lastName" matInput class=".align-middle">
+                            <div *ngIf="lastNameControl && lastNameControl.invalid && (lastNameControl.dirty || lastNameControl.touched)"
+                                class="validation-error">
+                                <p *ngIf="lastNameControl.errors?.['required']">
+                                    {{'STUDENT.LAST_NAME_VALIDATION' | translate}}
+                                </p>
+                            </div>
+
                         </mat-form-field>            
                         <mat-form-field>
                             <mat-label>{{'STUDENT.FIRST_NAME' | translate}}</mat-label>
