@@ -17,13 +17,18 @@ export class StudentaddeditComponent implements OnInit {
   editcode!: number;
   editdata!: Student;  
 
+
     personalDataForm = this.builder.group({
 
       id: [''],
       lastName: ['',Validators.required],
       firstName: ['', Validators.required],
       birthDate: ['', Validators.required],
-      dni: ['', Validators.required],
+      // Regex:
+        // ^      : Start of string
+        // \d+    : One or more digits (0-9). Use \d* for optional.
+        // $      : End of string      
+      dni: ['', Validators.required, Validators.pattern(/^\d+$/)],
       //cuil: [''],
       direccion: [''],
       planSocial: [''],

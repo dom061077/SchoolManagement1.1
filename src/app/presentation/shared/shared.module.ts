@@ -6,9 +6,10 @@ import { MatOptionModule } from '@angular/material/core';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { PortalModule } from '@angular/cdk/portal';
 import { AutocompleteDirective, AutocompletePanelComponent } from './directives/autocomplete.directive';
+import { NumbersOnlyDirective } from './directives/numbers-only.directive';
 
 @NgModule({
-  declarations: [AutocompletePanelComponent],
+  declarations: [AutocompletePanelComponent, NumbersOnlyDirective],
   imports: [
     CommonModule,
     ReactiveFormsModule,

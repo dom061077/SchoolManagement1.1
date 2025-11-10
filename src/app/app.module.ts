@@ -29,6 +29,7 @@ import { USER_PROFILEreducer } from './user-profile/store/user-profile.reducer';
 import { UserProfileEffects } from './user-profile/store/user-profile.effects';
 import { StudentModule } from './presentation/student/student.module';
 import { ConfirmDialogDirective } from './directive/confirm-dialog.directive';
+import { NumbersOnlyDirective } from './presentation/shared/directives/numbers-only.directive';
 import { ConfirmationDialogComponent } from './component/dialog/confirm-dialog/confirm-dialog.component';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -53,6 +54,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     LoginComponent,
     MenubarComponent,
     ConfirmDialogDirective,
+    NumbersOnlyDirective,
     ConfirmationDialogComponent
   ],
   imports: [
