@@ -13,11 +13,11 @@ import { MaterialModule } from './material.module';
   declarations: [AutocompletePanelComponent, NumbersOnlyDirective],
   imports: [
     CommonModule,
-    MaterialModule,
-    ReactiveFormsModule,
-    OverlayModule,
-    PortalModule,
-    AutocompleteDirective,
+    //MaterialModule,
+    //ReactiveFormsModule,
+    //OverlayModule, Luego ivestigar para que es este módulo
+    //PortalModule, Luego ivestigar para que es este módulo
+    //AutocompleteDirective,
   ],
   exports: [MaterialModule, NumbersOnlyDirective],
 })
