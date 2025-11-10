@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { MenubarComponent } from './component/menubar/menubar.component';
 import { AddpersonComponent } from './component/addperson/addperson.component';
 import { PersonlistingComponent } from './component/personlisting/personlisting.component';
-import { MaterialModule } from './material.module';
+import { MaterialModule } from './presentation/shared/material.module';
 import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -37,6 +37,7 @@ import { HttpClient } from '@angular/common/http';
 import { config } from './infra/api/config';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { CustomPaginatorIntlService } from './service/common/custom-paginator-intl.service';
+import { SharedModule } from './presentation/shared/shared.module';
 
 export function kcFactory(kcService: KeycloakService){
   return () => kcService.init();
@@ -54,7 +55,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     LoginComponent,
     MenubarComponent,
     ConfirmDialogDirective,
-    NumbersOnlyDirective,
     ConfirmationDialogComponent
   ],
   imports: [

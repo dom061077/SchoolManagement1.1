@@ -7,18 +7,18 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { PortalModule } from '@angular/cdk/portal';
 import { AutocompleteDirective, AutocompletePanelComponent } from './directives/autocomplete.directive';
 import { NumbersOnlyDirective } from './directives/numbers-only.directive';
+import { MaterialModule } from './material.module';
 
 @NgModule({
   declarations: [AutocompletePanelComponent, NumbersOnlyDirective],
   imports: [
     CommonModule,
+    MaterialModule,
     ReactiveFormsModule,
-    MatAutocompleteModule,
-    MatOptionModule,
     OverlayModule,
     PortalModule,
     AutocompleteDirective,
   ],
-  exports: [AutocompleteDirective],
+  exports: [MaterialModule, NumbersOnlyDirective],
 })
 export class SharedModule {}

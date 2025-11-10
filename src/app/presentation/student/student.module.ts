@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StudentlistingComponent } from './studentlisting/studentlisting.component';
 import { StudentRoutingModule } from './student-routing.module';
-import { MaterialModule } from '../../material.module';
+import { MaterialModule } from '../shared/material.module';
 import { StudentaddeditComponent } from './studentaddedit/studentaddedit.component';
 import { StoreModule } from '@ngrx/store';
 import { studentFeature } from '../../core/state/student/student-reducer';
@@ -12,6 +12,8 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpLoaderFactory } from '../../app.module';
 import { MatStepperModule } from '@angular/material/stepper';
+import { NumbersOnlyDirective } from '../shared/directives/numbers-only.directive';
+import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -19,13 +21,13 @@ import { MatStepperModule } from '@angular/material/stepper';
   declarations: [
     StudentlistingComponent,
     StudentaddeditComponent
+    //NumbersOnlyDirective
   ],
   imports: [
     CommonModule,
-
+    SharedModule,
     StoreModule.forFeature(studentFeature.name, studentFeature.reducer),
     EffectsModule.forFeature([StudentEffects])  ,  
-    MaterialModule,
     MatStepperModule,
     StudentRoutingModule,
     TranslateModule.forRoot({
