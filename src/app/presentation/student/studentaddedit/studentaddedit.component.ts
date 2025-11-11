@@ -28,7 +28,7 @@ export class StudentaddeditComponent implements OnInit {
         // ^      : Start of string
         // \d+    : One or more digits (0-9). Use \d* for optional.
         // $      : End of string      
-      dni: ['', Validators.required, Validators.pattern(/^\d+$/)],
+      dni: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
       //cuil: [''],
       direccion: [''],
       planSocial: [''],
@@ -60,8 +60,17 @@ export class StudentaddeditComponent implements OnInit {
 
     });
 
+
+    advisorForm = this.builder.group({
+      
+    });
+
   get lastNameControl() : AbstractControl | null{
     return this.personalDataForm.get('lastName');
+  }
+
+  get dniControl() : AbstractControl | null{
+    return this.personalDataForm.get('dni');
   }
 
   constructor(private builder: FormBuilder, private translate: TranslateService, private ref: MatDialogRef<StudentaddeditComponent>

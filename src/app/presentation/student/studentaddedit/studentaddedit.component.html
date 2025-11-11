@@ -12,7 +12,13 @@
                     <mat-card-content [style.overflow]="'auto'" >
                         <mat-form-field>
                             <mat-label>{{'STUDENT.DNI' | translate}}</mat-label>
-                            <input formControlName="dni" matInput class=".align-middle" numbersOnly>
+                            <input formControlName="dni" matInput class=".align-middle"  numbersOnly>
+                            <div *ngIf="dniControl && dniControl.invalid && (dniControl.dirty || dniControl.touched)"
+                                class = "validation-error">
+                                <p *ngIf="dniControl.errors?.['pattern']">
+                                    {{'STUDENT.DNI_INVALID_PATTERN'}}
+                                </p>
+                            </div>                            
                         </mat-form-field>
                         <mat-form-field>
                             <mat-label>{{'STUDENT.LAST_NAME' | translate}}</mat-label>
@@ -22,6 +28,7 @@
                                 <p *ngIf="lastNameControl.errors?.['required']">
                                     {{'STUDENT.LAST_NAME_VALIDATION' | translate}}
                                 </p>
+                                
                             </div>
 
                         </mat-form-field>            
@@ -54,36 +61,34 @@
             <ng-template matStepLabel> {{'STUDENT.STEP_DOCUMENTATION' | translate}}  </ng-template>
 
                     <mat-card-content [style.overflow]="'auto'" >
-                        <mat-form-field>
-                            <mat-label>{{'STUDENT.FOTO_DNI' | translate}}</mat-label>
-                            <input type="number" formControlName="fotoDni" matInput class=".align-middle">
-                        </mat-form-field>
-                        <mat-form-field>
-                            <mat-label>{{'STUDENT.CONSTANCIA_CUIL' | translate}}</mat-label>
-                            <input formControlName="constanciaCuil" matInput class=".align-middle">
-                        </mat-form-field>            
-                        <mat-form-field>
-                            <mat-label>{{'STUDENT.FIRST_NAME' | translate}}</mat-label>
-                            <input formControlName="constancia6grado" matInput class=".align-middle">
-                        </mat-form-field>  
 
-                        <mat-form-field>    
-                            <mat-label>{{'STUDENT.ACTA_NAC' | translate}} </mat-label>
-                            <input formControlName="actaNacimiento" matInput class=".align-middle">
-                        </mat-form-field>
+                        <mat-checkbox formControlName="fotoDni" class="align-middle">
+                            {{'STUDENT.FOTO_DNI' | translate}}
+                        </mat-checkbox>
+                        <mat-checkbox formControlName="constanciaCuil" matInput class="align-middle">
+                            {{'STUDENT.CONSTANCIA_CUIL' | translate}}
+                        </mat-checkbox>
+                            
+                        <mat-checkbox formControlName="constancia6grado" matInput class=".align-middle">
+                            {{'STUDENT.FIRST_NAME' | translate}}
+                        </mat-checkbox>
 
-                        <mat-form-field>
-                            <mat-label>{{'STUDENT.CONSTANCIA_REG' | translate}}</mat-label>
-                            <input formControlName="constanciaRegular" matInput class=".align-middle">
-                        </mat-form-field>
+                        <mat-checkbox formControlName="actaNacimiento" matInput class=".align-middle">
+                            {{'STUDENT.ACTA_NAC' | translate}}
+                        </mat-checkbox>
 
-                        <mat-form-field>
-                            <mat-label>{{'STUDENT.FOTO_4X4' | translate}}</mat-label>
-                            <input formControlName="foto4x4" matInput class=".align-middle">
-                        </mat-form-field>
+
+                            
+                        <mat-checkbox formControlName="constanciaRegular" matInput class=".align-middle">
+                            {{'STUDENT.CONSTANCIA_REG' | translate}}
+                        </mat-checkbox>
+
+                            
+                        <mat-checkbox formControlName="foto4x4" matInput class=".align-middle">
+                            {{'STUDENT.FOTO_4X4' | translate}}
+                        </mat-checkbox>
                     </mat-card-content>
                     <div>
-                        <p>Go to a different step to see the error state</p>
                         <button mat-raised-button color="primary" matStepperPrevious>{{'COMMON.BACK_BTN' | translate}}></button>
                         <button mat-raised-button color="primary" matStepperNext>{{'COMMON.NEXT_BTN' | translate}}></button>
                     </div>
@@ -95,39 +100,38 @@
         <form [formGroup]="additionalDocForm">
             <ng-template matStepLabel> {{'STUDENT.STEP_ADDITIONAL_DOCS' | translate}}  </ng-template>
                 <mat-card-content >
-                        <mat-form-field>
-                            <mat-label>{{'STUDENT.CARNET_VAC' | translate}}</mat-label>
-                            <input formControlName="fotoCarnetVac" matInput class=".align-middle">
-                        </mat-form-field>
+                            
+                            <mat-checkbox formControlName="fotoCarnetVac" matInput class=".align-middle">
+                                {{'STUDENT.CARNET_VAC' | translate}}
+                            </mat-checkbox>
 
-                        <mat-form-field>
-                            <mat-label>{{'STUDENT.FICHA_MEDIC' | translate}}</mat-label>
-                            <input formControlName="fichaMedica" matInput class=".align-middle">
-                        </mat-form-field>
-                        <mat-form-field>
-                            <mat-label>{{'STUDENT.APTITUD_FISICA' | translate}}</mat-label>
-                            <input formControlName="aptitudFisica" matInput class=".align-middle">
-                        </mat-form-field>
-                        <mat-form-field>
-                            <mat-label>{{'STUDENT.GRUPO_SANG' | translate}}</mat-label>
-                            <input formControlName="grupoSanguineo" matInput class=".align-middle">
-                        </mat-form-field>
-                        <mat-form-field>
-                            <mat-label>{{'STUDENT.FICHA_INS' | translate}}</mat-label>
-                            <input formControlName="fichaInscripcion" matInput class=".align-middle">
-                        </mat-form-field>
-                        <mat-form-field>
-                            <mat-label>{{'STUDENT.LIBRETA_6GRADO' | translate}}</mat-label>
-                            <input formControlName="libreta6grado" matInput class=".align-middle">
-                        </mat-form-field>
-                        <mat-form-field>
-                            <mat-label>{{'STUDENT.LIBRO_MATRIZ' | translate}}</mat-label>
-                            <input formControlName="fotocopiaLibroMatriz" matInput class=".align-middle">
-                        </mat-form-field>
+                            <mat-checkbox formControlName="fichaMedica" matInput class=".align-middle">
+                                {{'STUDENT.FICHA_MEDIC' | translate}}
+                            </mat-checkbox>
+
+                            <mat-checkbox formControlName="aptitudFisica" matInput class=".align-middle">
+                                {{'STUDENT.APTITUD_FISICA' | translate}}
+                            </mat-checkbox>    
+
+                            <mat-checkbox formControlName="grupoSanguineo" matInput class=".align-middle">
+                                {{'STUDENT.GRUPO_SANG' | translate}}
+                            </mat-checkbox>    
+
+                            <mat-checkbox formControlName="fichaInscripcion" matInput class=".align-middle">
+                                {{'STUDENT.FICHA_INS' | translate}}
+                            </mat-checkbox>    
+
+                            <mat-checkbox formControlName="libreta6grado" matInput class=".align-middle">
+                                {{'STUDENT.LIBRETA_6GRADO' | translate}}
+                            </mat-checkbox>    
+
+                            <mat-checkbox formControlName="fotocopiaLibroMatriz" matInput class=".align-middle">
+                                {{'STUDENT.LIBRO_MATRIZ' | translate}}
+                            </mat-checkbox>
+
                         <div>
-                            <p>Go to a different step to see the error state</p>
                             <button mat-raised-button color="primary" matStepperPrevious>{{'COMMON.BACK_BTN' | translate}}></button>
-                            <button mat-raised-button color="primary" matStepperNext>{{'COMMON.SAVE_BTN' | translate}} (click)="save()"></button>
+                            <button mat-raised-button color="primary" matStepperNext>{{'COMMON.NEXT_BTN' | translate}} ></button>
                         </div>
                 </mat-card-content>
 

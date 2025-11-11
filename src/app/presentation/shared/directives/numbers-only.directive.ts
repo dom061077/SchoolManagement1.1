@@ -1,30 +1,33 @@
 import { Directive, ElementRef, HostListener } from '@angular/core';
+import { NgControl } from '@angular/forms';
 
 @Directive({
   selector: 'input[numbersOnly]' // Use it as an attribute: <input matInput numbersOnly>
 })
+
 export class NumbersOnlyDirective {
 
-  constructor(private el: ElementRef) { }
+  // 2. Inject NgControl in the constructor
+  constructor(
+    private el: ElementRef, 
+    private ngControl: NgControl // Inject NgControl
+  ) { }
 
-  @HostListener('input', ['$event']) onInputChange(event: any) {
-    const initialValue = this.el.nativeElement.value;
-
-    // Use a regex to replace any character that ISN'T a digit (0-9) with an empty string
-    // If you need to allow decimals, change the regex to /[^0-9.]*/g or similar
+  @HostListener('input', ['$event']) 
+  onInputChange(event: any) {
+    const initialValue: string = this.el.nativeElement.value;
+    
+    // 3. Sanitize the value
     const newValue = initialValue.replace(/[^0-9]*/g, '');
-
-    // Update the input field's value
+    
+    // Update the DOM element's value
     this.el.nativeElement.value = newValue;
-
-    // If the value changed (meaning a non-numeric character was removed),
-    // stop the event propagation to prevent other handlers from using the bad input.
+    
+    // 4. Update the Angular Form Control's value (Model)
     if (initialValue !== newValue) {
-      event.stopPropagation();
+        this.ngControl.control?.setValue(newValue, { emitEvent: false });
     }
+    
+    // Note: Do NOT use event.stopPropagation() here
   }
-
-  // Optional: You can also use HostListener('keydown', ...) to prevent keys like 'e', '+', '-' 
-  // from being typed, but the 'input' listener is generally more effective for handling
-  // paste and all non-numeric input methods consistently.
 }
