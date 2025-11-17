@@ -11,11 +11,22 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrl: './studentaddedit.component.css'
 })
 export class StudentaddeditComponent implements OnInit {
+
   title: string = 'STUDENT.ADD_STUDENT';
   isedit = false;
   dialogdata : any;
   editcode!: number;
   editdata!: Student;  
+
+    advisorDocForm = this.builder.group({
+      apellidoTutor: [''],
+      nombreTutor: [''],
+      estudioPrimarioTutor: [''],
+      estudioTerUnivTutor: [''],
+      dniTutor: [''],
+      cuilTutor: [''],
+      parentescoTutor: ['']
+    });
 
 
     personalDataForm = this.builder.group({
@@ -86,8 +97,8 @@ export class StudentaddeditComponent implements OnInit {
     this.editcode = this.dialogdata.editcode;
   }
 
-    saveStudent(){
-
-    }
+  onSubmit() {
+   throw new Error('Method not implemented.');
+  }
 
 }

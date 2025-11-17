@@ -51,7 +51,7 @@
                     </mat-card-content>
                     <div>
                         
-                        <button mat-raised-button color="primary" matStepperNext>{{'COMMON.NEXT_BTN' | translate}}></button>
+                        <button mat-raised-button color="primary" [disabled]="personalDataForm.invalid"  matStepperNext>{{'COMMON.NEXT_BTN' | translate}}></button>
                     </div>                    
 
         </form>
@@ -90,7 +90,7 @@
                     </mat-card-content>
                     <div>
                         <button mat-raised-button color="primary" matStepperPrevious>{{'COMMON.BACK_BTN' | translate}}></button>
-                        <button mat-raised-button color="primary" matStepperNext>{{'COMMON.NEXT_BTN' | translate}}></button>
+                        <button mat-raised-button color="primary"  matStepperNext>{{'COMMON.NEXT_BTN' | translate}}></button>
                     </div>
 
         </form>
@@ -135,6 +135,46 @@
                         </div>
                 </mat-card-content>
 
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="advisorDocForm">
+        <form [formGroup]="advisorDocForm">
+            <ng-template matStepLabel> {{'STUDENT.STEP_ADVISOR_DOC' | translate}}  </ng-template>
+            <mat-card-content >
+                <p>{{'STUDENT.REVIEW_SUBMIT_INSTRUCTION' | translate}}</p>
+                <mat-form-field>
+                    <mat-label>{{'STUDENT.ADVISOR_LAST_NAME' | translate}}</mat-label>
+                    <input formControlName="apellidoTutor" matInput class=".align-middle">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>{{'STUDENT.ADVISOR_FIRST_NAME' | translate}}</mat-label>
+                    <input formControlName="nombreTutor" matInput class=".align-middle">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>{{'STUDENT.ADVISOR_PRIMARY_EDU' | translate}}</mat-label>
+                    <input formControlName="estudioPrimarioTutor" matInput class=".align-middle">     
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>{{'STUDENT.ADVISOR_UNIV_EDU' | translate}}</mat-label>
+                    <input formControlName="estudioTerUnivTutor" matInput class=".align-middle">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>{{'STUDENT.ADVISOR_DNI' | translate}}</mat-label>
+                    <input formControlName="dniTutor" matInput class=".align-middle" numbersOnly>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>{{'STUDENT.ADVISOR_CUIL' | translate}}</mat-label>
+                    <input formControlName="cuilTutor" matInput class=".align-middle" numbersOnly>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>{{'STUDENT.ADVISOR_RELATIONSHIP' | translate}}</mat-label>
+                    <input formControlName="parentescoTutor" matInput class=".align-middle">
+                </mat-form-field>
+                <div>
+                    <button mat-raised-button color="primary" matStepperPrevious>{{'COMMON.BACK_BTN' | translate}}></button>
+                    <button mat-raised-button color="accent" (click)="onSubmit()">{{'COMMON.SUBMIT_BTN' | translate}}></button>
+                </div>
+            </mat-card-content>
         </form>
     </mat-step>
 </mat-stepper>
