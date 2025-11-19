@@ -11,6 +11,9 @@ export class FacadeBase<T> {
 
   constructor(
     private store: Store<{ feature: EntityState<T> }>,
+    /**
+     * The actions parameter is the dependency injection point for the CRUD-related actions created by your createCrudActions factory.
+     */
     private actions: {
       loadAll: (payload: { offset: number; limit: number; qfilter: string; sorts: string }) => any;
       create: (payload: { item: T }) => any;
