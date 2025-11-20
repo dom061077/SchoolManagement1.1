@@ -5,13 +5,25 @@ import { Student } from '../../model/student.model';
 
 const { reducer, adapter, initialState } = createEntityReducer<Student>(studentActions);
 
+/*
+  In the below snippet code I define the studentfeature will be used in student module to register the store feature
+*/
 export const studentFeature = createFeature({
   name: 'students',
   reducer,
 });
 
+/**
+ * 
+ * @param state 
+ * @returns 
+ * This is the base selector. It takes the entire application state (state) and returns the specific part managed by this file, using the name defined in studentFeature.
+ */
 const selectFeatureState = (state: any) => state[studentFeature.name];
 
+/*
+Destructuring and Renaming: The generated selectors are renamed (selectAll becomes selectAllStudents, etc.) for clearer use in the application.
+*/
 const {
   selectAll: selectAllStudents,
   selectEntities: selectStudentEntities,
