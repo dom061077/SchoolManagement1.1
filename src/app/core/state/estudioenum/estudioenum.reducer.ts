@@ -6,7 +6,7 @@ import { estudioenumActions } from "./estudioenum.actions";
 const{reducer,adapter,initialState}=createEntityReducer<EstudioEnum>(estudioenumActions);
 
 export const estudioenumFeature=createFeature({
-    name:'estudioenums',
+    name:'estudioenum',
     reducer,
 });
 
@@ -28,4 +28,4 @@ export const estudioenumSelectors={
     selectLoading,
     selectError,
 };
-export{adapter};
+

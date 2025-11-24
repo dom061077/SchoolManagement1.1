@@ -4,6 +4,11 @@ import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
+import { EstudioEnum } from '../../../core/model/estudioenum.model';
+import { Observable } from 'rxjs/internal/Observable';
+import { estudioenumSelectors } from '../../../core/state/estudioenum/estudioenum.reducer';
+import { StudentFacade } from '../../../core/state/student/student.facade';
+import { EstudioEnumFacade } from '../../../core/state/estudioenum/estudioenum.facade';
 
 @Component({
   selector: 'app-studentaddedit',
@@ -17,6 +22,8 @@ export class StudentaddeditComponent implements OnInit {
   dialogdata : any;
   editcode!: number;
   editdata!: Student;  
+  estudioEnumData$: Observable<EstudioEnum[]>;
+  estudioEnumError$: Observable<any>;
 
     advisorDocForm = this.builder.group({
       apellidoTutor: [''],
@@ -84,17 +91,22 @@ export class StudentaddeditComponent implements OnInit {
     return this.personalDataForm.get('dni');
   }
 
-  constructor(private builder: FormBuilder, private translate: TranslateService, private ref: MatDialogRef<StudentaddeditComponent>
+  constructor( private facade: StudentFacade, private estudioEnumFacade: EstudioEnumFacade, private builder: FormBuilder, private translate: TranslateService, private ref: MatDialogRef<StudentaddeditComponent>
      ,@Inject(MAT_DIALOG_DATA) public data:any, private store: Store){
       this.title = this.translate.instant(this.title);
-      
-   }  
+      this.estudioEnumData$ = this.store.select(estudioenumSelectors.selectAll) as Observable<EstudioEnum []>;  
+      this.estudioEnumError$ = this.store.select(estudioenumSelectors.selectError) as Observable<any>;  
+    }  
 
   
   ngOnInit(): void {
     this.dialogdata = this.data;
     this.title = this.translate.instant(this.dialogdata.title);
     this.editcode = this.dialogdata.editcode;
+    this.estudioEnumError$.subscribe((error) => {
+      console.log('Error loading EstudioEnum data:', error);
+    });
+    this.estudioEnumFacade.loadAll(0,100,'','');
   }
 
   onSubmit() {

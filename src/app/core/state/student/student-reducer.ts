@@ -18,7 +18,9 @@ export const studentFeature = createFeature({
  * @param state 
  * @returns 
  * This is the base selector. It takes the entire application state (state) and returns the specific part managed by this file, using the name defined in studentFeature.
- */
+    I could have use (state: AppState) method
+    It's used to pass as parameter. In this case to getSelectors method.
+  */
 const selectFeatureState = (state: any) => state[studentFeature.name];
 
 /*
@@ -43,4 +45,4 @@ export const studentSelectors = {
   selectError,
 };
 
-export { adapter };
+

@@ -14,6 +14,8 @@ import { HttpLoaderFactory } from '../../app.module';
 import { MatStepperModule } from '@angular/material/stepper';
 import { NumbersOnlyDirective } from '../shared/directives/numbers-only.directive';
 import { SharedModule } from '../shared/shared.module';
+import { estudioenumFeature } from '../../core/state/estudioenum/estudioenum.reducer';
+import { EstudioenumEffects } from '../../core/state/estudioenum/estudioenum.effects';
 
 
 
@@ -27,7 +29,8 @@ import { SharedModule } from '../shared/shared.module';
     CommonModule,
     SharedModule,
     StoreModule.forFeature(studentFeature.name, studentFeature.reducer),
-    EffectsModule.forFeature([StudentEffects])  ,  
+    StoreModule.forFeature(estudioenumFeature.name, estudioenumFeature.reducer),
+    EffectsModule.forFeature([StudentEffects, EstudioenumEffects])  ,  
     MatStepperModule,
     StudentRoutingModule,
     TranslateModule.forRoot({

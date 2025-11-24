@@ -4,7 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { StudentFacade } from '../../../core/state/student/student.facade';
-import { studentSelectors } from '../../../core/state/student/student-selectors';
+import { studentSelectors } from '../../../core/state/student/student-reducer';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Student } from '../../../core/model/student.model';
@@ -15,7 +15,7 @@ import { StudentaddeditComponent } from '../studentaddedit/studentaddedit.compon
 @Component({
   selector: 'app-studentlisting',
   templateUrl: './studentlisting.component.html',
-  styleUrl: './studentlisting.component.css'
+  styleUrls: ['./studentlisting.component.css']
 })
 export class StudentlistingComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['id', 'lastName', 'firstName', 'dni', 'action'];
@@ -41,7 +41,7 @@ export class StudentlistingComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loadStudents();
     this.dataSource.sort = this.sort;
-    this.store.select(studentSelectors.selectAll).subscribe((students: any) => {
+    this.data$.subscribe((students: any) => {
         this.dataSource.data = students;
         
       });

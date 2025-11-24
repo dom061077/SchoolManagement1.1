@@ -25,7 +25,7 @@ export class EffectFactory<T> {
           map((response) => {
             return this.crudActions.loadAllSuccess({ items:response.data })
           }),
-          catchError((error) => of(this.crudActions.loadAllFailure({ error })))
+          catchError((e) => of(this.crudActions.loadAllFailure({ error:e.error })))
         )
       )
     )
