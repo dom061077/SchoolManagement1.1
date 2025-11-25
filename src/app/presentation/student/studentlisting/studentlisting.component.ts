@@ -5,11 +5,13 @@ import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { StudentFacade } from '../../../core/state/student/student.facade';
 import { studentSelectors } from '../../../core/state/student/student-reducer';
+import * as NotificationActions from '../../../core/state/notification/notification.actions';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Student } from '../../../core/model/student.model';
 import { MatDialog } from '@angular/material/dialog';
 import { StudentaddeditComponent } from '../studentaddedit/studentaddedit.component';
+import { TranslateService } from '@ngx-translate/core';
 //import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -27,7 +29,7 @@ export class StudentlistingComponent implements OnInit, OnDestroy {
   filterForm: FormGroup;
   private subscriptions: Subscription[] = [];
 
-  constructor(public facade: StudentFacade, private store: Store
+  constructor(public facade: StudentFacade, private store: Store, private translate: TranslateService
       , private fb: FormBuilder, private dialog: MatDialog) {
     
     this.filterForm = this.fb.group({
@@ -45,6 +47,7 @@ export class StudentlistingComponent implements OnInit, OnDestroy {
         this.dataSource.data = students;
         
       });
+
 
   }
 

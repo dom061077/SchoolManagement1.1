@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Student } from '../../../core/model/student.model';
+import * as NotificationActions from '../../../core/state/notification/notification.actions';
 import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
@@ -104,7 +105,10 @@ export class StudentaddeditComponent implements OnInit {
     this.title = this.translate.instant(this.dialogdata.title);
     this.editcode = this.dialogdata.editcode;
     this.estudioEnumError$.subscribe((error) => {
-      console.log('Error loading EstudioEnum data:', error);
+      this.store.dispatch(NotificationActions.showNotification({
+        message: this.translate.instant('ESTUDIOENUM.LOAD_ERROR') + ': ' + error,
+        kind: 'error'
+      }));
     });
     this.estudioEnumFacade.loadAll(0,100,'','');
   }

@@ -27,6 +27,9 @@ import { PdfReportEffects } from './common/store/pdfreport.effects';
 import { KeycloakService } from './auth/keycloak/keycloak.service';
 import { USER_PROFILEreducer } from './user-profile/store/user-profile.reducer';
 import { UserProfileEffects } from './user-profile/store/user-profile.effects';
+import { NotificationComponent } from './shared/notification/notification.component';
+import { notificationFeatureKey, notificationReducer } from './core/state/notification/notification.reducer';
+import { NotificationEffects } from './core/state/notification/notification.effects';
 import { StudentModule } from './presentation/student/student.module';
 import { ConfirmDialogDirective } from './directive/confirm-dialog.directive';
 import { NumbersOnlyDirective } from './presentation/shared/directives/numbers-only.directive';
@@ -55,7 +58,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     LoginComponent,
     MenubarComponent,
     ConfirmDialogDirective,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    NotificationComponent
   ],
   imports: [
     BrowserModule,
@@ -73,7 +77,8 @@ export function HttpLoaderFactory(http: HttpClient) {
       , pdfreport: PDFREPORTreducer
       
     }),
-    EffectsModule.forRoot([UserProfileEffects,UserEffect,AppEffects,PersonEffects,PdfReportEffects, UserProfileEffects]),
+    EffectsModule.forRoot([UserProfileEffects,UserEffect,AppEffects,PersonEffects,PdfReportEffects, UserProfileEffects, NotificationEffects]),
+    StoreModule.forFeature(notificationFeatureKey, notificationReducer),
     StoreRouterConnectingModule.forRoot(),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     TranslateModule.forRoot({
