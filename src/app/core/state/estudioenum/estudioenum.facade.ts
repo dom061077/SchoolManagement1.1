@@ -9,7 +9,7 @@ import { estudioenumSelectors } from "./estudioenum.reducer";
 
 @Injectable({ providedIn: 'root' })
 export class EstudioEnumFacade extends FacadeBase<EstudioEnum> {
-    constructor(store: Store<{ feature: EntityState<EstudioEnum> }>, private studentFacade: StudentFacade) {
+    constructor(store: Store<{ feature: EntityState<EstudioEnum> }>) {
 
         super(store, estudioenumActions, estudioenumSelectors);
     }   

@@ -104,13 +104,14 @@ export class StudentaddeditComponent implements OnInit {
     this.dialogdata = this.data;
     this.title = this.translate.instant(this.dialogdata.title);
     this.editcode = this.dialogdata.editcode;
+    this.estudioEnumFacade.loadAll(0,100,'','');
     this.estudioEnumError$.subscribe((error) => {
       this.store.dispatch(NotificationActions.showNotification({
         message: this.translate.instant('ESTUDIOENUM.LOAD_ERROR') + ': ' + error,
         kind: 'error'
       }));
     });
-    this.estudioEnumFacade.loadAll(0,100,'','');
+    
   }
 
   onSubmit() {

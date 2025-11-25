@@ -154,6 +154,7 @@
                     <mat-label>{{'STUDENT.ADVISOR_PRIMARY_EDU' | translate}}</mat-label>
                     <mat-select formControlName="estudioPrimarioTutor"
                         canSelectNullableOptions class="align-middle">
+                        <mat-option [value]="null">{{'COMMON.SELECT_OPTION' | translate}}</mat-option>
                         <mat-option *ngFor="let estudio of estudioEnumData$ | async" [value]="estudio.id">
                             {{estudio.description}}
                         </mat-option>
