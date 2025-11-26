@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddpersonComponent } from '../addperson/addperson.component';
 import { Store } from '@ngrx/store';
@@ -11,7 +11,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { FormBuilder } from '@angular/forms';
 import { ChangeDetectorRef } from '@angular/core';
 import { config } from '../../infra/api/config';
-import { Observable } from 'rxjs';
+import { Observable, Subject, takeUntil, filter } from 'rxjs';
 import { getLoading, getPdfReportBlob, getPdfReportError } from '../../common/store/pdfreport.selectors';
 import { pdfREPORTgenerate, pdfREPORTsuccess } from '../../common/store/pdfreport.actions';
 import { TranslateService } from '@ngx-translate/core';
@@ -21,7 +21,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './personlisting.component.html',
   styleUrl: './personlisting.component.css'
 })
-export class PersonlistingComponent implements OnInit {
+export class PersonlistingComponent implements OnInit, OnDestroy {
   personList!: Person[];
   datasource: any;
   errormessage='';
@@ -29,6 +29,7 @@ export class PersonlistingComponent implements OnInit {
   loading$: Observable<boolean> | undefined;
   pdfReportError$: Observable<string | null> | undefined;
   pdfReportUrl$: Observable<string | null> | undefined;
+  private destroy$ = new Subject<void>();
 
 
 
@@ -49,40 +50,45 @@ export class PersonlistingComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.store.select(getPdfReportBlob).subscribe(res=>{
-      if(!res)
-        return;
-      const resBlob : Blob = (res ? res : new Blob());
-      const a = document.createElement('a');
-      const blobUrl = URL.createObjectURL(resBlob);
-      a.href = blobUrl;
-      a.download = 'report.pdf';
-      a.target = '_blank';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(blobUrl);
-      //window.open(window.URL.createObjectURL(resBlob),'blank');
-      //console.log('El blob resultante es: ',res);
-    })
+    this.store.select(getPdfReportBlob)
+      .pipe(
+        filter((res) => !!res),
+        takeUntil(this.destroy$)
+      )
+      .subscribe((res) => {
+        const resBlob: Blob = (res ? res : new Blob());
+        const a = document.createElement('a');
+        const blobUrl = URL.createObjectURL(resBlob);
+        a.href = blobUrl;
+        a.download = 'report.pdf';
+        a.target = '_blank';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(blobUrl);
+      });
 
     this.store.dispatch(loadPERSON({offset: 0, limit: 5, qfilter: "", sorts: ""}));
-    this.store.select(getErrormessage).subscribe(res=>{
-      this.errormessage=res;
-    })
-    this.store.select(getpersonlist).subscribe(item => {
-      this.personList = item;
-      this.datasource = new MatTableDataSource<Person>(this.personList);
-      
-      //this.datasource.paginator = this.paginator;
-      this.datasource.sort = this.sort;
-        
     
-    });  
-    this.store.select(getTotalRows).subscribe(tot => {
-      this.totalRows=tot;
+    this.store.select(getErrormessage)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res) => {
+        this.errormessage = res;
+      });
     
-    }); 
+    this.store.select(getpersonlist)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((item) => {
+        this.personList = item;
+        this.datasource = new MatTableDataSource<Person>(this.personList);
+        this.datasource.sort = this.sort;
+      });
+    
+    this.store.select(getTotalRows)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((tot) => {
+        this.totalRows = tot;
+      });
   }
 
   addPerson(){
@@ -152,6 +158,11 @@ export class PersonlistingComponent implements OnInit {
 
     const qfilter = '[{ "property":"apellido:like", "value": "'+ this.filterForm.value.apellido+'"}]';
     this.store.dispatch(loadPERSON({offset:pageIndex*pageSize, limit: pageSize, qfilter: qfilter?.toString(),sorts}));    
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
 }

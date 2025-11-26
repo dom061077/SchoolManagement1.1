@@ -6,7 +6,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { EstudioEnum } from '../../../core/model/estudioenum.model';
-import { Observable } from 'rxjs/internal/Observable';
+import { Observable } from 'rxjs';
 import { estudioenumSelectors } from '../../../core/state/estudioenum/estudioenum.reducer';
 import { StudentFacade } from '../../../core/state/student/student.facade';
 import { EstudioEnumFacade } from '../../../core/state/estudioenum/estudioenum.facade';
@@ -105,14 +105,10 @@ export class StudentaddeditComponent implements OnInit {
     this.title = this.translate.instant(this.dialogdata.title);
     this.editcode = this.dialogdata.editcode;
     this.estudioEnumFacade.loadAll(0,100,'','');
-    this.estudioEnumError$.subscribe((error) => {
-      this.store.dispatch(NotificationActions.showNotification({
-        message: this.translate.instant('ESTUDIOENUM.LOAD_ERROR') + ': ' + error,
-        kind: 'error'
-      }));
-    });
     
   }
+
+ 
 
   onSubmit() {
    throw new Error('Method not implemented.');

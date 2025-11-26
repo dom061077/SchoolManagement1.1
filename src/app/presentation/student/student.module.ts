@@ -16,6 +16,7 @@ import { NumbersOnlyDirective } from '../shared/directives/numbers-only.directiv
 import { SharedModule } from '../shared/shared.module';
 import { estudioenumFeature } from '../../core/state/estudioenum/estudioenum.reducer';
 import { EstudioenumEffects } from '../../core/state/estudioenum/estudioenum.effects';
+import { ClearableSelectDirective } from '../shared/directives/clearable-select.directive';
 
 
 
@@ -28,6 +29,7 @@ import { EstudioenumEffects } from '../../core/state/estudioenum/estudioenum.eff
   imports: [
     CommonModule,
     SharedModule,
+    ClearableSelectDirective,
     StoreModule.forFeature(studentFeature.name, studentFeature.reducer),
     StoreModule.forFeature(estudioenumFeature.name, estudioenumFeature.reducer),
     EffectsModule.forFeature([StudentEffects, EstudioenumEffects])  ,  
