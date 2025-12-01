@@ -1,6 +1,6 @@
 import { AfterViewInit, computed, Directive, ElementRef, inject, OnDestroy, Renderer2 } from '@angular/core';
 import { MatSelect } from '@angular/material/select';
-
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 
 @Directive({
@@ -34,16 +34,38 @@ export class ClearableSelectDirective implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     // We need to wait for the MatSelect to fully render its structure.
-    setTimeout(() => {
-      this.createClearButton();
-      this.updateClearButtonVisibility();
-    });
+    this.tryCreateClearButton(5);
   }
+
+  private tryCreateClearButton(attemptsLeft: number): void {
+    if (this.clearButton) return; // Stop if already created
+
+    // Search for the wrapper, which should be the positioning context (position: relative)
+    const formFieldWrapper = this.elementRef.nativeElement.closest('.mat-mdc-text-field-wrapper');
+    
+    if (formFieldWrapper) {
+      // Success: Element found, create and attach the button
+      this.createClearButton(formFieldWrapper as HTMLElement);
+      this.updateClearButtonVisibility();
+    } else if (attemptsLeft > 0) {
+      // Failure: Element not found, schedule a retry in the next microtask
+      console.warn(`ClearableSelectDirective: Wrapper not found. Retrying... (${attemptsLeft - 1} left)`);
+      
+      // Use Promise.resolve().then() to ensure the retry runs after Angular's current cycle finishes
+      Promise.resolve().then(() => {
+        this.tryCreateClearButton(attemptsLeft - 1);
+      });
+    } else {
+      console.error('ClearableSelectDirective: CRITICAL - Failed to attach clear button after multiple retries. DOM not ready.');
+    }
+  }
+
 
   /**
    * Creates the clear button element and attaches the click listener.
+   * @param targetElement The wrapper element to append the button to.
    */
-  private createClearButton(): void {
+  private createClearButton(targetElement: HTMLElement): void {
     if (this.clearButton) return;
 
     // 1. Create the button element
@@ -56,7 +78,6 @@ export class ClearableSelectDirective implements AfterViewInit, OnDestroy {
     this.renderer.addClass(this.clearButton, 'clearable-select-button'); 
     this.renderer.addClass(this.clearButton, 'absolute');
     this.renderer.addClass(this.clearButton, 'z-10');
-    this.renderer.addClass(this.clearButton, 'right-0');
     this.renderer.addClass(this.clearButton, 'p-1');
     this.renderer.addClass(this.clearButton, 'rounded-full');
     this.renderer.addClass(this.clearButton, 'hover:bg-gray-200');
@@ -78,22 +99,8 @@ export class ClearableSelectDirective implements AfterViewInit, OnDestroy {
     });
     this.unsubscribeFn.push(listener);
 
-    // 5. Append the button to the host element's parent, which is the mat-form-field container.
-    // This allows us to position it relative to the entire form field.
-    const formFieldElement = this.elementRef.nativeElement.closest('.mat-mdc-form-field-infix');
-    if (formFieldElement) {
-      // Find the trailing action container to position the button correctly
-      const trailingContainer = formFieldElement.closest('.mat-mdc-text-field-wrapper')?.querySelector('.mat-mdc-form-field-trailing-icon');
-      if (trailingContainer) {
-        // We insert it before the dropdown arrow to occupy the same space
-        this.renderer.insertBefore(trailingContainer.parentNode, this.clearButton, trailingContainer);
-        // Add a class to the MatSelect element to make room for the new button
-        this.renderer.addClass(this.elementRef.nativeElement, 'clear-select-padding');
-      } else {
-        // Fallback: append to the form field wrapper
-        this.renderer.appendChild(this.elementRef.nativeElement.parentNode, this.clearButton);
-      }
-    }
+    // 5. Append the button to the *targetElement* (the form field wrapper).
+    this.renderer.appendChild(targetElement, this.clearButton);
   }
 
   /**
@@ -139,6 +146,6 @@ export class ClearableSelectDirective implements AfterViewInit, OnDestroy {
   }
 }
 
-function takeUntilDestroyed(): import("rxjs").OperatorFunction<any, unknown> {
-  throw new Error('Function not implemented.');
-}
+
+
+

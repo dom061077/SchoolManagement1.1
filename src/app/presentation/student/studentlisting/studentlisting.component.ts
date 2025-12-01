@@ -108,6 +108,7 @@ export class StudentlistingComponent implements OnInit, OnDestroy {
 
   openPopup(code: number, title: string){
     this.dialog.open(StudentaddeditComponent,{
+      //disableClose: true,
       enterAnimationDuration: '1000ms',
       exitAnimationDuration: '1000ms',
       width: '80vw', // 80% of the viewport width

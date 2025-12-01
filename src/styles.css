@@ -22,3 +22,37 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     color: white !important;
     border: none;
 }
+
+    /* Custom styles to make room for the clear button */
+    .mat-mdc-text-field-wrapper {
+        position: relative; /* Ensure container is positioned */
+    }
+    
+    /* Position the custom clear button precisely over the trailing icon area */
+    .clearable-select-button {
+      /* Position absolutely within the mat-form-field-wrapper */
+      top: 50%;
+      transform: translateY(-50%);
+      right: 1.5rem; /* Adjust this value to align with the arrow icon */
+      /* Override Angular Material button styles */
+      min-width: 0 !important;
+      width: 28px;
+      height: 28px;
+      line-height: 28px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+    }
+    
+    /* When the clear button is visible, push the default dropdown arrow slightly left */
+    /* And potentially adjust the padding of the select input itself */
+    :host ::ng-deep .clearable-select-host.mat-mdc-select-empty .mat-mdc-select-trigger,
+    :host ::ng-deep .clearable-select-host .mat-mdc-select-trigger {
+        padding-right: 2.5rem !important; /* Increase right padding to accommodate both icons */
+    }
+
+    /* Hide the default dropdown icon when clear button is shown (optional, cleaner look) */
+    .clearable-select-button:not([style*="display: none"]) ~ .mat-mdc-select-arrow-wrapper {
+        opacity: 0;
+        pointer-events: none;
+    }

@@ -30,9 +30,10 @@ export class StudentaddeditComponent implements OnInit {
       apellidoTutor: [''],
       nombreTutor: [''],
       estudioPrimarioTutor: [''],
+      estudioSecundarioTutor: [''],
       estudioTerUnivTutor: [''],
-      dniTutor: [''],
-      cuilTutor: [''],
+      dniTutor: ['',Validators.pattern(/^\d{8}$/)],
+      cuilTutor: ['', Validators.pattern(/^\d{2}-\d{8}-\d{1}$/)],
       parentescoTutor: ['']
     });
 
@@ -47,7 +48,7 @@ export class StudentaddeditComponent implements OnInit {
         // ^      : Start of string
         // \d+    : One or more digits (0-9). Use \d* for optional.
         // $      : End of string      
-      dni: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+      dni: ['', [Validators.required, Validators.pattern(/^\d{8}$/)]],
       //cuil: [''],
       direccion: [''],
       planSocial: [''],

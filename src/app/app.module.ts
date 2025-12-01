@@ -41,6 +41,7 @@ import { config } from './infra/api/config';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { CustomPaginatorIntlService } from './service/common/custom-paginator-intl.service';
 import { SharedModule } from './presentation/shared/shared.module';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
 export function kcFactory(kcService: KeycloakService){
   return () => kcService.init();
@@ -63,10 +64,11 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   imports: [
     BrowserModule,
+    NgxMaskDirective, NgxMaskPipe,
     AppRoutingModule,
     MaterialModule,
     HttpClientModule,
-    ReactiveFormsModule,
+    
     StudentModule,
     StoreModule.forRoot({user:UserReducer, userprofile: (state, action) =>{
         console.log('User reducer caugth action: ',action);
@@ -92,6 +94,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'es' },
+    provideNgxMask(),
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi:true },
     { provide: MatPaginatorIntl, useClass: CustomPaginatorIntlService },
     provideAnimationsAsync(),
