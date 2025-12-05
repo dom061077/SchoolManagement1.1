@@ -46,7 +46,8 @@
             <ng-container matColumnDef="action">
                 <th mat-header-cell *matHeaderCellDef>{{'COMMON.GRID_ACTIONS' | translate}}</th>
                 <td mat-cell *matCellDef="let element">
-                    <button (click)="studentEdit(element.id)" mat-raised-button color="primary">{{'COMMON.UPDATE_OPTION' | translate}}</button>
+                    <mat-icon>edit</mat-icon>
+                    <button fontIcon="home" (click)="studentEdit(element.id)" mat-raised-button color="primary">{{'COMMON.UPDATE_OPTION' | translate}}</button>
                     <button (click)="studentDelete(element.id)" mat-raised-button color="accent">{{'COMMON.CERTIFICADO' | translate}}</button>
                     
                 </td>
