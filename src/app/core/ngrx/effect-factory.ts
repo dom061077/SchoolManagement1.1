@@ -2,6 +2,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { catchError, map, mergeMap, of, tap } from 'rxjs';
 import { IPersistencePort } from '../ports/persistence-port';
+import * as NotificationActions from '../state/notification/notification.actions'; // Import NotificationActions
 
 
 export class EffectFactory<T> {
@@ -36,7 +37,10 @@ export class EffectFactory<T> {
       ofType(this.crudActions.create),
       mergeMap(({ item }) =>
         this.service.create(item).pipe(
-          map((created) => this.crudActions.createSuccess({ item: created })),
+          mergeMap((created) => [
+             this.crudActions.createSuccess({ item: created }),
+             NotificationActions.showNotification({ message: 'Created', kind: 'success' })
+          ]),
           catchError((error) => of(this.crudActions.createFailure({ error })))
         )
       )
