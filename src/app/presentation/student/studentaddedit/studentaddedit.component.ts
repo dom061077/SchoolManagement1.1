@@ -41,7 +41,7 @@ export class StudentaddeditComponent implements OnInit {
       estudioSecundarioTutor: [''],
       estudioTerUnivTutor: [''],
       dniTutor: ['',Validators.pattern(/^\d{8}$/)],
-      cuilTutor: ['', Validators.pattern(/^\d{2}-\d{8}-\d{1}$/)],
+      cuilTutor: [''/*, Validators.pattern(/^\d{2}-\d{8}-\d{1}$/)*/],
       parentescoTutor: ['']
     });
 
