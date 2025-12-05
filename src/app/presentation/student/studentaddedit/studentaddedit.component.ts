@@ -159,9 +159,9 @@ export class StudentaddeditComponent implements OnInit {
     // --- 3. HANDLE TUTOR DATA ---
     student.apellidoTutor = rawData.apellidoTutor || '';
     student.nombreTutor = rawData.nombreTutor || '';
-    student.estudioPrimarioTutor = rawData.estudioPrimarioTutor || '';
-    student.estudioSecundarioTutor = rawData.estudioSecundarioTutor || '';
-    student.estudioTerUnivTutor = rawData.estudioTerUnivTutor || '';
+    student.estudioPrimarioTutor = rawData.estudioPrimarioTutor || null;
+    student.estudioSecundarioTutor = rawData.estudioSecundarioTutor || null ;
+    student.estudioTerUnivTutor = rawData.estudioTerUnivTutor || null;
     student.dniTutor = rawData.dniTutor ? parseInt(rawData.dniTutor, 10) : 0;
     student.cuilTutor = rawData.cuilTutor || '';
     student.parentescoTutor = rawData.parentescoTutor || '';
