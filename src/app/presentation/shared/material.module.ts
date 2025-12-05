@@ -20,6 +20,7 @@ import {MatDatepickerModule  } from "@angular/material/datepicker";
 import { MatNativeDateModule } from "@angular/material/core"
 import { ReactiveFormsModule } from "@angular/forms"
 import { MatAutocompleteModule } from "@angular/material/autocomplete"
+import { MatTooltipModule } from "@angular/material/tooltip"
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { MatAutocompleteModule } from "@angular/material/autocomplete"
         MatDatepickerModule,
         MatNativeDateModule,
         ReactiveFormsModule,
-        MatAutocompleteModule
+        MatAutocompleteModule,
+        MatTooltipModule
         
     ]
 })
