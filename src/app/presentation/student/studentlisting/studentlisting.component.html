@@ -1,8 +1,12 @@
 <mat-card style="min-height: 500px;">
     <mat-card-header>
         <h1>{{'STUDENT.LIST_TITLE' | translate}}</h1>
-        <button (click) = "addStudent()" mat-raised-button color="primary" style="margin-left: 70%;">{{'STUDENT.ADD_OPTION' | translate}}
-            (+)</button>
+        <button (click) = "addStudent()" mat-fab color="primary" 
+            style="margin-left: 70%;">
+            <mat-icon>
+                add
+            </mat-icon>
+        </button>
     </mat-card-header>
     <mat-card-content>
         <div *ngIf="errormessage">
@@ -46,13 +50,16 @@
             <ng-container matColumnDef="action">
                 <th mat-header-cell *matHeaderCellDef>{{'COMMON.GRID_ACTIONS' | translate}}</th>
                 <td mat-cell *matCellDef="let element">
-                    <mat-icon matTooltip="{{'COMMON.UPDATE_OPTION' | translate}}"
-                    aria-label="User profile icon"
-                    class="action-icon"
-                    >edit</mat-icon>
-                    <button fontIcon="home" (click)="studentEdit(element.id)" mat-raised-button color="primary">{{'COMMON.UPDATE_OPTION' | translate}}</button>
-                    <button (click)="studentDelete(element.id)" mat-raised-button color="accent">{{'COMMON.CERTIFICADO' | translate}}</button>
-                    
+
+                    <button mat-fab (click)="studentEdit(element.id)" color="primary" aria-label="Example icon button with a delete icon">
+                        <mat-icon>edit</mat-icon>
+                    </button>                
+                    <button mat-fab (click)="studentDetails(element.id)" color="accent" aria-label="Example icon button with a delete icon">
+                        <mat-icon>info</mat-icon>   
+                    </button>
+                    <button mat-fab (click)="studentDelete(element.id)" color="warn" aria-label="Example icon button with a delete icon">
+                        <mat-icon>delete</mat-icon> 
+                    </button>                    
                 </td>
                 
             </ng-container>

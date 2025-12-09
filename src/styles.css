@@ -1,4 +1,28 @@
+
+
 /* You can add global styles to this file, and also import other style files */
+
+/* styles.css */
+
+/* 1. Reduce the base font size for the whole application */
+body {
+  /* Standard web default is often 16px. Reducing this scales everything down. */
+  font-size: 14px; 
+}
+
+/* 2. Target Angular Material elements to ensure they are smaller */
+/* This makes buttons, cards, and text tighter. */
+.mat-button, .mat-raised-button, .mat-flat-button {
+  font-size: 14px;
+  line-height: 1.2; /* Tighter line spacing */
+}
+
+/* 3. Target any specific icons (e.g., Material Icons) */
+.material-icons {
+  font-size: 16px; /* Ensure icons are visually balanced with the 14px text */
+  width: 16px;
+  height: 16px;
+}
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
@@ -56,3 +80,35 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
         opacity: 0;
         pointer-events: none;
     }
+
+
+/* styles.css */
+
+/* 1. Target all standard Angular Material buttons */
+.mat-button,
+.mat-raised-button,
+.mat-flat-button,
+.mat-stroked-button {
+  /* Reduce padding on the left and right */
+  padding: 0 10px !important; /* Reduced from default 16px */
+  /* Ensure the font size is consistent with your smaller setting */
+  font-size: 14px; 
+  /* Reduce the overall minimum height */
+  min-height: 32px !important; /* Reduced from default 36px or 40px */
+  line-height: 32px !important; /* Matches min-height for vertical alignment */
+}
+
+/* 2. Target icon-only buttons (mat-icon-button) */
+/* These often look too big next to smaller icons */
+.mat-icon-button {
+  width: 32px !important; /* Reduced from default 40px */
+  height: 32px !important; /* Reduced from default 40px */
+  line-height: 32px !important;
+}
+
+/* 3. Ensure the icon inside the button is the size you want */
+.mat-icon-button .mat-icon {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+}    

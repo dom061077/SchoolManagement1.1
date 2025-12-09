@@ -82,12 +82,13 @@ export class StudentlistingComponent implements OnInit, OnDestroy {
     this.loadStudents();
   }
 
-  studentEdit(id: number) {
-    // Open edit dialog
-  }
   
   studentDelete(id: number) {
     // Open delete confirmation dialog
+  }
+
+  studentDetails(id: number) {
+    // Open details view
   }
 
   sortData(event: any) {this.applyFilter();
@@ -100,6 +101,11 @@ export class StudentlistingComponent implements OnInit, OnDestroy {
         console.error('MatSort is undefined! Check the HTML template and module imports.');
     }
   }
+
+  studentEdit(id: number) {
+    this.openPopup(id,'STUDENT.EDIT_STUDENT');
+  }
+
 
   addStudent(){
     this.openPopup(0, 'STUDENT.ADD_STUDENT');

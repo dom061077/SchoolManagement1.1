@@ -15,7 +15,7 @@ export class PersistenceService<T> implements IPersistencePort<T, number, string
 
     }
     getById(id: number): Observable<T> {
-        throw new Error("Method not implemented.");
+        return this.http.get<T>(this.baseUrl+'/'+id);
     }
     create(entity: T): Observable<T> {
         return this.http.post<T>(this.baseUrl+'/create', entity );

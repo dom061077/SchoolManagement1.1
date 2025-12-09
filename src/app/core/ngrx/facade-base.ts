@@ -16,6 +16,7 @@ export class FacadeBase<T> {
      */
     private actions: {
       loadAll: (payload: { offset: number; limit: number; qfilter: string; sorts: string }) => any;
+      loadInstance: (payload: {id: string | number}) => any;
       create: (payload: { item: T }) => any;
       update: (payload: { item: T }) => any;
       delete: (payload: { id: string | number }) => any;
@@ -33,6 +34,10 @@ export class FacadeBase<T> {
 
   loadAll(offset: number, limit: number, qfilter: string, sorts: string): void {
     this.store.dispatch(this.actions.loadAll({ offset, limit, qfilter, sorts }));
+  }
+
+  loadInstance(id: string | number): void {
+    this.store.dispatch(this.actions.loadInstance({id:id}));
   }
 
   create(item: T): void {

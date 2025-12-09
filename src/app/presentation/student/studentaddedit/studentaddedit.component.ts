@@ -100,7 +100,7 @@ export class StudentaddeditComponent implements OnInit {
   }
 
   constructor( private facade: StudentFacade, private estudioEnumFacade: EstudioEnumFacade, private builder: FormBuilder, private translate: TranslateService, private ref: MatDialogRef<StudentaddeditComponent>
-     ,@Inject(MAT_DIALOG_DATA) public data:any, private store: Store){
+     ,@Inject(MAT_DIALOG_DATA) public data:{code:number, title: string}, private store: Store){
       this.title = this.translate.instant(this.title);
       this.estudioEnumData$ = this.store.select(estudioenumSelectors.selectAll) as Observable<EstudioEnum []>;  
       this.estudioEnumError$ = this.store.select(estudioenumSelectors.selectError) as Observable<any>;  
@@ -112,7 +112,7 @@ export class StudentaddeditComponent implements OnInit {
     this.title = this.translate.instant(this.dialogdata.title);
     this.editcode = this.dialogdata.editcode;
     this.estudioEnumFacade.loadAll(0,100,'','');
-    
+    this.facade.loadInstance(this.data.code)
   }
 
  transformRawDataToStudent(rawData: any): Student {
