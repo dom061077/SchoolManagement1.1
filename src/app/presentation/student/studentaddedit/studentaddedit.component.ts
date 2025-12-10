@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 import { estudioenumSelectors } from '../../../core/state/estudioenum/estudioenum.reducer';
 import { StudentFacade } from '../../../core/state/student/student.facade';
 import { EstudioEnumFacade } from '../../../core/state/estudioenum/estudioenum.facade';
+import { studentSelectors } from '../../../core/state/student/student-reducer';
 
 // Define a shape for the raw form data, where everything is a string or null/undefined
 interface RawStudentData {
@@ -112,7 +113,50 @@ export class StudentaddeditComponent implements OnInit {
     this.title = this.translate.instant(this.dialogdata.title);
     this.editcode = this.dialogdata.editcode;
     this.estudioEnumFacade.loadAll(0,100,'','');
-    this.facade.loadInstance(this.data.code)
+    this.store.select(studentSelectors.selectEntities).subscribe(entities => {
+      if (this.editcode && entities[this.editcode]) {
+        this.editdata = entities[this.editcode] as Student; 
+        this.personalDataForm.setValue({
+          id: this.editdata.id,
+          lastName: this.editdata.lastName, 
+          firstName: this.editdata.firstName,
+          birthDate: this.editdata.birthDate,
+          dni: this.editdata.dni.toString(),  
+          direccion: this.editdata.direccion,
+          planSocial: this.editdata.planSocial,
+          trabaja: this.editdata.trabaja,
+          localidad: this.editdata.localidad,
+          telefono1: this.editdata.telefono1,
+          telefono2: this.editdata.telefono2,
+        });
+        this.advisorDocForm.setValue({
+          apellidoTutor: this.editdata.apellidoTutor,
+          nombreTutor: this.editdata.nombreTutor,
+          estudioPrimarioTutor: this.editdata.estudioPrimarioTutor,
+          estudioSecundarioTutor: this.editdata.estudioSecundarioTutor,
+          estudioTerUnivTutor: this.editdata.estudioTerUnivTutor,
+          dniTutor: this.editdata.dniTutor.toString(),  
+          cuilTutor: this.editdata.cuilTutor,
+          parentescoTutor: this.editdata.parentescoTutor,
+        });
+        this.personDocForm.setValue({
+          fotoDni: this.editdata.fotoDni,
+          constanciaCuil: this.editdata.constanciaCuil, 
+          constancia6grado: this.editdata.constancia6grado,
+          actaNacimiento: this.editdata.actaNacimiento,
+          constanciaRegular: this.editdata.constanciaRegular, 
+          foto4x4: this.editdata.foto4x4,
+        });
+        this.additionalDocForm.setValue({
+          fotoCarnetVac: this.editdata.fotoCarnetVac,
+          fichaMedica: this.editdata.fichaMedica,
+          aptitudFisica: this.editdata.aptitudFisica,
+          grupoSanguineo: this.editdata.grupoSanguineo, 
+          fichaInscripcion: this.editdata.fichaInscripcion,
+          libreta6grado: this.editdata.libreta6grado,
+          fotocopiaLibroMatriz: this.editdata.fotocopiaLibroMatriz,
+        });
+      } 
   }
 
  transformRawDataToStudent(rawData: any): Student {
