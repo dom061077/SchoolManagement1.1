@@ -114,14 +114,16 @@ export class StudentaddeditComponent implements OnInit {
     this.editcode = this.dialogdata.editcode;
     this.estudioEnumFacade.loadAll(0,100,'','');
     this.store.select(studentSelectors.selectEntities).subscribe(entities => {
-      if (this.editcode && entities[this.editcode]) {
+      if (this.editcode && this.editcode > 0) {
+        this.isedit = true;
         this.editdata = entities[this.editcode] as Student; 
-        this.personalDataForm.setValue({
-          id: this.editdata.id,
-          lastName: this.editdata.lastName, 
+        this.personalDataForm.patchValue({
+          id: this.editdata.id?.toString() || '',
+          lastName: this.editdata.lastName,
           firstName: this.editdata.firstName,
-          birthDate: this.editdata.birthDate,
-          dni: this.editdata.dni.toString(),  
+          birthDate: this.editdata.birthDate ? this.editdata.birthDate.toISOString().substring(0,10) : '',
+          dni: this.editdata.dni,
+          cuil: this.editdata.cuil,
           direccion: this.editdata.direccion,
           planSocial: this.editdata.planSocial,
           trabaja: this.editdata.trabaja,
@@ -129,35 +131,73 @@ export class StudentaddeditComponent implements OnInit {
           telefono1: this.editdata.telefono1,
           telefono2: this.editdata.telefono2,
         });
-        this.advisorDocForm.setValue({
+        this.advisorDocForm.patchValue({
           apellidoTutor: this.editdata.apellidoTutor,
           nombreTutor: this.editdata.nombreTutor,
           estudioPrimarioTutor: this.editdata.estudioPrimarioTutor,
           estudioSecundarioTutor: this.editdata.estudioSecundarioTutor,
           estudioTerUnivTutor: this.editdata.estudioTerUnivTutor,
-          dniTutor: this.editdata.dniTutor.toString(),  
+          dniTutor: this.editdata.dniTutor,
           cuilTutor: this.editdata.cuilTutor,
           parentescoTutor: this.editdata.parentescoTutor,
         });
-        this.personDocForm.setValue({
+        this.personDocForm.patchValue({
           fotoDni: this.editdata.fotoDni,
-          constanciaCuil: this.editdata.constanciaCuil, 
+          constanciaCuil: this.editdata.constanciaCuil,
           constancia6grado: this.editdata.constancia6grado,
           actaNacimiento: this.editdata.actaNacimiento,
-          constanciaRegular: this.editdata.constanciaRegular, 
+          constanciaRegular: this.editdata.constanciaRegular,
           foto4x4: this.editdata.foto4x4,
         });
-        this.additionalDocForm.setValue({
+        this.additionalDocForm.patchValue({
           fotoCarnetVac: this.editdata.fotoCarnetVac,
-          fichaMedica: this.editdata.fichaMedica,
+          fichaMedica: this.editdata.fichaMedica, 
           aptitudFisica: this.editdata.aptitudFisica,
-          grupoSanguineo: this.editdata.grupoSanguineo, 
+          grupoSanguineo: this.editdata.grupoSanguineo,
           fichaInscripcion: this.editdata.fichaInscripcion,
-          libreta6grado: this.editdata.libreta6grado,
+          libreta6grado: this.editdata.libreta6grado, 
           fotocopiaLibroMatriz: this.editdata.fotocopiaLibroMatriz,
         });
-      } 
+      }
+    });
+
   }
+
+ transformStudentToRawData(student: Student): RawStudentData {
+    const rawData: RawStudentData = {};
+    // --- 1. HANDLE PERSONAL DATA ---
+    rawData.id = student.id?.toString() || '';
+    rawData.lastName = student.lastName || '';
+    rawData.firstName = student.firstName || '';
+    rawData.birthDate = student.birthDate ? student.birthDate.toISOString().substring(0,10) : '';
+    rawData.dni = student.dni?.toString() || '';
+    rawData.cuil = student.cuil || '';
+    rawData.direccion = student.direccion || '';
+    rawData.planSocial = student.planSocial;
+    rawData.trabaja = student.trabaja;
+    rawData.localidad = student.localidad || '';
+    rawData.telefono1 = student.telefono1 || '';
+    rawData.telefono2 = student.telefono2 || '';
+    // --- 2. HANDLE BOOLEAN DOCUMENTATION FIELDS ---
+    const booleanDocFields = [
+        'fotoDni', 'constanciaCuil', 'constancia6grado', 'actaNacimiento', 'constanciaRegular', 'foto4x4',
+        'fotoCarnetVac', 'fichaMedica', 'aptitudFisica', 'grupoSanguineo', 'fichaInscripcion',  
+        'libreta6grado', 'fotocopiaLibroMatriz', 'fotocopiaDniTutor', 'constanciaCuilTutor'
+    ];
+    booleanDocFields.forEach(field => {
+        rawData[field] = (student as any)[field];
+    });
+    // --- 3. HANDLE TUTOR DATA ---
+    rawData.apellidoTutor = student.apellidoTutor || '';
+    rawData.nombreTutor = student.nombreTutor || '';
+    rawData.estudioPrimarioTutor = student.estudioPrimarioTutor || null;
+    rawData.estudioSecundarioTutor = student.estudioSecundarioTutor || null ;
+    rawData.estudioTerUnivTutor = student.estudioTerUnivTutor || null;
+    rawData.dniTutor = student.dniTutor?.toString() || '';
+    rawData.cuilTutor = student.cuilTutor || '';
+    rawData.parentescoTutor = student.parentescoTutor || '';
+    return rawData;
+} 
 
  transformRawDataToStudent(rawData: any): Student {
     const student: Student = {} as Student;
