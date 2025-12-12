@@ -90,7 +90,17 @@ export class StudentaddeditComponent implements OnInit {
     });
 
 
+populateForms(student: Student) {
+  // 1. Transform the Student object into the flattened rawData object
+  const rawData = this.transformStudentToRawData(student);
 
+  // 2. Use patchValue() on each form group to populate it
+  //    It will only set the values for controls that exist in the group
+  this.personalDataForm.patchValue(rawData);
+  this.advisorDocForm.patchValue(rawData);
+  this.personDocForm.patchValue(rawData);
+  this.additionalDocForm.patchValue(rawData);
+}
 
   get lastNameControl() : AbstractControl | null{
     return this.personalDataForm.get('lastName');
