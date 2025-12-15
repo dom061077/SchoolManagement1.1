@@ -234,10 +234,10 @@ transformStudentToRawData(student: Student): RawStudentData {
       if (this.editcode && this.editcode > 0) {
         studentData.id = this.editcode;
         this.facade.update(studentData);
-        this.store.dispatch(NotificationActions.showNotification({ message: this.translate.instant('STUDENT.STUDENT_UPDATED_SUCCESS') }));
+        //this.store.dispatch(NotificationActions.showNotification({ message: this.translate.instant('STUDENT.STUDENT_UPDATED_SUCCESS') }));
       } else {
         this.facade.create(studentData);
-        this.store.dispatch(NotificationActions.showNotification({ message: this.translate.instant('STUDENT.STUDENT_ADDED_SUCCESS') }));
+        //this.store.dispatch(NotificationActions.showNotification({ message: this.translate.instant('STUDENT.STUDENT_ADDED_SUCCESS') }));
       }
       this.ref.close(true);
 

@@ -3,13 +3,16 @@ import { Injectable } from '@angular/core';
 import { catchError, map, mergeMap, of, switchMap, tap } from 'rxjs';
 import { IPersistencePort } from '../ports/persistence-port';
 import * as NotificationActions from '../state/notification/notification.actions'; // Import NotificationActions
+import { TranslateService } from '@ngx-translate/core';
 
 
 export class EffectFactory<T> {
   constructor(
     private actions$: Actions,
     private crudActions: any,
-    private service: IPersistencePort<T>/*{
+    private service: IPersistencePort<T>,
+    private translate: TranslateService
+    /*{
       list: () => any;
       create: (item: T) => any;
       update: (item: T) => any;
@@ -67,13 +70,23 @@ export class EffectFactory<T> {
       mergeMap(({ item }) =>
         this.service.update(item.id, item).pipe(
           map((updated) =>{
-            return this.crudActions.updateSuccess({ item: updated })
+            return  this.crudActions.updateSuccess({ item: updated });      
+            
+
           })
           ,catchError((error) =>{
-            return of(this.crudActions.updateFailure({ error }))
+            //return of(this.crudActions.updateFailure({ error }))
+            return of(NotificationActions.showNotification({ message: this.translate.instant('NOTIFICATION.UPDATE_ERROR. '), kind: 'error' }))
           })
         )
       )
+    )
+  );
+
+  updateSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(this.crudActions.updateSuccess),   
+      map(() => NotificationActions.showNotification({ message: this.translate.instant('NOTIFICATION.UPDATED_SUCCESS'), kind: 'success' }))
     )
   );
 
