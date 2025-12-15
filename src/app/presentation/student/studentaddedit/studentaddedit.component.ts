@@ -124,7 +124,8 @@ populateForms(student: Student) {
     this.editcode = this.dialogdata.code;
     this.estudioEnumFacade.loadAll(0,100,'','');
     this.store.select(studentSelectors.selectEntities).subscribe(entities => {
-      this.transformStudentToRawData(entities[this.editcode] as Student);
+      this.populateForms(entities[this.editcode] as Student);
+      this.markFormasAsTouched();
     });
 
   }
@@ -178,7 +179,7 @@ transformStudentToRawData(student: Student): RawStudentData {
     student.birthDate = rawData.birthDate ? new Date(rawData.birthDate) : new Date(0); 
     
     // DNI/Number fields conversion
-    student.dni = rawData.dni ? parseInt(rawData.dni, 10) : 0;
+    student.dni = rawData.dni ? parseInt(rawData.dni, 10) : null;
     student.cuil = rawData.cuil || '';
 
     // Other string fields
@@ -243,6 +244,12 @@ transformStudentToRawData(student: Student): RawStudentData {
     }
   }
 
+  markFormasAsTouched() {
+    this.personalDataForm.markAllAsTouched();
+    this.advisorDocForm.markAllAsTouched();
+    this.personDocForm.markAllAsTouched();
+    this.additionalDocForm.markAllAsTouched();
+  }
 }
 
 

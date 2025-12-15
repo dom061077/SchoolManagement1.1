@@ -49,7 +49,7 @@ export interface Student {
     lastName: string;
     firstName: string;
     birthDate: Date;
-    dni: number;
+    dni: number | null;
     cuil?: string;
     direccion?: string;
     planSocial?: boolean;
@@ -84,7 +84,7 @@ export interface Student {
     estudioPrimarioTutor?: string;
     estudioSecundarioTutor?: string;
     estudioTerUnivTutor?: string;
-    dniTutor?: number;
+    dniTutor?: number | null;
     cuilTutor?: string;
     fotocopiaDniTutor?: boolean;
     constanciaCuilTutor?: boolean;

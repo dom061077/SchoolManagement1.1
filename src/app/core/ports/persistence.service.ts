@@ -1,4 +1,4 @@
-import { Observable } from "rxjs";
+import { Observable, throwError } from "rxjs";
 import { IPersistencePort } from "./persistence-port";
 import { DataSource } from "../model/datasource.model";
 import { config } from "../../infra/api/config";
@@ -21,7 +21,7 @@ export class PersistenceService<T> implements IPersistencePort<T, number, string
         return this.http.post<T>(this.baseUrl+'/create', entity );
     }
     update(id: number, entity: T): Observable<T> {
-        throw new Error("Method not implemented.");
+         return throwError(new Error("Method not implemented."));
     }
     delete(id: number): Observable<void> {
         throw new Error("Method not implemented.");

@@ -66,8 +66,12 @@ export class EffectFactory<T> {
       ofType(this.crudActions.update),
       mergeMap(({ item }) =>
         this.service.update(item.id, item).pipe(
-          map((updated) => this.crudActions.updateSuccess({ item: updated })),
-          catchError((error) => of(this.crudActions.updateFailure({ error })))
+          map((updated) =>{
+            return this.crudActions.updateSuccess({ item: updated })
+          })
+          ,catchError((error) =>{
+            return of(this.crudActions.updateFailure({ error }))
+          })
         )
       )
     )
