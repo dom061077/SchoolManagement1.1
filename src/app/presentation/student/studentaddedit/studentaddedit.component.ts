@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Student } from '../../../core/model/student.model';
 import * as NotificationActions from '../../../core/state/notification/notification.actions';
 import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { EstudioEnum } from '../../../core/model/estudioenum.model';
@@ -28,10 +28,11 @@ export class StudentaddeditComponent implements OnInit {
 
   
   title: string = 'STUDENT.ADD_STUDENT';
-  isedit = false;
   dialogdata : any;
   editcode!: number;
   editdata!: Student;  
+  readonly: boolean = false;
+  toDelete: boolean = false;
   estudioEnumData$: Observable<EstudioEnum[]>;
   estudioEnumError$: Observable<any>;
 
@@ -111,7 +112,8 @@ populateForms(student: Student) {
   }
 
   constructor( private facade: StudentFacade, private estudioEnumFacade: EstudioEnumFacade, private builder: FormBuilder, private translate: TranslateService, private ref: MatDialogRef<StudentaddeditComponent>
-     ,@Inject(MAT_DIALOG_DATA) public data:{code:number, title: string}, private store: Store){
+     ,@Inject(MAT_DIALOG_DATA) public data:{code:number, title: string}
+     , private store: Store, private dialog: MatDialog) {
       this.title = this.translate.instant(this.title);
       this.estudioEnumData$ = this.store.select(estudioenumSelectors.selectAll) as Observable<EstudioEnum []>;  
       this.estudioEnumError$ = this.store.select(estudioenumSelectors.selectError) as Observable<any>;  
@@ -127,7 +129,17 @@ populateForms(student: Student) {
       this.populateForms(entities[this.editcode] as Student);
       this.markFormasAsTouched();
     });
-
+    if(this.editcode && this.editcode > 0){
+      this.readonly = this.dialogdata.readOnly;
+      this.toDelete = this.dialogdata.toDelete;
+      if (this.readonly){
+        this.personalDataForm.disable();
+        this.advisorDocForm.disable();
+        this.personDocForm.disable();
+        this.additionalDocForm.disable();
+      }
+    }
+    
   }
 
 transformStudentToRawData(student: Student): RawStudentData {
@@ -232,9 +244,13 @@ transformStudentToRawData(student: Student): RawStudentData {
       const studentData: Student = this.transformRawDataToStudent(rawStudentData);
 
       if (this.editcode && this.editcode > 0) {
-        studentData.id = this.editcode;
-        this.facade.update(studentData);
-        //this.store.dispatch(NotificationActions.showNotification({ message: this.translate.instant('STUDENT.STUDENT_UPDATED_SUCCESS') }));
+        if(this.toDelete){
+          this.dialog
+        }else{
+          studentData.id = this.editcode;
+          this.facade.update(studentData);
+          //this.store.dispatch(NotificationActions.showNotification({ message: this.translate.instant('STUDENT.STUDENT_UPDATED_SUCCESS') }));
+        }
       } else {
         this.facade.create(studentData);
         //this.store.dispatch(NotificationActions.showNotification({ message: this.translate.instant('STUDENT.STUDENT_ADDED_SUCCESS') }));

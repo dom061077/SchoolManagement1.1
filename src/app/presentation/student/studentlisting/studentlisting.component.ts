@@ -89,6 +89,7 @@ export class StudentlistingComponent implements OnInit, OnDestroy {
 
   studentDetails(id: number) {
     // Open details view
+    this.openPopup(id,'STUDENT.VIEW_STUDENT', true);
   }
 
   sortData(event: any) {this.applyFilter();
@@ -112,7 +113,7 @@ export class StudentlistingComponent implements OnInit, OnDestroy {
   }
 
 
-  openPopup(code: number, title: string){
+  openPopup(code: number, title: string, readOnly: boolean = false, toDelete: boolean = false) {
     this.dialog.open(StudentaddeditComponent,{
       //disableClose: true,
       enterAnimationDuration: '1000ms',
@@ -121,7 +122,9 @@ export class StudentlistingComponent implements OnInit, OnDestroy {
       height: '80vh',      
       data: {
         code: code,
-        title: title
+        readOnly: readOnly,
+        title: title,
+        toDelete: toDelete
       }      
     });
     
