@@ -56,7 +56,7 @@ export class EffectFactory<T> {
         this.service.create(item).pipe(
           mergeMap((created) => [
              this.crudActions.createSuccess({ item: created }),
-             NotificationActions.showNotification({ message: 'Created', kind: 'success' })
+             NotificationActions.showNotification({ message: this.translate.instant('NOTIFICATION.CREATED_SUCCESS'), kind: 'success' })
           ]),
           catchError((error) => of(this.crudActions.createFailure({ error })))
         )

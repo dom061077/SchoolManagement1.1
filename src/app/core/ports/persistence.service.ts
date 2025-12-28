@@ -25,7 +25,7 @@ export class PersistenceService<T> implements IPersistencePort<T, number, string
         return this.http.put<T>(this.baseUrl+'/'+id, entity );
     }
     delete(id: number): Observable<void> {
-        throw new Error("Method not implemented.");
+        return this.http.delete<void>(this.baseUrl+'/'+id);
     }
 
     list(offset: number, limit: number, qfilter: string, qsort: string): Observable<DataSource<T>>{

@@ -12,6 +12,7 @@ import { Student } from '../../../core/model/student.model';
 import { MatDialog } from '@angular/material/dialog';
 import { StudentaddeditComponent } from '../studentaddedit/studentaddedit.component';
 import { TranslateService } from '@ngx-translate/core';
+import { UiService } from '../../shared/ui.service';
 //import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -30,7 +31,7 @@ export class StudentlistingComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
   constructor(public facade: StudentFacade, private store: Store, private translate: TranslateService
-      , private fb: FormBuilder, private dialog: MatDialog) {
+      , private fb: FormBuilder, private dialog: MatDialog, private uiService: UiService) {
     
     this.filterForm = this.fb.group({
       lastName: [''],
@@ -43,10 +44,12 @@ export class StudentlistingComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loadStudents();
     this.dataSource.sort = this.sort;
-    this.data$.subscribe((students: any) => {
+    this.subscriptions.push(
+      this.data$.subscribe((students: any) => {
         this.dataSource.data = students;
         
-      });
+      }));
+
 
 
   }
@@ -85,6 +88,13 @@ export class StudentlistingComponent implements OnInit, OnDestroy {
   
   studentDelete(id: number) {
     // Open delete confirmation dialog
+   this.subscriptions.push(this.uiService.confirm(this.translate.instant('STUDENT.CONFIRM_DELETE_MESSAGE'), this.translate.instant('STUDENT.CONFIRM_DELETE_TITLE'), 'warn')
+      .subscribe(confirmed => {
+        if (confirmed) {
+          // Proceed with deletion
+          this.facade.delete(id);
+        }
+      }));
   }
 
   studentDetails(id: number) {
