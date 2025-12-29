@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { addPERSON, updatePERSON } from '../../person/store/person.actions';
 import { showalert } from '../../common/store/app.action';
 import { getperson } from '../../person/store/person.selectors';
+import { UiService } from '../../presentation/shared/ui.service';
 
 @Component({
   selector: 'app-addperson',
@@ -18,11 +19,11 @@ export class AddpersonComponent implements OnInit{
   dialogdata : any;
   editcode!: number;
   editdata!: Person;
-
+  dateformat: string;
 
   constructor(private builder: FormBuilder, private ref: MatDialogRef<AddpersonComponent>
-    ,@Inject(MAT_DIALOG_DATA) public data:any, private store: Store){
-
+    ,@Inject(MAT_DIALOG_DATA) public data:any, private store: Store, private uiservice: UiService) {
+      this.dateformat = this.uiservice.getDateFormat();
   } 
   
 

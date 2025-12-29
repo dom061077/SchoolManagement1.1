@@ -42,6 +42,8 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
 import { CustomPaginatorIntlService } from './service/common/custom-paginator-intl.service';
 import { SharedModule } from './presentation/shared/shared.module';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
+import 'moment/min/locales';
 
 export function kcFactory(kcService: KeycloakService){
   return () => kcService.init();
@@ -50,6 +52,19 @@ export function kcFactory(kcService: KeycloakService){
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, config.apiUrl+'/api/v1/translation/messages/', '');
 }
+
+// 'L' is the Moment.js token for a Localized Date (e.g., DD/MM/YYYY or MM/DD/YYYY)
+export const DYNAMIC_LOCALE_FORMATS = {
+  parse: {
+    dateInput: 'L', // This forces the parser to use the locale's format
+  },
+  display: {
+    dateInput: 'L',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 
 @NgModule({
   declarations: [ 
@@ -68,7 +83,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppRoutingModule,
     MaterialModule,
     HttpClientModule,
-    
     StudentModule,
     StoreModule.forRoot({user:UserReducer, userprofile: (state, action) =>{
         console.log('User reducer caugth action: ',action);
@@ -93,8 +107,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),    
   ],
   providers: [
-    { provide: MAT_DATE_LOCALE, useValue: 'es' },
+    
     provideNgxMask(),
+    { provide: MAT_DATE_LOCALE, useValue: navigator.language },
+    provideMomentDateAdapter(DYNAMIC_LOCALE_FORMATS),
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi:true },
     { provide: MatPaginatorIntl, useClass: CustomPaginatorIntlService },
     provideAnimationsAsync(),

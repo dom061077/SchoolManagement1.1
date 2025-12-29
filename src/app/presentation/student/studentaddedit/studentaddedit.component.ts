@@ -11,6 +11,7 @@ import { estudioenumSelectors } from '../../../core/state/estudioenum/estudioenu
 import { StudentFacade } from '../../../core/state/student/student.facade';
 import { EstudioEnumFacade } from '../../../core/state/estudioenum/estudioenum.facade';
 import { studentSelectors } from '../../../core/state/student/student-reducer';
+import { UiService } from '../../shared/ui.service';
 
 // Define a shape for the raw form data, where everything is a string or null/undefined
 interface RawStudentData {
@@ -26,7 +27,7 @@ interface RawStudentData {
 export class StudentaddeditComponent implements OnInit {
 
 
-  
+  dateformat: string;
   title: string = 'STUDENT.ADD_STUDENT';
   dialogdata : any;
   editcode!: number;
@@ -113,10 +114,11 @@ populateForms(student: Student) {
 
   constructor( private facade: StudentFacade, private estudioEnumFacade: EstudioEnumFacade, private builder: FormBuilder, private translate: TranslateService, private ref: MatDialogRef<StudentaddeditComponent>
      ,@Inject(MAT_DIALOG_DATA) public data:{code:number, title: string}
-     , private store: Store, private dialog: MatDialog) {
+     , private store: Store, private dialog: MatDialog, private uiService: UiService) {
       this.title = this.translate.instant(this.title);
       this.estudioEnumData$ = this.store.select(estudioenumSelectors.selectAll) as Observable<EstudioEnum []>;  
       this.estudioEnumError$ = this.store.select(estudioenumSelectors.selectError) as Observable<any>;  
+      this.dateformat = this.uiService.getDateFormat();
     }  
 
   

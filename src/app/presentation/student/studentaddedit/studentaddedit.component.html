@@ -43,7 +43,7 @@
                         <input   formControlName="birthDate" [matDatepicker]="pickerBirthDate" matInput 
                             class=".align-middle">
                             
-                            <mat-hint>DD/MM/YYYY</mat-hint>
+                            <mat-hint>{{dateformat}}</mat-hint>
                             <mat-datepicker-toggle matIconSuffix [for]="pickerBirthDate"></mat-datepicker-toggle>
                             <mat-datepicker #pickerBirthDate></mat-datepicker>                      
                     </mat-form-field>
