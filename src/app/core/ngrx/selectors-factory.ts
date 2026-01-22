@@ -1,4 +1,4 @@
-import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { createFeatureSelector, createSelector, select } from '@ngrx/store';
 
 export function createEntitySelectors<T>(
   featureKey: string,
@@ -15,6 +15,10 @@ export function createEntitySelectors<T>(
 
   const selectLoading = createSelector(selectFeature, state => state.loading);
   const selectError = createSelector(selectFeature, state => state.error);
+  const selectPageIndex = createSelector(selectFeature, state => state.pageIndex ?? 0);
+  const selectPageSize = createSelector(selectFeature, state => state.pageSize ?? 10);
+  const selectTotalRest = createSelector(selectFeature, state => state.total ?? 0);
 
-  return { selectFeature, selectAll, selectEntities, selectIds, selectTotal, selectLoading, selectError };
+  return { selectFeature, selectAll, selectEntities, selectIds, selectTotalRest, selectLoading
+    , selectError, selectPageIndex, selectPageSize };
 }

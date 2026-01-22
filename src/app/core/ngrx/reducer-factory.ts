@@ -14,15 +14,18 @@ export function createEntityReducer<T extends { id: string | number }>(actions: 
   const initialState: CrudState<T> = adapter.getInitialState({
     loading: false,
     error: null,
+    pageIndex: 0,
+    pageSize: 10,
+    total: 0
   });
 
   const reducer = createReducer(
     initialState,
 
     // LOAD ALL
-    on(actions.loadAll, (state) => ({ ...state, loading: true })),
-    on(actions.loadAllSuccess, (state, { items }) =>
-      adapter.setAll(items, { ...state, loading: false })
+    on(actions.loadAll, (state,{pageIndex, pageSize}) => ({ ...state, pageIndex, pageSize, loading: true })),
+    on(actions.loadAllSuccess, (state, { items, total }) =>
+      adapter.setAll(items, { ...state, total, loading: false })
     ),
     on(actions.loadAllFailure, (state, { error }) => ({ ...state, loading: false, error })),
 

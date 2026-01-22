@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, Signal } from '@angular/core';
 import { Student } from '../../../core/model/student.model';
 import * as NotificationActions from '../../../core/state/notification/notification.actions';
 import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
@@ -34,8 +34,10 @@ export class StudentaddeditComponent implements OnInit {
   editdata!: Student;  
   readonly: boolean = false;
   toDelete: boolean = false;
-  estudioEnumData$: Observable<EstudioEnum[]>;
-  estudioEnumError$: Observable<any>;
+  //estudioEnumData$: Observable<EstudioEnum[]>;
+  //estudioEnumError$: Observable<any>;
+  pageIndex: Signal<number>;
+  pageSize: Signal<number>;
 
     advisorDocForm = this.builder.group({
       apellidoTutor: [''],
@@ -126,11 +128,15 @@ populateForms(student: Student) {
     this.dialogdata = this.data;
     this.title = this.translate.instant(this.dialogdata.title);
     this.editcode = this.dialogdata.code;
+    this.pageIndex = this.store.selectSignal(estudioenumSelectors.selectPageIndex) as Signal<number>;
+    this.pageSize = this.store.selectSignal(estudioenumSelectors.selectPageSize) as Signal<number>;
     this.estudioEnumFacade.loadAll(0,100,'','');
+    /*
     this.store.select(studentSelectors.selectEntities).subscribe(entities => {
       this.populateForms(entities[this.editcode] as Student);
       this.markFormasAsTouched();
     });
+    */
     if(this.editcode && this.editcode > 0){
       this.readonly = this.dialogdata.readOnly;
       this.toDelete = this.dialogdata.toDelete;

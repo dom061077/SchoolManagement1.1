@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, Signal, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { Store } from '@ngrx/store';
@@ -23,7 +23,11 @@ import { UiService } from '../../shared/ui.service';
 export class StudentlistingComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['id', 'lastName', 'firstName', 'dni', 'action'];
   dataSource = new MatTableDataSource<Student>();
-  data$: Observable<Student[]>;
+  data: Signal<Student[]>;
+  total: Signal<number>;
+  pageIndex: Signal<number>;  
+  pageSize: Signal<number>;
+  loading: Signal<boolean>;
   errormessage : string = '';
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   @ViewChild(MatSort) sort!: MatSort;  
@@ -38,17 +42,18 @@ export class StudentlistingComponent implements OnInit, OnDestroy {
       firstName: [''],
       dni: ['']
     });
-    this.data$ = this.store.select(studentSelectors.selectAll) as Observable<Student []>;
+    this.data = this.store.selectSignal(studentSelectors.selectAll) as Signal<Student []>;
+    this.total = this.store.selectSignal(studentSelectors.selectTotalRest) as Signal<number>;
+    this.pageIndex = this.store.selectSignal(studentSelectors.selectPageIndex) as Signal<number>;    
+    this.pageSize = this.store.selectSignal(studentSelectors.selectPageSize) as Signal<number>;
+    this.loading = this.store.selectSignal(studentSelectors.selectLoading) as Signal<boolean>; 
+
   }
 
   ngOnInit(): void {
     this.loadStudents();
     this.dataSource.sort = this.sort;
-    this.subscriptions.push(
-      this.data$.subscribe((students: any) => {
-        this.dataSource.data = students;
-        
-      }));
+
 
 
 
@@ -77,7 +82,7 @@ export class StudentlistingComponent implements OnInit, OnDestroy {
 
   loadStudents() {
     //this.store.dispatch(loadStudents());
-    this.facade.loadAll(0, 5, "a", "a");
+    this.facade.loadAll(this.pageIndex(), this.pageSize(), "a", "a");
   }
 
   clearFilter() {

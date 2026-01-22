@@ -1,4 +1,4 @@
-import { EntityAdapter } from "@ngrx/entity";
+
 
 
 /*
@@ -96,8 +96,3 @@ export interface Student {
 
 }
 
-export interface StudentModel extends EntityAdapter<Student>{
-    errormessage: string,
-    isloading: boolean,
-    totalRows: number
-}

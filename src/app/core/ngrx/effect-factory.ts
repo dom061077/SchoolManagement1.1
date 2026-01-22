@@ -27,7 +27,7 @@ export class EffectFactory<T> {
         this.service.list(action.offset,action.limit, action.qfilter,action.sorts).pipe(
           tap((response) => console.log('[Effect] API response:', response)),
           map((response) => {
-            return this.crudActions.loadAllSuccess({ items:response.data })
+            return this.crudActions.loadAllSuccess({ items:response.data, total: response.total });
           }),
           catchError((e) => of(this.crudActions.loadAllFailure({ error:e.error })))
         )
