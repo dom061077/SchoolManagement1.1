@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit, Signal, ViewChild } from '@angular/core';
+import { Component, effect, OnDestroy, OnInit, Signal, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { StudentFacade } from '../../../core/state/student/student.facade';
@@ -21,13 +21,16 @@ import { UiService } from '../../shared/ui.service';
   styleUrls: ['./studentlisting.component.css']
 })
 export class StudentlistingComponent implements OnInit, OnDestroy {
+pageSizeOptions: number[] = [5,10,20];
+
   displayedColumns: string[] = ['id', 'lastName', 'firstName', 'dni', 'action'];
   dataSource = new MatTableDataSource<Student>();
-  data: Signal<Student[]>;
-  total: Signal<number>;
-  pageIndex: Signal<number>;  
-  pageSize: Signal<number>;
-  loading: Signal<boolean>;
+  data = this.store.selectSignal(studentSelectors.selectAll) as Signal<Student []>;
+  total = this.store.selectSignal(studentSelectors.selectTotalRest) as Signal<number>;
+  pageIndex = this.store.selectSignal(studentSelectors.selectPageIndex) as Signal<number>;    
+  pageSize = this.store.selectSignal(studentSelectors.selectPageSize) as Signal<number>;
+  loading = this.store.selectSignal(studentSelectors.selectLoading) as Signal<boolean>; 
+
   errormessage : string = '';
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   @ViewChild(MatSort) sort!: MatSort;  
@@ -42,25 +45,18 @@ export class StudentlistingComponent implements OnInit, OnDestroy {
       firstName: [''],
       dni: ['']
     });
-    this.data = this.store.selectSignal(studentSelectors.selectAll) as Signal<Student []>;
-    this.total = this.store.selectSignal(studentSelectors.selectTotalRest) as Signal<number>;
-    this.pageIndex = this.store.selectSignal(studentSelectors.selectPageIndex) as Signal<number>;    
-    this.pageSize = this.store.selectSignal(studentSelectors.selectPageSize) as Signal<number>;
-    this.loading = this.store.selectSignal(studentSelectors.selectLoading) as Signal<boolean>; 
+    effect(()=>{
+      this.dataSource.data = this.data();
+    });
 
   }
 
   ngOnInit(): void {
-    this.loadStudents();
     this.dataSource.sort = this.sort;
-
-
-
-
+    this.loadRecords();
   }
 
-  applyFilter(){
-      this.paginator?.firstPage();
+  loadRecords(){
     const pageIndex = this.paginator?.pageIndex;
     const pageSize = this.paginator?.pageSize;
     const sortField = this.dataSource.sort?.active;
@@ -69,25 +65,27 @@ export class StudentlistingComponent implements OnInit, OnDestroy {
     if(sortField != undefined && sortDirection!= undefined)
       sorts = '[{"property": "'+sortField+'","value":"'+sortDirection+'"}]'; 
     const qfilter = '[{ "property":"lastName:like", "value": "'+ this.filterForm.value.lastName+'"},{"property":"firstName:like", "value" : "'
-      +this.filterForm.value.firstName+'"},{"property":"dni:eq","value": '+this.filterForm.value?.dni+'}]';
+      +this.filterForm.value.firstName+'"},{"property":"dni:eq","value": '+(this.filterForm.value?.dni ? this.filterForm.value?.dni : 'null')+'}]';
     //this.store.dispatch(loadStudents({offset:pageIndex*pageSize, limit: pageSize, qfilter: qfilter?.toString(),sorts}));
     const offset = (pageIndex ?? 0) * (pageSize ?? 5);
     const limit = pageSize ?? 5;
     this.facade.loadAll(offset, limit, qfilter?.toString(), sorts);
   }
 
+  applyFilter(){
+    this.paginator?.firstPage();
+    this.loadRecords();
+  }
+
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
-  loadStudents() {
-    //this.store.dispatch(loadStudents());
-    this.facade.loadAll(this.pageIndex(), this.pageSize(), "a", "a");
-  }
+
 
   clearFilter() {
     this.filterForm.reset();
-    this.loadStudents();
+    this.loadRecords();
   }
 
   
@@ -107,7 +105,8 @@ export class StudentlistingComponent implements OnInit, OnDestroy {
     this.openPopup(id,'STUDENT.VIEW_STUDENT', true);
   }
 
-  sortData(event: any) {this.applyFilter();
+  sortData(event: any) {
+    this.applyFilter();
   }
 
   ngAfterViewInit() {
@@ -143,6 +142,11 @@ export class StudentlistingComponent implements OnInit, OnDestroy {
       }      
     });
     
+  }
+
+  onPageChange($event: PageEvent) {
+    this.loadRecords();
+
   }
 
 }

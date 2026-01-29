@@ -23,8 +23,8 @@ export class EffectFactory<T> {
   loadAll$ = createEffect(() =>
     this.actions$.pipe(
       ofType(this.crudActions.loadAll),
-      switchMap((action: { offset: number; limit: number; qfilter: string; sorts: string }) =>
-        this.service.list(action.offset,action.limit, action.qfilter,action.sorts).pipe(
+      switchMap((action: { pageIndex: number; pageSize: number; qfilter: string; sorts: string }) =>
+        this.service.list(action.pageIndex,action.pageSize, action.qfilter,action.sorts).pipe(
           tap((response) => console.log('[Effect] API response:', response)),
           map((response) => {
             return this.crudActions.loadAllSuccess({ items:response.data, total: response.total });

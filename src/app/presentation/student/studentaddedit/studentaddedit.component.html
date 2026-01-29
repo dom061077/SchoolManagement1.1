@@ -155,7 +155,7 @@
                     <mat-select formControlName="estudioPrimarioTutor" appClearableSelect
                         canSelectNullableOptions class="align-middle">
                         <mat-option [value]="null">{{'COMMON.SELECT_OPTION' | translate}}</mat-option>
-                        <mat-option *ngFor="let estudio of estudioEnumData$ | async" [value]="estudio.id">
+                        <mat-option *ngFor="let estudio of estudioEnumData()" [value]="estudio.id">
                             {{estudio.description}}
                         </mat-option>
                     </mat-select>
@@ -165,7 +165,7 @@
                     <mat-select formControlName="estudioSecundarioTutor" appClearableSelect
                         canSelectNullableOptions class="align-middle">
                         <mat-option [value]="null">{{'COMMON.SELECT_OPTION' | translate}}</mat-option>
-                        <mat-option *ngFor="let estudio of estudioEnumData$ | async" [value]="estudio.id">
+                        <mat-option *ngFor="let estudio of estudioEnumData()" [value]="estudio.id">
                             {{estudio.description}}
                         </mat-option>
                     </mat-select>
@@ -175,7 +175,7 @@
                     <mat-select formControlName="estudioTerUnivTutor" appClearableSelect
                         canSelectNullableOptions class="align-middle">
                         <mat-option [value]="null">{{'COMMON.SELECT_OPTION' | translate}}</mat-option>
-                        <mat-option *ngFor="let estudio of estudioEnumData$ | async" [value]="estudio.id">
+                        <mat-option *ngFor="let estudio of estudioEnumData()" [value]="estudio.id">
                             {{estudio.description}}
                         </mat-option>
                     </mat-select>

@@ -69,5 +69,11 @@
             <tr mat-row *matRowDef="let row;columns:displayedColumns"></tr>
         </table>
     </mat-card-content>
-
+    <mat-card-footer>
+        <mat-paginator [length]="total()"
+                       [pageSize]="pageSize()"
+                       [pageSizeOptions]="pageSizeOptions"
+                       (page)="onPageChange($event)">
+        </mat-paginator>
+    </mat-card-footer>
 </mat-card>

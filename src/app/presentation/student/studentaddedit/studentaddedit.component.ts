@@ -26,7 +26,7 @@ interface RawStudentData {
 })
 export class StudentaddeditComponent implements OnInit {
 
-
+  selectEntities = this.store.selectSignal(studentSelectors.selectEntities) as Signal<{[id: number]: Student}>;
   dateformat: string;
   title: string = 'STUDENT.ADD_STUDENT';
   dialogdata : any;
@@ -34,10 +34,9 @@ export class StudentaddeditComponent implements OnInit {
   editdata!: Student;  
   readonly: boolean = false;
   toDelete: boolean = false;
-  //estudioEnumData$: Observable<EstudioEnum[]>;
+  estudioEnumData: Signal<EstudioEnum[]>;
   //estudioEnumError$: Observable<any>;
-  pageIndex: Signal<number>;
-  pageSize: Signal<number>;
+
 
     advisorDocForm = this.builder.group({
       apellidoTutor: [''],
@@ -118,9 +117,9 @@ populateForms(student: Student) {
      ,@Inject(MAT_DIALOG_DATA) public data:{code:number, title: string}
      , private store: Store, private dialog: MatDialog, private uiService: UiService) {
       this.title = this.translate.instant(this.title);
-      this.estudioEnumData$ = this.store.select(estudioenumSelectors.selectAll) as Observable<EstudioEnum []>;  
-      this.estudioEnumError$ = this.store.select(estudioenumSelectors.selectError) as Observable<any>;  
+      this.estudioEnumData = this.store.selectSignal(estudioenumSelectors.selectAll) as Signal<EstudioEnum []>;  
       this.dateformat = this.uiService.getDateFormat();
+
     }  
 
   
@@ -128,8 +127,6 @@ populateForms(student: Student) {
     this.dialogdata = this.data;
     this.title = this.translate.instant(this.dialogdata.title);
     this.editcode = this.dialogdata.code;
-    this.pageIndex = this.store.selectSignal(estudioenumSelectors.selectPageIndex) as Signal<number>;
-    this.pageSize = this.store.selectSignal(estudioenumSelectors.selectPageSize) as Signal<number>;
     this.estudioEnumFacade.loadAll(0,100,'','');
     /*
     this.store.select(studentSelectors.selectEntities).subscribe(entities => {
@@ -137,6 +134,7 @@ populateForms(student: Student) {
       this.markFormasAsTouched();
     });
     */
+    this.populateForms(this.selectEntities()[this.editcode] as Student);
     if(this.editcode && this.editcode > 0){
       this.readonly = this.dialogdata.readOnly;
       this.toDelete = this.dialogdata.toDelete;
