@@ -6,6 +6,7 @@ import { StudentlistingComponent } from './studentlisting/studentlisting.compone
 
 const routes = [ 
   // Define your routes here
+  { path: '', component: StudentlistingComponent },
   { path: 'list', component: StudentlistingComponent }
 ];
      

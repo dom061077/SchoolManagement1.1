@@ -31,6 +31,14 @@ export class KeycloakService {
     return this._keycloak;
   }
 
+  hastRole(rol:string){
+    return this.keycloak.hasRealmRole(rol);
+   
+  }
+
+  hasResourceRole(rol:string){
+    return this.keycloak.hasResourceRole(rol);
+  }
 
   async init(...args: []) {
     console.log('Authenticating the user...');

@@ -44,6 +44,8 @@ import { SharedModule } from './presentation/shared/shared.module';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 import 'moment/min/locales';
+import { IfPermissionDirective } from './directive/if-permission.directive';
+import { IfRoleDirective } from './directive/if-role.directive';
 
 export function kcFactory(kcService: KeycloakService){
   return () => kcService.init();
@@ -75,7 +77,9 @@ export const DYNAMIC_LOCALE_FORMATS = {
     MenubarComponent,
     ConfirmDialogDirective,
     ConfirmationDialogComponent,
-    NotificationComponent
+    NotificationComponent,
+    IfPermissionDirective,
+    IfRoleDirective
   ],
   imports: [
     BrowserModule,
