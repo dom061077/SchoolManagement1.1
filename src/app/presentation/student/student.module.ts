@@ -18,6 +18,7 @@ import { estudioenumFeature } from '../../core/state/estudioenum/estudioenum.red
 import { EstudioenumEffects } from '../../core/state/estudioenum/estudioenum.effects';
 import { ClearableSelectDirective } from '../shared/directives/clearable-select.directive';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 
@@ -31,6 +32,7 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
     CommonModule,
     NgxMaskDirective, NgxMaskPipe,
     SharedModule,
+    NgSelectModule,
     ClearableSelectDirective,
     StoreModule.forFeature(studentFeature.name, studentFeature.reducer),
     StoreModule.forFeature(estudioenumFeature.name, estudioenumFeature.reducer),

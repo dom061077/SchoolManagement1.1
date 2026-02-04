@@ -8,7 +8,12 @@
     <mat-step [stepControl]="personalDataForm" errorMessage="Name is required.">
         <form [formGroup]="personalDataForm"  >
             <ng-template matStepLabel> {{'STUDENT.STEP_PERSONAL_DATA' | translate}}  </ng-template>
- 
+                     <ng-select [items]="estudioEnumData()"
+                        bindLabel="description"
+                        bindValue="id"
+                        placeholder="{{'COMMON.SELECT_OPTION' | translate}}">
+
+                    </ng-select>
                     <mat-card-content [style.overflow]="'auto'" >
                         <mat-form-field>
                             <mat-label>{{'STUDENT.DNI' | translate}}</mat-label>
@@ -47,6 +52,8 @@
                             <mat-datepicker-toggle matIconSuffix [for]="pickerBirthDate"></mat-datepicker-toggle>
                             <mat-datepicker #pickerBirthDate></mat-datepicker>                      
                     </mat-form-field>
+
+
 
                     </mat-card-content>
                     <div>
