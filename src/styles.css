@@ -112,3 +112,53 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   height: 20px;
   font-size: 20px;
 }    
+
+/*****************fix ng-select*******************/
+/* Container for the fields to ensure identical width */
+.form-grid {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px; /* Space between fields */
+  max-width: 400px; /* Or whatever width you need */
+  width: 100%;
+}
+
+/* 1. Reset ng-select to look like Material Outline */
+.ng-select.material-style-select .ng-control {
+  background-color: transparent !important;
+  border: 1px solid rgba(0, 0, 0, 0.38) !important; /* Standard MDC outline color */
+  border-radius: 4px !important;
+  min-height: 56px !important; /* Standard MDC height */
+  align-items: center;
+  padding: 0 16px;
+  transition: border-color 0.2s, border-width 0.1s;
+}
+
+/* 2. Style on Hover */
+.ng-select.material-style-select:hover .ng-control {
+  border-color: rgba(0, 0, 0, 0.87) !important;
+}
+
+/* 3. Style on Focus (Material Blue/Primary) */
+.ng-select.material-style-select.ng-select-opened .ng-control {
+  border-color: #3f51b5 !important; /* Change to your primary theme color */
+  border-width: 2px !important;
+}
+
+/* 4. Align Placeholder Text with Material Label */
+.ng-select.material-style-select .ng-placeholder {
+  color: rgba(0, 0, 0, 0.6);
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  top: 18px;
+}
+
+/* 5. Match the Dropdown Panel with Material elevation */
+.ng-dropdown-panel.ng-select-bottom {
+  border: none !important;
+  box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 
+              0 8px 10px 1px rgba(0,0,0,.14), 
+              0 3px 14px 2px rgba(0,0,0,.12) !important;
+  background: white;
+}
+/*****************fix ng-select*******************/
