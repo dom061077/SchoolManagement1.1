@@ -15,7 +15,7 @@ export class FacadeBase<T> {
      * The actions parameter is the dependency injection point for the CRUD-related actions created by your createCrudActions factory.
      */
     private actions: {
-      loadAll: (payload: { pageIndex: number; pageSize: number; qfilter: string; sorts: string }) => any;
+      loadAll: (payload: { pageIndex: number; pageSize: number; qfilter: string; sorts: string; loperator:string}) => any;
       loadAllSuccess: (payload: { items: T[]; total: number }) => any;
       loadAllFailure: (payload: { error: any }) => any;
       loadInstance: (payload: { id: string | number }) => any;
@@ -55,8 +55,8 @@ selectFeature, selectAll, selectEntities, selectIds, selectTotalRest, selectLoad
     this.error = this.store.selectSignal(this.selectors.selectError);
   }
 
-  loadAll(pageIndex: number, pageSize: number, qfilter: string, sorts: string): void {
-    this.store.dispatch(this.actions.loadAll({ pageIndex, pageSize, qfilter, sorts }));
+  loadAll(pageIndex: number, pageSize: number, qfilter: string, sorts: string, loperator: string): void {
+    this.store.dispatch(this.actions.loadAll({ pageIndex, pageSize, qfilter, sorts, loperator }));
   }
 
 

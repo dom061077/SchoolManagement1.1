@@ -9,7 +9,7 @@ export function createCrudActions<T>(entity: string) {
   const prefix = `[${entity}]`;
 
   return {
-    loadAll: createAction(`${prefix} Load All`, props<{pageIndex:number,pageSize: number, qfilter?:string, sorts?:string}>()),
+    loadAll: createAction(`${prefix} Load All`, props<{pageIndex:number,pageSize: number, qfilter?:string, sorts?:string, loperator?:string}>()),
     loadAllSuccess: createAction(`${prefix} Load All Success`, props<{ items: T[], total: number }>()),
     loadAllFailure: createAction(`${prefix} Load All Failure`, props<{ error: any }>()),
 

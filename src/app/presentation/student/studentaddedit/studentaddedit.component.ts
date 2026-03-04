@@ -127,7 +127,7 @@ populateForms(student: Student) {
     this.dialogdata = this.data;
     this.title = this.translate.instant(this.dialogdata.title);
     this.editcode = this.dialogdata.code;
-    this.estudioEnumFacade.loadAll(0,100,'','');
+    this.estudioEnumFacade.loadAll(0,100,'[]','[]','AND');
     /*
     this.store.select(studentSelectors.selectEntities).subscribe(entities => {
       this.populateForms(entities[this.editcode] as Student);

@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { StudentaddeditComponent } from '../studentaddedit/studentaddedit.component';
 import { TranslateService } from '@ngx-translate/core';
 import { UiService } from '../../shared/ui.service';
+import { QueryFIlterCriterion } from '../../../core/model/query-filter-criterion';
 //import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -64,12 +65,27 @@ pageSizeOptions: number[] = [5,10,20];
     var sorts = '';
     if(sortField != undefined && sortDirection!= undefined)
       sorts = '[{"property": "'+sortField+'","value":"'+sortDirection+'"}]'; 
-    const qfilter = '[{ "property":"lastName:like", "value": "'+ this.filterForm.value.lastName+'"},{"property":"firstName:like", "value" : "'
-      +this.filterForm.value.firstName+'"},{"property":"dni:eq","value": '+(this.filterForm.value?.dni ? this.filterForm.value?.dni : 'null')+'}]';
-    //this.store.dispatch(loadStudents({offset:pageIndex*pageSize, limit: pageSize, qfilter: qfilter?.toString(),sorts}));
+    const qfilter : QueryFIlterCriterion[] = [{
+      property: 'lastName:like',
+      value: this.filterForm.value.lastName
+      },{
+      property: 'firstName:like',
+      value: this.filterForm.value.firstName
+      }
+    ];
+    if(this.filterForm.value.dni)
+      qfilter.push({
+        property: 'dni:eq',
+        value: this.filterForm.value.dni
+      });
+
+    
+    //const qfilter = ""
+    //  '[{ "property":"lastName:like", "value": "'+ this.filterForm.value.lastName+'"},{"property":"firstName:like", "value" : "'
+    //  +this.filterForm.value.firstName+'"},{"property":"dni:eq","value": '+(this.filterForm.value?.dni ? this.filterForm.value?.dni : 'null')+'}]';
     const offset = (pageIndex ?? 0) * (pageSize ?? 5);
     const limit = pageSize ?? 5;
-    this.facade.loadAll(offset, limit, qfilter?.toString(), sorts);
+    this.facade.loadAll(offset, limit, JSON.stringify(qfilter), sorts,'AND');
   }
 
   applyFilter(){

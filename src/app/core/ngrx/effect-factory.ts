@@ -24,10 +24,10 @@ export class EffectFactory<T> {
     this.actions$.pipe(
       ofType(this.crudActions.loadAll),
       switchMap((action: { pageIndex: number; pageSize: number; qfilter: string; sorts: string }) =>
-        this.service.list(action.pageIndex,action.pageSize, action.qfilter,action.sorts).pipe(
+        this.service.list(action.pageIndex,action.pageSize, action.qfilter,action.sorts,'AND').pipe(
           tap((response) => console.log('[Effect] API response:', response)),
           map((response) => {
-            return this.crudActions.loadAllSuccess({ items:response.data, total: response.total });
+            return this.crudActions.loadAllSuccess({ items:response.content, total: response.totalElements });
           }),
           catchError((e) => of(this.crudActions.loadAllFailure({ error:e.error })))
         )

@@ -28,12 +28,13 @@ export class PersistenceService<T> implements IPersistencePort<T, number, string
         return this.http.delete<void>(this.baseUrl+'/'+id);
     }
 
-    list(offset: number, limit: number, qfilter: string, qsort: string): Observable<DataSource<T>>{
+    list(offset: number, limit: number, qfilter: string, qsort: string, loperator: string): Observable<DataSource<T>>{
         let queryParams = new HttpParams();
         queryParams = queryParams.append("offset",offset);
         queryParams = queryParams.append("limit",limit);
         queryParams = queryParams.append("qfilters", qfilter);
         queryParams = queryParams.append("sorts",qsort);
+        queryParams = queryParams.append("loperator",loperator);
     
     
         return this.http.get<DataSource<T>>(this.baseUrl+'/list',{params: queryParams});

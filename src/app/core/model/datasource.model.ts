@@ -1,6 +1,6 @@
 
 
 export interface DataSource<T> {
-    total: number,
-    data: T[]
+    totalElements: number,
+    content: T[]
 }
