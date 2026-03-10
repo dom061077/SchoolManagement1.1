@@ -56,14 +56,42 @@
                                         appendTo="body"
                                         class="material-style-select"
                                         dropdownPosition="bottom"
-                                        placeholder="{{'COMMON.SELECT_OPTION' | translate}}">
+                                        placeholder="{{'COMMON.SELECT_EDUCATION_STATE' | translate}}">
                             </ng-select>
+                            <ng-select [searchable]="true"
+                                appendTo=".select-wrapper"
+                                bindLabel="description"
+                                bindValue="id"
+                                appendTo="body"
+                                class="material-style-select"
+                                dropdownPosition="bottom"
+                                placeholder="{{'COMMON.SELECT_PROVINCE' | translate}}">
+                                
+                            </ng-select>
+                            <ng-select [searchable]="true"
+                                appendTo=".select-wrapper"
+                                bindLabel="description"
+                                bindValue="id"
+                                appendTo="body"
+                                class="material-style-select"
+                                dropdownPosition="bottom"
+                                placeholder="{{'COMMON.SELECT_DEPARTMENT' | translate}}">
+                            </ng-select>
+                            <ng-select [searchable]="true"
+                                appendTo=".select-wrapper"
+                                bindLabel="description"
+                                bindValue="id"
+                                appendTo="body"
+                                class="material-style-select"
+                                dropdownPosition="bottom"
+                                placeholder="{{'COMMON.SELECT_LOCALITY' | translate}}">
+                            </ng-select>                                                
                         </div>   
 
                     </mat-card-content>
                     <div>
                         
-                        <button mat-raised-button color="primary" [disabled]="personalDataForm.invalid"  matStepperNext>{{'COMMON.NEXT_BTN' | translate}}></button>
+                        <button mat-raised-button color="primary" [disabled]="personalDataForm.invalid"  matStepperNext>{{'COMMON.NEXT_BTN' | translate}}</button>
                     </div>                    
 
         </form>
