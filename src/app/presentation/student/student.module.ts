@@ -19,6 +19,8 @@ import { EstudioenumEffects } from '../../core/state/estudioenum/estudioenum.eff
 import { ClearableSelectDirective } from '../shared/directives/clearable-select.directive';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { localityFeature } from '@app/core/state/location/locality/localty.reducer';
+import { LocaltyEffects } from '@app/core/state/location/locality/localty.effects';
 
 
 
@@ -36,7 +38,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
     ClearableSelectDirective,
     StoreModule.forFeature(studentFeature.name, studentFeature.reducer),
     StoreModule.forFeature(estudioenumFeature.name, estudioenumFeature.reducer),
-    EffectsModule.forFeature([StudentEffects, EstudioenumEffects])  ,  
+    StoreModule.forFeature(localityFeature.name, localityFeature.reducer),
+    EffectsModule.forFeature([StudentEffects, EstudioenumEffects, LocaltyEffects])  ,  
+    MaterialModule,
     MatStepperModule,
     StudentRoutingModule,
     TranslateModule.forRoot({

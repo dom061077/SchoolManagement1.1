@@ -12,6 +12,8 @@ import { StudentFacade } from '../../../core/state/student/student.facade';
 import { EstudioEnumFacade } from '../../../core/state/estudioenum/estudioenum.facade';
 import { studentSelectors } from '../../../core/state/student/student-reducer';
 import { UiService } from '../../shared/ui.service';
+import { Localty } from '@app/core/model/localty.model';
+import { localitySelectors } from '@app/core/state/location/locality/localty.reducer';
 
 // Define a shape for the raw form data, where everything is a string or null/undefined
 interface RawStudentData {
@@ -35,6 +37,7 @@ export class StudentaddeditComponent implements OnInit {
   readonly: boolean = false;
   toDelete: boolean = false;
   estudioEnumData: Signal<EstudioEnum[]>;
+  localtyData: Signal<Localty[]> ;
   //estudioEnumError$: Observable<any>;
 
 
@@ -113,11 +116,12 @@ populateForms(student: Student) {
     return this.personalDataForm.get('dni');
   }
 
-  constructor( private facade: StudentFacade, private estudioEnumFacade: EstudioEnumFacade, private builder: FormBuilder, private translate: TranslateService, private ref: MatDialogRef<StudentaddeditComponent>
+  constructor( private facade: StudentFacade, private localtyFacade: StudentFacade, private estudioEnumFacade: EstudioEnumFacade, private builder: FormBuilder, private translate: TranslateService, private ref: MatDialogRef<StudentaddeditComponent>
      ,@Inject(MAT_DIALOG_DATA) public data:{code:number, title: string}
      , private store: Store, private dialog: MatDialog, private uiService: UiService) {
       this.title = this.translate.instant(this.title);
       this.estudioEnumData = this.store.selectSignal(estudioenumSelectors.selectAll) as Signal<EstudioEnum []>;  
+      this.localtyData = this.store.selectSignal(localitySelectors.selectAll as Signal<Localty []> );
       this.dateformat = this.uiService.getDateFormat();
 
     }  
@@ -128,14 +132,17 @@ populateForms(student: Student) {
     this.title = this.translate.instant(this.dialogdata.title);
     this.editcode = this.dialogdata.code;
     this.estudioEnumFacade.loadAll(0,100,'[]','[]','AND');
+    this.localtyFacade.loadAll(0,100,'[]','[]','AND');
+    
+
     /*
     this.store.select(studentSelectors.selectEntities).subscribe(entities => {
       this.populateForms(entities[this.editcode] as Student);
       this.markFormasAsTouched();
     });
     */
-    this.populateForms(this.selectEntities()[this.editcode] as Student);
     if(this.editcode && this.editcode > 0){
+      this.populateForms(this.selectEntities()[this.editcode] as Student);
       this.readonly = this.dialogdata.readOnly;
       this.toDelete = this.dialogdata.toDelete;
       if (this.readonly){
@@ -151,7 +158,7 @@ populateForms(student: Student) {
 transformStudentToRawData(student: Student): RawStudentData {
     const rawData: RawStudentData = {};
     // --- 1. HANDLE PERSONAL DATA ---
-    rawData['id'] = student.id?.toString() || '';
+    rawData['id'] = student?.id?.toString() || '';
     rawData['lastName'] = student.lastName || '';
     rawData['firstName'] = student.firstName || '';
     rawData['birthDate'] = student.birthDate ? student.birthDate : '';//student.birthDate ? student.birthDate.toISOString().substring(0,10) : '';
