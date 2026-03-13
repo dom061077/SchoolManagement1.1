@@ -14,6 +14,10 @@ import { studentSelectors } from '../../../core/state/student/student-reducer';
 import { UiService } from '../../shared/ui.service';
 import { Localty } from '@app/core/model/localty.model';
 import { localitySelectors } from '@app/core/state/location/locality/localty.reducer';
+import { LocaltyFacade } from '@app/core/state/location/locality/localty.facade';
+import { Province } from '@app/core/model/province.model';
+import { provinceSelectors } from '@app/core/state/location/province/province.redurers';
+import { ProvinceFacade } from '@app/core/state/location/province/province.facade';
 
 // Define a shape for the raw form data, where everything is a string or null/undefined
 interface RawStudentData {
@@ -38,6 +42,7 @@ export class StudentaddeditComponent implements OnInit {
   toDelete: boolean = false;
   estudioEnumData: Signal<EstudioEnum[]>;
   localtyData: Signal<Localty[]> ;
+  provinceData: Signal<Province[]>;
   //estudioEnumError$: Observable<any>;
 
 
@@ -116,12 +121,13 @@ populateForms(student: Student) {
     return this.personalDataForm.get('dni');
   }
 
-  constructor( private facade: StudentFacade, private localtyFacade: StudentFacade, private estudioEnumFacade: EstudioEnumFacade, private builder: FormBuilder, private translate: TranslateService, private ref: MatDialogRef<StudentaddeditComponent>
+  constructor( private facade: StudentFacade, private provinceFacade: ProvinceFacade, private localtyFacade: LocaltyFacade, private estudioEnumFacade: EstudioEnumFacade, private builder: FormBuilder, private translate: TranslateService, private ref: MatDialogRef<StudentaddeditComponent>
      ,@Inject(MAT_DIALOG_DATA) public data:{code:number, title: string}
      , private store: Store, private dialog: MatDialog, private uiService: UiService) {
       this.title = this.translate.instant(this.title);
       this.estudioEnumData = this.store.selectSignal(estudioenumSelectors.selectAll) as Signal<EstudioEnum []>;  
       this.localtyData = this.store.selectSignal(localitySelectors.selectAll as Signal<Localty []> );
+      this.provinceData = this.store.selectSignal(provinceSelectors.selectAll) as Signal<Province []>;
       this.dateformat = this.uiService.getDateFormat();
 
     }  
@@ -133,6 +139,7 @@ populateForms(student: Student) {
     this.editcode = this.dialogdata.code;
     this.estudioEnumFacade.loadAll(0,100,'[]','[]','AND');
     this.localtyFacade.loadAll(0,100,'[]','[]','AND');
+    this.provinceFacade.loadAll(0,100,'[]','[]','AND');
     
 
     /*

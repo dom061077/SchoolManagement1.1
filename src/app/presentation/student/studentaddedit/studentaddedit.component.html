@@ -58,9 +58,9 @@
                                         dropdownPosition="bottom"
                                         placeholder="{{'COMMON.SELECT_EDUCATION_STATE' | translate}}">
                             </ng-select>
-                            <ng-select [searchable]="true"
+                            <ng-select [searchable]="true" [items] = "provinceData()"
                                 appendTo=".select-wrapper"
-                                bindLabel="description"
+                                bindLabel="nomnbre"
                                 bindValue="id"
                                 appendTo="body"
                                 class="material-style-select"
@@ -77,9 +77,9 @@
                                 dropdownPosition="bottom"
                                 placeholder="{{'COMMON.SELECT_DEPARTMENT' | translate}}">
                             </ng-select>
-                            <ng-select [searchable]="true"
+                            <ng-select [searchable]="true" [items] = "localtyData()"
                                 appendTo=".select-wrapper"
-                                bindLabel="description"
+                                bindLabel="nombre"
                                 bindValue="id"
                                 appendTo="body"
                                 class="material-style-select"

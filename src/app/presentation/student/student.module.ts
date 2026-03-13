@@ -21,6 +21,8 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { localityFeature } from '@app/core/state/location/locality/localty.reducer';
 import { LocaltyEffects } from '@app/core/state/location/locality/localty.effects';
+import { provinceFeature } from '@app/core/state/location/province/province.redurers';
+import { ProvinceEffects } from '@app/core/state/location/province/province.effects';
 
 
 
@@ -39,7 +41,8 @@ import { LocaltyEffects } from '@app/core/state/location/locality/localty.effect
     StoreModule.forFeature(studentFeature.name, studentFeature.reducer),
     StoreModule.forFeature(estudioenumFeature.name, estudioenumFeature.reducer),
     StoreModule.forFeature(localityFeature.name, localityFeature.reducer),
-    EffectsModule.forFeature([StudentEffects, EstudioenumEffects, LocaltyEffects])  ,  
+    StoreModule.forFeature(provinceFeature.name, provinceFeature.reducer),
+    EffectsModule.forFeature([StudentEffects, EstudioenumEffects, LocaltyEffects, ProvinceEffects])  ,  
     MaterialModule,
     MatStepperModule,
     StudentRoutingModule,
