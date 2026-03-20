@@ -126,7 +126,7 @@ populateForms(student: Student) {
      , private store: Store, private dialog: MatDialog, private uiService: UiService) {
       this.title = this.translate.instant(this.title);
       this.estudioEnumData = this.store.selectSignal(estudioenumSelectors.selectAll) as Signal<EstudioEnum []>;  
-      this.localtyData = this.store.selectSignal(localitySelectors.selectAll as Signal<Localty []> );
+      this.localtyData = this.store.selectSignal(localitySelectors.selectAll as unknown as Signal<Localty []> );
       this.provinceData = this.store.selectSignal(provinceSelectors.selectAll) as Signal<Province []>;
       this.dateformat = this.uiService.getDateFormat();
 

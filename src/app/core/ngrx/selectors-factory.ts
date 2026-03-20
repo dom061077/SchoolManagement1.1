@@ -1,10 +1,13 @@
+import { EntityAdapter } from '@ngrx/entity';
 import { createFeatureSelector, createSelector, select } from '@ngrx/store';
+import { CrudState } from './reducer-factory';
+import { CrudSelectorMap } from './crud-selector-map';
 
 export function createEntitySelectors<T>(
   featureKey: string,
-  adapter: any
-) {
-  const selectFeature = createFeatureSelector<any>(featureKey);
+  adapter: EntityAdapter<T>
+): CrudSelectorMap<T> {
+  const selectFeature = createFeatureSelector<CrudState<T>>(featureKey);
 
   const {
     selectAll,

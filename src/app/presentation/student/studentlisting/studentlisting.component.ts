@@ -30,7 +30,7 @@ pageSizeOptions: number[] = [5,10,20];
   total = this.store.selectSignal(studentSelectors.selectTotalRest) as Signal<number>;
   pageIndex = this.store.selectSignal(studentSelectors.selectPageIndex) as Signal<number>;    
   pageSize = this.store.selectSignal(studentSelectors.selectPageSize) as Signal<number>;
-  loading = this.store.selectSignal(studentSelectors.selectLoading) as Signal<boolean>; 
+ // loading = this.store.selectSignal(studentSelectors.selectLoading) as Signal<boolean>; 
 
   errormessage : string = '';
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;

@@ -1,8 +1,6 @@
-import { Injectable, Signal } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { EntityState } from '@ngrx/entity';
-
+import { Signal } from '@angular/core';
+import { MemoizedSelector, Store } from '@ngrx/store';
+import { CrudSelectorMap } from './crud-selector-map';
 
 export class FacadeBase<T> {
   items: Signal<T[]>;
@@ -10,12 +8,11 @@ export class FacadeBase<T> {
   error: Signal<any>;
 
   constructor(
-    private store: Store<{ feature: EntityState<T> }>,
-    /**
-     * The actions parameter is the dependency injection point for the CRUD-related actions created by your createCrudActions factory.
-     */
+    // Use 'any' or a global state interface for the Store root
+    private store: Store<any>, 
+    
     private actions: {
-      loadAll: (payload: { pageIndex: number; pageSize: number; qfilter: string; sorts: string; loperator:string}) => any;
+      loadAll: (payload: { pageIndex: number; pageSize: number; qfilter: string; sorts: string; loperator: string }) => any;
       loadAllSuccess: (payload: { items: T[]; total: number }) => any;
       loadAllFailure: (payload: { error: any }) => any;
       loadInstance: (payload: { id: string | number }) => any;
@@ -29,32 +26,15 @@ export class FacadeBase<T> {
       updateFailure: (payload: { error: any }) => any;
       delete: (payload: { id: string | number }) => any;
       deleteSuccess: (payload: { id: string | number }) => any;
-      deleteFailure: (payload: { error: any }) => any;
-    
-
+      deleteFailure: (payload: { error: any }) => any; // Allows for flexibility with generated actions
     },
 
-    /*
-selectFeature, selectAll, selectEntities, selectIds, selectTotalRest, selectLoading
-    , selectError, selectPageIndex, selectPageSize    
-    */
-    private selectors: {
-      selectFeature: (state: any) => any;
-      selectAll: (state: any) => T[];
-      selectEntities: (state: any) => { [id: string]: T };
-      selectIds: (state: any) => string[] | number[];
-      selectTotalRest: (state: any) => number;
-      selectLoading: (state: any) => boolean;
-      selectError: (state: any) => any;
-      selectPageIndex: (state: any) => number;
-      selectPageSize: (state: any) => number;
-    }
+    private selectors: CrudSelectorMap<T>
   ) {
     this.items = this.store.selectSignal(this.selectors.selectAll);
     this.loading = this.store.selectSignal(this.selectors.selectLoading);
     this.error = this.store.selectSignal(this.selectors.selectError);
   }
-
   loadAll(pageIndex: number, pageSize: number, qfilter: string, sorts: string, loperator: string): void {
     this.store.dispatch(this.actions.loadAll({ pageIndex, pageSize, qfilter, sorts, loperator }));
   }
@@ -71,4 +51,5 @@ selectFeature, selectAll, selectEntities, selectIds, selectTotalRest, selectLoad
   delete(id: string | number): void {
     this.store.dispatch(this.actions.delete({ id }));
   }
+
 }

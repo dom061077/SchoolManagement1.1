@@ -4,6 +4,9 @@ import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 export interface CrudState<T> extends EntityState<T> {
   loading: boolean;
   error: any;
+  pageIndex: number;
+  pageSize: number;
+  total: number;
 }
 
 export function createEntityReducer<T extends { id: string | number }>(actions: any) {
