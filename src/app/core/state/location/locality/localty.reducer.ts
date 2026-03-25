@@ -10,6 +10,7 @@ const { reducer, adapter, initialState } = createEntityReducer<Localty>(locality
 
 /*
   In the below snippet code I define the LocaltyFeature will be used in student module to register the store feature
+  
 */
 
 export const localityFeature = createFeature({
