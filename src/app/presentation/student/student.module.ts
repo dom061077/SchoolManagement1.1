@@ -21,7 +21,7 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { localityFeature } from '@app/core/state/location/locality/localty.reducer';
 import { LocaltyEffects } from '@app/core/state/location/locality/localty.effects';
-import { provinceFeature } from '@app/core/state/location/province/province.redurers';
+import { provinceFeature } from '@app/core/state/location/province/province.reducer';
 import { ProvinceEffects } from '@app/core/state/location/province/province.effects';
 
 

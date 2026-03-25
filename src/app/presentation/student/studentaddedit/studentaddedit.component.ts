@@ -16,7 +16,7 @@ import { Localty } from '@app/core/model/localty.model';
 import { localitySelectors } from '@app/core/state/location/locality/localty.reducer';
 import { LocaltyFacade } from '@app/core/state/location/locality/localty.facade';
 import { Province } from '@app/core/model/province.model';
-import { provinceSelectors } from '@app/core/state/location/province/province.redurers';
+import { provinceSelectors } from '@app/core/state/location/province/province.reducer';
 import { ProvinceFacade } from '@app/core/state/location/province/province.facade';
 
 // Define a shape for the raw form data, where everything is a string or null/undefined

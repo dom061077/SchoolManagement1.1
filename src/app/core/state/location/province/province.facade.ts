@@ -3,7 +3,7 @@ import { CrudState, FacadeBase } from "@app/core/ngrx";
 import { EntityState } from "@ngrx/entity";
 import { Store } from "@ngrx/store";
 import { provinceActions } from "./province.actions";
-import { provinceSelectors } from "./province.redurers";
+import { provinceSelectors } from "./province.reducer";
 import { Injectable } from "@angular/core";
 
 @Injectable({ providedIn: 'root' })
