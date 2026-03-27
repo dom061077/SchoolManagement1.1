@@ -1,4 +1,4 @@
-export interface Localty{
+export interface Locality{
     id: number;
     description: string;
 

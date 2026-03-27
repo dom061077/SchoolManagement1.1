@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Localty } from "@app/core/model/localty.model";
+import { Locality } from "@app/core/model/locality.model";
 import { EffectFactory } from "@app/core/ngrx";
 import { LocaltyService } from "@app/infra/api/localty.service";
 import { Actions } from "@ngrx/effects";
@@ -9,7 +9,7 @@ import { localityActions } from "@app/core/state/location/locality/locality.acti
 
 
 @Injectable()
-export class LocaltyEffects extends EffectFactory<Localty>{
+export class LocalityEffects extends EffectFactory<Locality>{
     constructor(actions$: Actions, service: LocaltyService, translate: TranslateService) {
       super(actions$, localityActions, service, translate);
     }

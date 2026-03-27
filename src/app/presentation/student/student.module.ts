@@ -19,8 +19,8 @@ import { EstudioenumEffects } from '../../core/state/estudioenum/estudioenum.eff
 import { ClearableSelectDirective } from '../shared/directives/clearable-select.directive';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { localityFeature } from '@app/core/state/location/locality/localty.reducer';
-import { LocaltyEffects } from '@app/core/state/location/locality/localty.effects';
+import { localityFeature } from '@app/core/state/location/locality/locality.reducer';
+import { LocaltyEffects } from '@app/core/state/location/locality/locality.effects';
 import { provinceFeature } from '@app/core/state/location/province/province.reducer';
 import { ProvinceEffects } from '@app/core/state/location/province/province.effects';
 

@@ -1,6 +1,6 @@
 
 import { createCrudActions } from '@core/ngrx/action-factory';
-import { Localty } from '@app/core/model/localty.model';   
+import { Locality } from '@app/core/model/locality.model';   
 
 
-export const localityActions = createCrudActions<Localty>('Locality');
+export const localityActions = createCrudActions<Locality>('Locality');
