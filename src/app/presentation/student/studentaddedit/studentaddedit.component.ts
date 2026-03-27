@@ -12,7 +12,7 @@ import { StudentFacade } from '../../../core/state/student/student.facade';
 import { EstudioEnumFacade } from '../../../core/state/estudioenum/estudioenum.facade';
 import { studentSelectors } from '../../../core/state/student/student-reducer';
 import { UiService } from '../../shared/ui.service';
-import { Localty } from '@app/core/model/locality.model';
+import { Locality } from '@app/core/model/locality.model';
 import { localitySelectors } from '@app/core/state/location/locality/locality.reducer';
 import { LocaltyFacade } from '@app/core/state/location/locality/locality.facade';
 import { Province } from '@app/core/model/province.model';
@@ -41,7 +41,7 @@ export class StudentaddeditComponent implements OnInit {
   readonly: boolean = false;
   toDelete: boolean = false;
   estudioEnumData: Signal<EstudioEnum[]>;
-  localtyData: Signal<Localty[]> ;
+  localtyData: Signal<Locality[]> ;
   provinceData: Signal<Province[]>;
   //estudioEnumError$: Observable<any>;
 
@@ -126,7 +126,7 @@ populateForms(student: Student) {
      , private store: Store, private dialog: MatDialog, private uiService: UiService) {
       this.title = this.translate.instant(this.title);
       this.estudioEnumData = this.store.selectSignal(estudioenumSelectors.selectAll) as Signal<EstudioEnum []>;  
-      this.localtyData = this.store.selectSignal(localitySelectors.selectAll as unknown as Signal<Localty []> );
+      this.localtyData = this.store.selectSignal(localitySelectors.selectAll as unknown as Signal<Locality []> );
       this.provinceData = this.store.selectSignal(provinceSelectors.selectAll) as Signal<Province []>;
       this.dateformat = this.uiService.getDateFormat();
 
