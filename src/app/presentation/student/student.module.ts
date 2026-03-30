@@ -20,7 +20,7 @@ import { ClearableSelectDirective } from '../shared/directives/clearable-select.
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { localityFeature } from '@app/core/state/location/locality/locality.reducer';
-import { LocaltyEffects } from '@app/core/state/location/locality/locality.effects';
+import { LocalityEffects } from '@app/core/state/location/locality/locality.effects';
 import { provinceFeature } from '@app/core/state/location/province/province.reducer';
 import { ProvinceEffects } from '@app/core/state/location/province/province.effects';
 
@@ -42,7 +42,7 @@ import { ProvinceEffects } from '@app/core/state/location/province/province.effe
     StoreModule.forFeature(estudioenumFeature.name, estudioenumFeature.reducer),
     StoreModule.forFeature(localityFeature.name, localityFeature.reducer),
     StoreModule.forFeature(provinceFeature.name, provinceFeature.reducer),
-    EffectsModule.forFeature([StudentEffects, EstudioenumEffects, LocaltyEffects, ProvinceEffects])  ,  
+    EffectsModule.forFeature([StudentEffects, EstudioenumEffects, LocalityEffects, ProvinceEffects])  ,  
     MaterialModule,
     MatStepperModule,
     StudentRoutingModule,

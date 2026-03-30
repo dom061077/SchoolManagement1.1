@@ -6,6 +6,6 @@ import { Injectable } from "@angular/core";
 @Injectable({
   providedIn: 'root'
 })
-export class LocaltyService extends PersistenceService<Localty> {
+export class LocaltyService extends PersistenceService<Locality> {
   protected override baseUrl = config.apiUrl + '/api/v1/localidad';
 }   
