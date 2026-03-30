@@ -8,7 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 export class EffectFactory<T> {
   constructor(
-    private actions$: Actions,
+    public actions$: Actions,
     private crudActions: any,
     private service: IPersistencePort<T>,
     private translate: TranslateService

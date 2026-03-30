@@ -5,7 +5,7 @@ import { LocaltyService } from "@app/infra/api/localty.service";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { TranslateService } from "@ngx-translate/core";
 import { LocalityActions } from "@app/core/state/location/locality/locality.actions";
-import { switchMap } from "rxjs";
+import { of, switchMap } from "rxjs";
 
 
 
