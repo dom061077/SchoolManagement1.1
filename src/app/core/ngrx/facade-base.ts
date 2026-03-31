@@ -9,7 +9,7 @@ export class FacadeBase<T> {
 
   constructor(
     // Use 'any' or a global state interface for the Store root
-    private store: Store<any>, 
+    protected store: Store<any>, 
     
     private actions: {
       loadAll: (payload: { pageIndex: number; pageSize: number; qfilter: string; sorts: string; loperator: string }) => any;

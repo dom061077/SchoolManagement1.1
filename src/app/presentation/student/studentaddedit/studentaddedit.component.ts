@@ -13,7 +13,7 @@ import { EstudioEnumFacade } from '../../../core/state/estudioenum/estudioenum.f
 import { studentSelectors } from '../../../core/state/student/student-reducer';
 import { UiService } from '../../shared/ui.service';
 import { Locality } from '@app/core/model/locality.model';
-import { localitySelectors } from '@app/core/state/location/locality/locality.reducer';
+import { LocalitySelectors } from '@app/core/state/location/locality/locality.reducer';
 import { LocaltyFacade } from '@app/core/state/location/locality/locality.facade';
 import { Province } from '@app/core/model/province.model';
 import { provinceSelectors } from '@app/core/state/location/province/province.reducer';
@@ -126,7 +126,7 @@ populateForms(student: Student) {
      , private store: Store, private dialog: MatDialog, private uiService: UiService) {
       this.title = this.translate.instant(this.title);
       this.estudioEnumData = this.store.selectSignal(estudioenumSelectors.selectAll) as Signal<EstudioEnum []>;  
-      this.localtyData = this.store.selectSignal(localitySelectors.selectAll as unknown as Signal<Locality []> );
+      this.localtyData = this.store.selectSignal(LocalitySelectors.selectAll as unknown as Signal<Locality []> );
       this.provinceData = this.store.selectSignal(provinceSelectors.selectAll) as Signal<Province []>;
       this.dateformat = this.uiService.getDateFormat();
 

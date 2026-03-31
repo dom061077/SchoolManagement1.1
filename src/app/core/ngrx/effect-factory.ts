@@ -102,3 +102,29 @@ export class EffectFactory<T> {
     )
   );
 }
+
+/*
+dispatch(action)
+      ↓
+   actions$
+      ↓
+  [Effect is already subscribed]
+      ↓
+  ofType filters
+      ↓
+  pipe operators run
+      ↓
+  (optional) new action returned
+
+What NgRx handles for you:
+✔ Subscriptions
+✔ Lifecycle (destroy/unsubscribe)
+✔ Dispatching returned actions
+✔ Error handling (internally)
+
+switchMap
+mergeMap
+concatMap
+exhaustMap
+
+  */

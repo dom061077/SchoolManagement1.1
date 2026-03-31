@@ -166,3 +166,23 @@ pageSizeOptions: number[] = [5,10,20];
   }
 
 }
+
+
+/*
+src/app/
+├── core/
+│   ... (Models, Ports, State)
+│
+├── infrastructure/
+│   ... (API Services, Effects)
+│
+└── presentation/             <-- Driving Adapter Layer
+    ├── shared/
+    │   ├── directives/       <-- Location for Directives
+    │   │   └── focus-on-load.directive.ts
+    │   ├── pipes/
+    │   └── components/
+    │
+    └── users/                <-- Feature Components
+        └── users-list.component.ts
+*/

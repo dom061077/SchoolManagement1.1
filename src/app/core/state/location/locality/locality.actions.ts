@@ -2,6 +2,7 @@
 import { createAction, props } from '@ngrx/store';
 import { createCrudActions } from '@app/core/ngrx/action-factory';
 import { Locality } from '@app/core/model/locality.model';
+import { Department } from '@app/core/model/department.model';
 
 // A) Generate the Standard CRUD Actions (Load All, Create, Update, Delete)
 // This gives us the actions for the 24,000 items
@@ -21,7 +22,7 @@ export const loadDepartments = createAction(
 
 export const loadDepartmentsSuccess = createAction(
   '[Locality] Load Departments Success',
-  props<{ departments: any[] }>()
+  props<{ departments: Department[] }>()
 );
 
 export const selectDepartment = createAction(
