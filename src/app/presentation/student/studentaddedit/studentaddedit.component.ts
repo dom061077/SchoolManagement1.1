@@ -32,6 +32,10 @@ interface RawStudentData {
 })
 export class StudentaddeditComponent implements OnInit {
 
+onDepartmentChange($event: any) {
+  
+}
+
   selectEntities = this.store.selectSignal(studentSelectors.selectEntities) as Signal<{[id: number]: Student}>;
   dateformat: string;
   title: string = 'STUDENT.ADD_STUDENT';
