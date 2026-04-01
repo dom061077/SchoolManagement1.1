@@ -11,7 +11,7 @@ import { Injectable } from "@angular/core";
 })
 export class PersistenceService<T> implements IPersistencePort<T, number, string, any> {
     protected baseUrl!: string;
-    constructor(private http: HttpClient){
+    constructor(public http: HttpClient){
 
     }
     getById(id: number): Observable<T> {
