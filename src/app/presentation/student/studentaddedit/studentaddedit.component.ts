@@ -125,7 +125,7 @@ populateForms(student: Student) {
     return this.personalDataForm.get('dni');
   }
 
-  constructor( private facade: StudentFacade, private provinceFacade: ProvinceFacade, private localtyFacade: LocaltyFacade, private estudioEnumFacade: EstudioEnumFacade, private builder: FormBuilder, private translate: TranslateService, private ref: MatDialogRef<StudentaddeditComponent>
+  constructor( private facade: StudentFacade, private provinceFacade: ProvinceFacade, private localityFacade: LocaltyFacade, private estudioEnumFacade: EstudioEnumFacade, private builder: FormBuilder, private translate: TranslateService, private ref: MatDialogRef<StudentaddeditComponent>
      ,@Inject(MAT_DIALOG_DATA) public data:{code:number, title: string}
      , private store: Store, private dialog: MatDialog, private uiService: UiService) {
       this.title = this.translate.instant(this.title);
@@ -142,7 +142,7 @@ populateForms(student: Student) {
     this.title = this.translate.instant(this.dialogdata.title);
     this.editcode = this.dialogdata.code;
     this.estudioEnumFacade.loadAll(0,100,'[]','[]','AND');
-    this.localtyFacade.loadAll(0,100,'[]','[]','AND');
+    this.localityFacade.loadAll(0,100,'[]','[]','AND');
     this.provinceFacade.loadAll(0,100,'[]','[]','AND');
     
 
