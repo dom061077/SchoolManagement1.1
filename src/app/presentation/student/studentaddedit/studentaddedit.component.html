@@ -65,7 +65,9 @@
                                 appendTo="body"
                                 class="material-style-select"
                                 dropdownPosition="bottom"
-                                placeholder="{{'COMMON.SELECT_PROVINCE' | translate}}">
+                                placeholder="{{'COMMON.SELECT_PROVINCE' | translate}}"
+                                (change)="onProvinceChange($event)">
+
                                 
                             </ng-select>
                             <ng-select [searchable]="true"

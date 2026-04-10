@@ -27,10 +27,18 @@ interface RawStudentData {
 
 @Component({
   selector: 'app-studentaddedit',
-  templateUrl: './studentaddedit.component.html',
+  templateUrl: './studentaddedit.component.html', 
   styleUrl: './studentaddedit.component.css'
 })
 export class StudentaddeditComponent implements OnInit {
+onProvinceChange($event: Province) {
+  if ($event) {
+    this.localityFacade.selectProvince($event.id);
+  }else{
+    this.localityFacade.selectProvince(0);
+    
+  }
+}
 
 onDepartmentChange($event: any) {
   

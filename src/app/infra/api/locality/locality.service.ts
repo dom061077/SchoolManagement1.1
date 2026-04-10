@@ -11,10 +11,10 @@ import { HttpClient } from "@angular/common/http";
 @Injectable({
   providedIn: 'root'
 })
-export class LocaltyService extends PersistenceService<Locality>  implements ILocalityPersistencePort{
+export class LocalityService extends PersistenceService<Locality>  implements ILocalityPersistencePort{
 
   protected override baseUrl = config.apiUrl + '/api/v1/localidad';
-  private readonly departmentsByProvinceUrl = config.apiUrl + '/api/v1/localidad/departments-by-province';
+  private readonly departmentsByProvinceUrl = config.apiUrl + '/api/v1/localidad/departamentos-por-provincia';
 
   constructor( http: HttpClient) {
     super(http);

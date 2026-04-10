@@ -1,5 +1,5 @@
 import { EffectFactory } from "@app/core/ngrx";
-import { ProvinceActions } from "./province.actions";
+import { provinceActions } from "./province.actions";
 import { Province } from "@app/core/model/province.model";
 import { TranslateService } from "@ngx-translate/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
@@ -10,14 +10,8 @@ import { Injectable } from "@angular/core";
 @Injectable()
 export class ProvinceEffects extends EffectFactory<Province>{
     constructor(actions$: Actions, service: ProvinceService, translate: TranslateService) {
-      super(actions$, ProvinceActions, service, translate);
+      super(actions$, provinceActions, service, translate);
     }
   
-    loadDepartments$ = createEffect(() =>
-        this.actions$.pipe(
-          // 1. Listen for the 'selectProvince' action
-          ofType(ProvinceActions.selectProvince),
-          
-          // 2. Call the specific Port (Persistence) to get children
-    
+
 }
