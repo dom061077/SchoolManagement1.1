@@ -70,9 +70,9 @@
 
                                 
                             </ng-select>
-                            <ng-select [searchable]="true"
+                            <ng-select [searchable]="true" [items] = "departmentData()"
                                 appendTo=".select-wrapper"
-                                bindLabel="description"
+                                bindLabel="nombre"
                                 bindValue="id"
                                 appendTo="body"
                                 class="material-style-select"

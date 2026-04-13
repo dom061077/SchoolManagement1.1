@@ -1,6 +1,6 @@
 import { createCrudActions } from '@core/ngrx/action-factory';
 import { Locality } from '@app/core/model/locality.model';
-import { Action, createFeature, createReducer, on } from '@ngrx/store';
+import { Action, createFeature, createReducer, createSelector, on } from '@ngrx/store';
 import { createEntityReducer, CrudState } from '@app/core/ngrx';
 import { LocalityActions} from './locality.actions';
 import { createEntitySelectors } from '@app/core/ngrx/selectors-factory';
@@ -42,6 +42,12 @@ const {
  */
 const initialState: LocalityState = {
   ...baseInitialState,
+  /*
+The reason ...localityFeature isn't "magically" giving you selectDepartments is because of your Reducer Wrapper.
+
+Because you wrote a custom function for the reducer property, NgRx loses the connection to the LocalityState interface properties. 
+It thinks the state is just a generic object, so it doesn't generate the specific selectors for provinces, departments, etc.  
+  */
   provinces: [],
   departments: [],
   selectedProvinceId: null,
@@ -106,6 +112,33 @@ const genericSelectors = createEntitySelectors<Locality>(
 
 export const LocalitySelectors = {
   ...genericSelectors,
-  ...localityFeature // This includes selectProvinces, selectDepartments, etc.
+// 2. Map the specialized ones MANUALLY
+  // We use createSelector to point exactly where the data lives
+  selectProvinces: createSelector(
+    localityFeature.selectLocalitiesState, 
+    (state) => state.provinces
+  ),
+
+  selectDepartments: createSelector(
+    localityFeature.selectLocalitiesState, 
+    (state) => state.departments
+  ),
+
+  selectSelectedProvinceId: createSelector(
+    localityFeature.selectLocalitiesState, 
+    (state) => state.selectedProvinceId
+  ),
+
+  selectSelectedDepartmentId: createSelector(
+    localityFeature.selectLocalitiesState, 
+    (state) => state.selectedDepartmentId
+  ),
+
+  // 3. Add your "Ready" logic
+  selectIsReadyForLocations: createSelector(
+    localityFeature.selectLocalitiesState,
+    (state) => !!state.selectedProvinceId && !!state.selectedDepartmentId
+  )
+
 };
 

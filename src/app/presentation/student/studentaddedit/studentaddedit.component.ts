@@ -31,7 +31,9 @@ interface RawStudentData {
   styleUrl: './studentaddedit.component.css'
 })
 export class StudentaddeditComponent implements OnInit {
+
 onProvinceChange($event: Province) {
+  console.log("Available selectors: ", Object.keys(LocalitySelectors));
   if ($event) {
     this.localityFacade.selectProvince($event.id);
   }else{
@@ -55,6 +57,7 @@ onDepartmentChange($event: any) {
   estudioEnumData: Signal<EstudioEnum[]>;
   localtyData: Signal<Locality[]> ;
   provinceData: Signal<Province[]>;
+  departmentData: Signal<any[]> ;
   //estudioEnumError$: Observable<any>;
 
 
@@ -140,8 +143,9 @@ populateForms(student: Student) {
       this.estudioEnumData = this.store.selectSignal(estudioenumSelectors.selectAll) as Signal<EstudioEnum []>;  
       this.localtyData = this.store.selectSignal(LocalitySelectors.selectAll as unknown as Signal<Locality []> );
       this.provinceData = this.store.selectSignal(provinceSelectors.selectAll) as Signal<Province []>;
+      this.departmentData = this.store.selectSignal(LocalitySelectors.selectDepartments) as Signal<any []>;
       this.dateformat = this.uiService.getDateFormat();
-
+      console.log("Available selectors: ", Object.keys(LocalitySelectors));
     }  
 
   
