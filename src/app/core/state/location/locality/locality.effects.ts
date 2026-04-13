@@ -49,9 +49,34 @@ export class LocalityEffects extends EffectFactory<Locality>{
           }
       )
     )
-  );
+   );    
 
-
+    loadLocalities$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(LocalityActions.selectDepartment),
+      switchMap(({ departmentId }) => {
+        if(departmentId === null || departmentId === undefined || departmentId === 0) {
+          // If no department is selected, we can either return an empty list or a failure action. Here we choose to return an empty list.
+          return of(LocalityActions.loadLocalitiesByDepartmentSuccess({ departments: [] }));
+        }
+        return this.localityService.getLocalitiesByDepartment(departmentId).pipe(
+          tap((response) =>
+            console.log('[Effect] Load Localities API response:', response)
+          ),
+          map((response) =>
+            LocalityActions.loadLocalitiesByDepartmentSuccess({
+              departments: response.content
+            })
+          ),
+          catchError((error) =>
+            of(LocalityActions.loadAllFailure({ error }))
+          )
+        );
+      })
+    )
+   );
+   
+    
 
     
 }

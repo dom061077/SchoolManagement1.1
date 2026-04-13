@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, Signal } from '@angular/core';
+import { Component, Inject, OnInit, Signal, ViewChild } from '@angular/core';
 import { Student } from '../../../core/model/student.model';
 import * as NotificationActions from '../../../core/state/notification/notification.actions';
 import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
@@ -32,18 +32,24 @@ interface RawStudentData {
 })
 export class StudentaddeditComponent implements OnInit {
 
+  @ViewChild('localitySelect') localitySelect: any; // Reference to the locality ng-select component
+  @ViewChild('departmentSelect') departmentSelect: any; // Reference to the department ng-select component
+
 onProvinceChange($event: Province) {
   console.log("Available selectors: ", Object.keys(LocalitySelectors));
   if ($event) {
     this.localityFacade.selectProvince($event.id);
   }else{
     this.localityFacade.selectProvince(0);
-    
   }
+  this.localitySelect.clearModel(); // Clear the selected value in the locality ng-select
+  this.departmentSelect.clearModel(); // Clear the selected value in the department ng-select
+  this.personalDataForm?.get('localidad')?.setValue(null); // Clear the form control value for localidad
 }
 
 onDepartmentChange($event: any) {
-  
+  this.localitySelect.clearModel(); // Clear the selected value in the locality ng-select
+  this.localityFacade.selectDepartment($event ? $event.id : 0);
 }
 
   selectEntities = this.store.selectSignal(studentSelectors.selectEntities) as Signal<{[id: number]: Student}>;

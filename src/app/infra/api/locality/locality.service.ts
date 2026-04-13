@@ -15,6 +15,7 @@ export class LocalityService extends PersistenceService<Locality>  implements IL
 
   protected override baseUrl = config.apiUrl + '/api/v1/localidad';
   private readonly departmentsByProvinceUrl = config.apiUrl + '/api/v1/localidad/departamentos-por-provincia';
+  private readonly localitiesByDepartmentUrl = config.apiUrl + '/api/v1/localidad/localidades-por-departamento';
 
   constructor( http: HttpClient) {
     super(http);
@@ -23,6 +24,11 @@ export class LocalityService extends PersistenceService<Locality>  implements IL
   getDepartmentsByProvince(provinceId: string | number): Observable<DataSource<Department>> {
     const url = `${this.departmentsByProvinceUrl}/${provinceId}`;
     return this.http.get<DataSource<Department>>(url);
+  }
+
+  getLocalitiesByDepartment(departmentId: string | number): Observable<DataSource<Locality>> {
+    const url = `${this.localitiesByDepartmentUrl}/${departmentId}`;
+    return this.http.get<DataSource<Locality>>(url);
   }
 
 }   

@@ -15,6 +15,10 @@ export class LocaltyFacade extends FacadeBase<Locality>{
     selectProvince(provinceId: number | string): void {
       this.store.dispatch(LocalityActions.selectProvince({ provinceId }));
     }
+
+    selectDepartment(departmentId: number | string): void {
+      this.store.dispatch(LocalityActions.selectDepartment({ departmentId }));
+    }
   
     
   }

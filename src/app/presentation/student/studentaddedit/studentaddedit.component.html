@@ -70,22 +70,24 @@
 
                                 
                             </ng-select>
-                            <ng-select [searchable]="true" [items] = "departmentData()"
+                            <ng-select #departmentSelect [searchable]="true" [items] = "departmentData()"
                                 appendTo=".select-wrapper"
                                 bindLabel="nombre"
                                 bindValue="id"
                                 appendTo="body"
                                 class="material-style-select"
                                 dropdownPosition="bottom"
-                                placeholder="{{'COMMON.SELECT_DEPARTMENT' | translate}}">
+                                placeholder="{{'COMMON.SELECT_DEPARTMENT' | translate}}"
+                                (change)="onDepartmentChange($event)">
                             </ng-select>
-                            <ng-select [searchable]="true" [items] = "localtyData()"
+                            <ng-select #localitySelect [searchable]="true" [items] = "localtyData()"
                                 appendTo=".select-wrapper"
                                 bindLabel="nombre"
                                 bindValue="id"
                                 appendTo="body"
                                 class="material-style-select"
                                 dropdownPosition="bottom"
+                                formControlName="localidad"
                                 placeholder="{{'COMMON.SELECT_LOCALITY' | translate}}">
                             </ng-select>                                                
                         </div>   

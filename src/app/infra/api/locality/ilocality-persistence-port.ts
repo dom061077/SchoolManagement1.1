@@ -8,5 +8,6 @@ import { Observable } from "rxjs";
 export interface ILocalityPersistencePort extends IPersistencePort<Locality, number, string, any> {
     
     getDepartmentsByProvince(provinceId: number): Observable<DataSource<Department>>;
+    getLocalitiesByDepartment(departmentId: number): Observable<DataSource<Locality>>;
 
 }
