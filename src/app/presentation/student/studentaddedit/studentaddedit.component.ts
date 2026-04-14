@@ -50,6 +50,8 @@ onProvinceChange($event: Province) {
 onDepartmentChange($event: any) {
   this.localitySelect.clearModel(); // Clear the selected value in the locality ng-select
   this.localityFacade.selectDepartment($event ? $event.id : 0);
+  console.log("Available selectors on deparment change: ", Object.keys(LocalitySelectors));
+  console.log("Localidades: "+this.localtyData());
 }
 
   selectEntities = this.store.selectSignal(studentSelectors.selectEntities) as Signal<{[id: number]: Student}>;
@@ -147,7 +149,7 @@ populateForms(student: Student) {
      , private store: Store, private dialog: MatDialog, private uiService: UiService) {
       this.title = this.translate.instant(this.title);
       this.estudioEnumData = this.store.selectSignal(estudioenumSelectors.selectAll) as Signal<EstudioEnum []>;  
-      this.localtyData = this.store.selectSignal(LocalitySelectors.selectAll as unknown as Signal<Locality []> );
+      this.localtyData = this.store.selectSignal(LocalitySelectors.selectLocalities as unknown as Signal<Locality []> );
       this.provinceData = this.store.selectSignal(provinceSelectors.selectAll) as Signal<Province []>;
       this.departmentData = this.store.selectSignal(LocalitySelectors.selectDepartments) as Signal<any []>;
       this.dateformat = this.uiService.getDateFormat();

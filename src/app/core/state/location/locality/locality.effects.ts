@@ -57,7 +57,7 @@ export class LocalityEffects extends EffectFactory<Locality>{
       switchMap(({ departmentId }) => {
         if(departmentId === null || departmentId === undefined || departmentId === 0) {
           // If no department is selected, we can either return an empty list or a failure action. Here we choose to return an empty list.
-          return of(LocalityActions.loadLocalitiesByDepartmentSuccess({ departments: [] }));
+          return of(LocalityActions.loadLocalitiesByDepartmentSuccess({ localities: [] }));
         }
         return this.localityService.getLocalitiesByDepartment(departmentId).pipe(
           tap((response) =>
@@ -65,7 +65,7 @@ export class LocalityEffects extends EffectFactory<Locality>{
           ),
           map((response) =>
             LocalityActions.loadLocalitiesByDepartmentSuccess({
-              departments: response.content
+              localities: response.content
             })
           ),
           catchError((error) =>

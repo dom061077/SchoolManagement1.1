@@ -37,7 +37,7 @@ export const loadLocalitiesByDepartment = createAction(
 
 const loadLocalitiesByDepartmentSuccess = createAction(
   '[Locality] Load Localities By Department Success',
-  props<{ departments: Locality[] }>()
+  props<{ localities: Locality[] }>()
 );
 
 // C) Export them all together so the Facade and Reducer can find them

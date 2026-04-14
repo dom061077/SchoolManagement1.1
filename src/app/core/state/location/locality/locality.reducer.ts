@@ -1,6 +1,6 @@
 import { createCrudActions } from '@core/ngrx/action-factory';
 import { Locality } from '@app/core/model/locality.model';
-import { Action, createFeature, createReducer, createSelector, on } from '@ngrx/store';
+import { Action, createFeature, createReducer, createSelector, on, select } from '@ngrx/store';
 import { createEntityReducer, CrudState } from '@app/core/ngrx';
 import { LocalityActions} from './locality.actions';
 import { createEntitySelectors } from '@app/core/ngrx/selectors-factory';
@@ -10,6 +10,7 @@ import { createEntitySelectors } from '@app/core/ngrx/selectors-factory';
 export interface LocalityState extends CrudState<Locality> {
   provinces: any[];
   departments: any[];
+  localities: Locality[];
   selectedProvinceId: number | string | null;
   selectedDepartmentId: number | string | null;
 }
@@ -50,6 +51,7 @@ It thinks the state is just a generic object, so it doesn't generate the specifi
   */
   provinces: [],
   departments: [],
+  localities: [],
   selectedProvinceId: null,
   selectedDepartmentId: null,
 };
@@ -81,7 +83,12 @@ const specializedReducer = createReducer(
       selectedDepartmentId: departmentId,
       loading: true
     })
-  )
+  ),
+  on(LocalityActions.loadLocalitiesByDepartmentSuccess, (state, { localities }) => ({
+    ...state,
+    localities,
+    loading: false
+  }))
 );
 
 
@@ -138,6 +145,10 @@ export const LocalitySelectors = {
   selectIsReadyForLocations: createSelector(
     localityFeature.selectLocalitiesState,
     (state) => !!state.selectedProvinceId && !!state.selectedDepartmentId
+  ),
+  selectLocalities: createSelector(
+    localityFeature.selectLocalitiesState, 
+    (state) => state.localities
   )
 
 };
