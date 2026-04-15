@@ -43,6 +43,12 @@
     ParentescoTutor parentescoTutor
 
 */
+
+export interface Localidad {
+    id: number;
+    nombre: string;
+}
+
 export interface Student {
     //Datos Personales
     id: number;
@@ -54,7 +60,7 @@ export interface Student {
     direccion?: string;
     planSocial?: boolean;
     trabaja?: boolean;      
-    localidad?: string; // Assuming Localidad is a string for simplicity
+    localidadEntity?: Localidad|null; // Assuming Localidad is a string for simplicity
     telefono1?: string;
     telefono2?: string;    
 

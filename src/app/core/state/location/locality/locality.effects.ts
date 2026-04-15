@@ -5,7 +5,7 @@ import { LocalityService } from "@app/infra/api/locality/locality.service";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { TranslateService } from "@ngx-translate/core";
 import { LocalityActions, selectProvince } from "@app/core/state/location/locality/locality.actions";
-import { catchError, map, of, switchMap, tap } from "rxjs";
+import { catchError, delay, map, of, switchMap, tap } from "rxjs";
 
 
 
@@ -60,6 +60,7 @@ export class LocalityEffects extends EffectFactory<Locality>{
           return of(LocalityActions.loadLocalitiesByDepartmentSuccess({ localities: [] }));
         }
         return this.localityService.getLocalitiesByDepartment(departmentId).pipe(
+          delay(5000), // Simulate network delay for better UX demonstration
           tap((response) =>
             console.log('[Effect] Load Localities API response:', response)
           ),

@@ -71,6 +71,7 @@
                                 
                             </ng-select>
                             <ng-select #departmentSelect [searchable]="true" [items] = "departmentData()"
+                                
                                 appendTo=".select-wrapper"
                                 bindLabel="nombre"
                                 bindValue="id"
@@ -81,6 +82,7 @@
                                 (change)="onDepartmentChange($event)">
                             </ng-select>
                             <ng-select #localitySelect [searchable]="true" [items] = "localtyData()"
+                                [loading] = "loading()"
                                 appendTo=".select-wrapper"
                                 bindLabel="nombre"
                                 bindValue="id"
@@ -89,6 +91,14 @@
                                 dropdownPosition="bottom"
                                 formControlName="localidad"
                                 placeholder="{{'COMMON.SELECT_LOCALITY' | translate}}">
+                                <ng-template ng-loadingspinner-tmp>
+                                        <div class="lds-ellipsis">
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                        </div>
+                                </ng-template>                                
                             </ng-select>                                                
                         </div>   
 

@@ -18,6 +18,7 @@ import { LocaltyFacade } from '@app/core/state/location/locality/locality.facade
 import { Province } from '@app/core/model/province.model';
 import { provinceSelectors } from '@app/core/state/location/province/province.reducer';
 import { ProvinceFacade } from '@app/core/state/location/province/province.facade';
+import { Department } from '@app/core/model/department.model';
 
 // Define a shape for the raw form data, where everything is a string or null/undefined
 interface RawStudentData {
@@ -65,8 +66,9 @@ onDepartmentChange($event: any) {
   estudioEnumData: Signal<EstudioEnum[]>;
   localtyData: Signal<Locality[]> ;
   provinceData: Signal<Province[]>;
-  departmentData: Signal<any[]> ;
-  //estudioEnumError$: Observable<any>;
+  departmentData: Signal<Department[]> ;
+  loading : Signal<boolean>;
+  
 
 
     advisorDocForm = this.builder.group({
@@ -151,7 +153,8 @@ populateForms(student: Student) {
       this.estudioEnumData = this.store.selectSignal(estudioenumSelectors.selectAll) as Signal<EstudioEnum []>;  
       this.localtyData = this.store.selectSignal(LocalitySelectors.selectLocalities as unknown as Signal<Locality []> );
       this.provinceData = this.store.selectSignal(provinceSelectors.selectAll) as Signal<Province []>;
-      this.departmentData = this.store.selectSignal(LocalitySelectors.selectDepartments) as Signal<any []>;
+      this.departmentData = this.store.selectSignal(LocalitySelectors.selectDepartments) as Signal<Department []>;
+      this.loading = this.store.selectSignal(LocalitySelectors.selectLoading);
       this.dateformat = this.uiService.getDateFormat();
       console.log("Available selectors: ", Object.keys(LocalitySelectors));
     }  
@@ -198,7 +201,7 @@ transformStudentToRawData(student: Student): RawStudentData {
     rawData['direccion'] = student.direccion || '';
     rawData['planSocial'] = student.planSocial;
     rawData['trabaja'] = student.trabaja;
-    rawData['localidad'] = student.localidad || '';
+    rawData['localidad'] = student.localidadEntity?.id?.toString() || '';
     rawData['telefono1'] = student.telefono1 || '';
     rawData['telefono2'] = student.telefono2 || '';
     // --- 2. HANDLE BOOLEAN DOCUMENTATION FIELDS ---
@@ -240,7 +243,7 @@ transformStudentToRawData(student: Student): RawStudentData {
 
     // Other string fields
     student.direccion = rawData.direccion || '';
-    student.localidad = rawData.localidad || '';
+    student.localidadEntity = rawData.localidad ? { id: parseInt(rawData.localidad, 10), nombre: '' } : null; // Convert localidad ID to number
     student.telefono1 = rawData.telefono1 || '';
     student.telefono2 = rawData.telefono2 || '';
 
