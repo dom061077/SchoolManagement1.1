@@ -60,7 +60,15 @@ export interface Student {
     direccion?: string;
     planSocial?: boolean;
     trabaja?: boolean;      
-    localidadEntity?: Localidad|null; // Assuming Localidad is a string for simplicity
+    localidadId?: number;
+    localidadNombre?: string;
+    departamentoId?: number;
+    departamentoNombre?: string;
+    provinciaId?: number;
+    provinciaNombre?: string;
+    parentescoTutorId?: number;
+    parentescoTutorNombre?: string;
+
     telefono1?: string;
     telefono2?: string;    
 

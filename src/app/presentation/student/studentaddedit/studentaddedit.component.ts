@@ -45,7 +45,7 @@ onProvinceChange($event: Province) {
   }
   this.localitySelect.clearModel(); // Clear the selected value in the locality ng-select
   this.departmentSelect.clearModel(); // Clear the selected value in the department ng-select
-  this.personalDataForm?.get('localidad')?.setValue(null); // Clear the form control value for localidad
+  this.personalDataForm?.get('localidadId')?.setValue(null); // Clear the form control value for localidad
 }
 
 onDepartmentChange($event: any) {
@@ -98,7 +98,7 @@ onDepartmentChange($event: any) {
       direccion: [''],
       planSocial: [''],
       trabaja: [''],
-      localidad: [''],
+      localidadId: [''],
       telefono1: [''],
       telefono2: [''],
 
@@ -201,7 +201,12 @@ transformStudentToRawData(student: Student): RawStudentData {
     rawData['direccion'] = student.direccion || '';
     rawData['planSocial'] = student.planSocial;
     rawData['trabaja'] = student.trabaja;
-    rawData['localidad'] = student.localidadEntity?.id?.toString() || '';
+    rawData['localidadId'] = student.localidadId?.toString() || '';
+    rawData['localidadNombre'] = student.localidadNombre || '';
+    rawData['departamentoId'] = student.departamentoId?.toString() || '';
+    rawData['departamentoNombre'] = student.departamentoNombre || '';
+    rawData['provinciaId'] = student.provinciaId?.toString() || '';
+    rawData['provinciaNombre'] = student.provinciaNombre || '';
     rawData['telefono1'] = student.telefono1 || '';
     rawData['telefono2'] = student.telefono2 || '';
     // --- 2. HANDLE BOOLEAN DOCUMENTATION FIELDS ---
@@ -243,7 +248,12 @@ transformStudentToRawData(student: Student): RawStudentData {
 
     // Other string fields
     student.direccion = rawData.direccion || '';
-    student.localidadEntity = rawData.localidad ? { id: parseInt(rawData.localidad, 10), nombre: '' } : null; // Convert localidad ID to number
+    student.localidadId = parseInt(rawData.localidadId, 10); // Convert localidad ID to number
+    student.localidadNombre = rawData.localidadNombre || '';
+    student.departamentoId = parseInt(rawData.departamentoId, 10) ;
+    student.departamentoNombre = rawData.departamentoNombre || '';
+    student.provinciaId = parseInt(rawData.provinciaId, 10) ;
+    student.provinciaNombre = rawData.provinciaNombre || '';
     student.telefono1 = rawData.telefono1 || '';
     student.telefono2 = rawData.telefono2 || '';
 
@@ -275,8 +285,9 @@ transformStudentToRawData(student: Student): RawStudentData {
     student.estudioTerUnivTutor = rawData.estudioTerUnivTutor || null;
     student.dniTutor = rawData.dniTutor ? parseInt(rawData.dniTutor, 10) : 0;
     student.cuilTutor = rawData.cuilTutor || '';
-    student.parentescoTutor = rawData.parentescoTutor || '';
-    
+    student.parentescoTutorId = parseInt(rawData.parentescoTutorId, 10) ;
+    student.parentescoTutorNombre = rawData.parentescoTutorNombre || '';
+
     return student;
 }
 
