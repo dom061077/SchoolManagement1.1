@@ -46,6 +46,7 @@ onProvinceChange($event: Province) {
   this.localitySelect.clearModel(); // Clear the selected value in the locality ng-select
   this.departmentSelect.clearModel(); // Clear the selected value in the department ng-select
   this.personalDataForm?.get('localidadId')?.setValue(null); // Clear the form control value for localidad
+  
 }
 
 onDepartmentChange($event: any) {
@@ -99,6 +100,8 @@ onDepartmentChange($event: any) {
       planSocial: [''],
       trabaja: [''],
       localidadId: [''],
+      provinciaId: [''],
+      departamentoId: [''],
       telefono1: [''],
       telefono2: [''],
 
@@ -129,6 +132,8 @@ onDepartmentChange($event: any) {
 populateForms(student: Student) {
   // 1. Transform the Student object into the flattened rawData object
   const rawData = this.transformStudentToRawData(student);
+  this.localityFacade.selectProvince((student.provinciaId?student.provinciaId:0));
+  this.localityFacade.selectDepartment((student.departamentoId?student.departamentoId:0));
 
   // 2. Use patchValue() on each form group to populate it
   //    It will only set the values for controls that exist in the group
@@ -201,11 +206,11 @@ transformStudentToRawData(student: Student): RawStudentData {
     rawData['direccion'] = student.direccion || '';
     rawData['planSocial'] = student.planSocial;
     rawData['trabaja'] = student.trabaja;
-    rawData['localidadId'] = student.localidadId?.toString() || '';
+    rawData['localidadId'] = Number(student.localidadId) || '';
     rawData['localidadNombre'] = student.localidadNombre || '';
-    rawData['departamentoId'] = student.departamentoId?.toString() || '';
+    rawData['departamentoId'] = Number(student.departamentoId) || '';
     rawData['departamentoNombre'] = student.departamentoNombre || '';
-    rawData['provinciaId'] = student.provinciaId?.toString() || '';
+    rawData['provinciaId'] = Number(student.provinciaId) || '';
     rawData['provinciaNombre'] = student.provinciaNombre || '';
     rawData['telefono1'] = student.telefono1 || '';
     rawData['telefono2'] = student.telefono2 || '';
