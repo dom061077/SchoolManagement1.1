@@ -16,17 +16,25 @@
                             <mat-form-field appearance="outline">
                                 <mat-label>{{'STUDENT.DNI' | translate}}</mat-label>
                                 <input formControlName="dni" matInput [showMaskTyped]="true" mask="00000000">
-                                <mat-error *ngIf="dniControl?.errors?.['pattern']">
-                                {{'STUDENT.DNI_INVALID_PATTERN' | translate}}
-                                </mat-error>
+                                   <div *ngIf="dniControl && dniControl.invalid || dniControl?.errors?.['pattern']"
+                                        class="validation-error">
+                                        <p *ngIf="dniControl?.errors?.['required']">
+                                            {{'STUDENT.DNI_VALIDATION' | translate}}
+                                        </p>
+                                        <p *ngIf="dniControl?.errors?.['pattern']">
+                                            {{'STUDENT.DNI_VALIDATION_PATTERN' | translate}}
+                                        </p>
+                                        
+                                    </div>
+
                             </mat-form-field>
 
                                 <mat-form-field>
                                     <mat-label>{{'STUDENT.LAST_NAME' | translate}}</mat-label>
                                     <input formControlName="lastName" matInput class=".align-middle">
-                                    <div *ngIf="lastNameControl && lastNameControl.invalid && (lastNameControl.dirty || lastNameControl.touched)"
+                                    <div *ngIf="lastNameControl && lastNameControl.invalid"
                                         class="validation-error">
-                                        <p *ngIf="lastNameControl.errors?.['required']">
+                                        <p *ngIf="lastNameControl?.errors?.['required']">
                                             {{'STUDENT.LAST_NAME_VALIDATION' | translate}}
                                         </p>
                                         
@@ -206,36 +214,43 @@
                     <mat-label>{{'STUDENT.ADVISOR_FIRST_NAME' | translate}}</mat-label>
                     <input formControlName="nombreTutor" matInput class=".align-middle">
                 </mat-form-field>
-                <mat-form-field>
-                    <mat-label>{{'STUDENT.ADVISOR_PRIMARY_EDU' | translate}}</mat-label>
-                    <mat-select formControlName="estudioPrimarioTutor" appClearableSelect
-                        canSelectNullableOptions class="align-middle">
-                        <mat-option [value]="null">{{'COMMON.SELECT_OPTION' | translate}}</mat-option>
-                        <mat-option *ngFor="let estudio of estudioEnumData()" [value]="estudio.id">
-                            {{estudio.description}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>{{'STUDENT.ADVISOR_SECONDARY_EDU' | translate}}</mat-label>
-                    <mat-select formControlName="estudioSecundarioTutor" appClearableSelect
-                        canSelectNullableOptions class="align-middle">
-                        <mat-option [value]="null">{{'COMMON.SELECT_OPTION' | translate}}</mat-option>
-                        <mat-option *ngFor="let estudio of estudioEnumData()" [value]="estudio.id">
-                            {{estudio.description}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>{{'STUDENT.ADVISOR_UNIV_EDU' | translate}}</mat-label>
-                    <mat-select formControlName="estudioTerUnivTutor" appClearableSelect
-                        canSelectNullableOptions class="align-middle">
-                        <mat-option [value]="null">{{'COMMON.SELECT_OPTION' | translate}}</mat-option>
-                        <mat-option *ngFor="let estudio of estudioEnumData()" [value]="estudio.id">
-                            {{estudio.description}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
+                <ng-select [items]="estudioEnumData()"
+                    [searchable]="true"
+                    appendTo=".select-wrapper"
+                    bindLabel="description"
+                    bindValue="id"
+                    appendTo="body"
+                    class="material-style-select"
+                    dropdownPosition="bottom"
+                    placeholder="{{'STUDENT.ADVISOR_PRIMARY_EDU' | translate}}"
+                    formControlName="estudioPrimarioTutor"  
+                    >
+                </ng-select>
+
+                <ng-select [items]="estudioEnumData()"
+                    [searchable]="true"
+                    appendTo=".select-wrapper"
+                    bindLabel="description"
+                    bindValue="id"
+                    appendTo="body"
+                    class="material-style-select"
+                    dropdownPosition="bottom"
+                    placeholder="{{'STUDENT.ADVISOR_SECONDARY_EDU' | translate}}"
+                    formControlName="estudioSecundarioTutor">
+                </ng-select>
+
+                <ng-select [items]="estudioEnumData()"
+                    [searchable]="true"
+                    appendTo=".select-wrapper"                   
+                    bindLabel="description"
+                    bindValue="id"
+                    appendTo="body"
+                    class="material-style-select"
+                    dropdownPosition="bottom"
+                    placeholder="{{'STUDENT.ADVISOR_UNIV_EDU' | translate}}"
+                    formControlName="estudioTerUnivTutor">
+                </ng-select>
+
                 <mat-form-field>
                     <mat-label>{{'STUDENT.ADVISOR_DNI' | translate}}</mat-label>
                     <input formControlName="dniTutor" matInput class=".align-middle" [showMaskTyped]="true" mask="00000000">

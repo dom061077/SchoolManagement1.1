@@ -206,11 +206,11 @@ transformStudentToRawData(student: Student): RawStudentData {
     rawData['direccion'] = student.direccion || '';
     rawData['planSocial'] = student.planSocial;
     rawData['trabaja'] = student.trabaja;
-    rawData['localidadId'] = Number(student.localidadId) || '';
+    rawData['localidadId'] = Number(student.localidadId) || null;
     rawData['localidadNombre'] = student.localidadNombre || '';
-    rawData['departamentoId'] = Number(student.departamentoId) || '';
+    rawData['departamentoId'] = Number(student.departamentoId) || null;
     rawData['departamentoNombre'] = student.departamentoNombre || '';
-    rawData['provinciaId'] = Number(student.provinciaId) || '';
+    rawData['provinciaId'] = Number(student.provinciaId) || null;
     rawData['provinciaNombre'] = student.provinciaNombre || '';
     rawData['telefono1'] = student.telefono1 || '';
     rawData['telefono2'] = student.telefono2 || '';
