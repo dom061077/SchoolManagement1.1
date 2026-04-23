@@ -1,16 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { StudentaddeditComponent } from './studentaddedit.component';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { StudentFacade } from '../../../core/state/student/student.facade';
 import { ProvinceFacade } from '@app/core/state/location/province/province.facade';
 import { LocaltyFacade } from '@app/core/state/location/locality/locality.facade';
 import { EstudioEnumFacade } from '../../../core/state/estudioenum/estudioenum.facade';
 import { UiService } from '../../shared/ui.service';
 import { of } from 'rxjs';
-import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, EventEmitter, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('StudentaddeditComponent', () => {
   let component: StudentaddeditComponent;
@@ -39,7 +40,11 @@ describe('StudentaddeditComponent', () => {
 
   const mockTranslateService = {
     instant: jasmine.createSpy('instant').and.returnValue('Translated Title'),
-    get: jasmine.createSpy('get').and.returnValue(of('Translated Title'))
+    get: jasmine.createSpy('get').and.returnValue(of('Translated Title')),
+    // The pipe subscribes to these three events on init
+    onTranslationChange: new EventEmitter(),
+    onLangChange: new EventEmitter(),
+    onDefaultLangChange: new EventEmitter(),
   };
 
   const mockMatDialogRef = {
@@ -67,7 +72,7 @@ describe('StudentaddeditComponent', () => {
 
     await TestBed.configureTestingModule({
       declarations: [StudentaddeditComponent],
-      imports: [ReactiveFormsModule],
+      imports: [ReactiveFormsModule, TranslateModule.forRoot(), NgSelectModule, FormsModule],
       providers: [
         FormBuilder,
         { provide: StudentFacade, useValue: mockStudentFacade },
@@ -83,8 +88,8 @@ describe('StudentaddeditComponent', () => {
       ],
       schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(StudentaddeditComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -99,12 +104,12 @@ describe('StudentaddeditComponent', () => {
     component.editcode = 1;
     const mockStudent = { id: 1, lastName: 'Perez', firstName: 'Juan' };
     spyOn(component, 'populateForms');
-    
+
     // Simulate selectEntities returning a mock student dictionary
     component.selectEntities = (() => ({ 1: mockStudent })) as any;
-    
+
     component.ngOnInit();
-    
+
     expect(component.populateForms).toHaveBeenCalledWith(mockStudent as any);
   });
 
@@ -132,7 +137,7 @@ describe('StudentaddeditComponent', () => {
 
   it('should call facade create on submit if editcode is 0 and forms are valid', () => {
     component.editcode = 0;
-    
+
     // Setup valid form
     component.personalDataForm.patchValue({
       lastName: 'Smith',
