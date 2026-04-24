@@ -12,6 +12,13 @@ import { EstudioEnumFacade } from '../../../core/state/estudioenum/estudioenum.f
 import { UiService } from '../../shared/ui.service';
 import { of } from 'rxjs';
 import { CUSTOM_ELEMENTS_SCHEMA, EventEmitter, NO_ERRORS_SCHEMA } from '@angular/core';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
 describe('StudentaddeditComponent', () => {
   let component: StudentaddeditComponent;
@@ -72,8 +79,22 @@ describe('StudentaddeditComponent', () => {
 
     await TestBed.configureTestingModule({
       declarations: [StudentaddeditComponent],
-      imports: [ReactiveFormsModule, TranslateModule.forRoot(), NgSelectModule, FormsModule],
+      imports: [
+        ReactiveFormsModule, 
+        TranslateModule.forRoot(), 
+        NgSelectModule, 
+        FormsModule,
+        MatCheckboxModule,
+        MatInputModule,
+        MatFormFieldModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        NoopAnimationsModule,
+        NgxMaskDirective,
+        NgxMaskPipe
+      ],
       providers: [
+        provideNgxMask(),
         FormBuilder,
         { provide: StudentFacade, useValue: mockStudentFacade },
         { provide: ProvinceFacade, useValue: mockProvinceFacade },
@@ -101,7 +122,7 @@ describe('StudentaddeditComponent', () => {
 
   it('should populate forms when editcode > 0', () => {
     // Setup for edit scenario
-    component.editcode = 1;
+    component.data = { code: 1, title: 'STUDENT.ADD_STUDENT', readOnly: false, toDelete: false } as any;
     const mockStudent = { id: 1, lastName: 'Perez', firstName: 'Juan' };
     spyOn(component, 'populateForms');
 
