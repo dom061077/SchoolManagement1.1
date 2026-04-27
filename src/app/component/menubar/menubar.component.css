@@ -1,3 +1,35 @@
 .example-spacer {
     flex: 1 1 auto;
-  }
+}
+
+mat-toolbar {
+    background: var(--glass-bg) !important;
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-bottom: 1px solid var(--glass-border);
+    color: var(--text-main) !important;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+mat-drawer-container {
+    background: transparent !important;
+}
+
+mat-drawer {
+    background: rgba(255, 255, 255, 0.4) !important;
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-right: 1px solid var(--glass-border) !important;
+}
+
+mat-nav-list .mat-mdc-list-item {
+    margin: 8px 16px;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+}
+
+mat-nav-list .mat-mdc-list-item:hover {
+    background: rgba(57, 255, 20, 0.2) !important; /* Neon green hover hint */
+}

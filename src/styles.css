@@ -1,31 +1,89 @@
 @import "@ng-select/ng-select/themes/material.theme.css";
 
-/* You can add global styles to this file, and also import other style files */
-
-/* styles.css */
-
-/* 1. Reduce the base font size for the whole application */
-body {
-  /* Standard web default is often 16px. Reducing this scales everything down. */
-  font-size: 14px; 
+:root {
+  /* Vibrant Light Glassmorphism with Neon Green Accents */
+  --primary-font: 'Outfit', 'Roboto', sans-serif;
+  
+  --bg-gradient: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+  --glass-bg: rgba(255, 255, 255, 0.65);
+  --glass-border: rgba(255, 255, 255, 0.6);
+  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
+  --glass-blur: blur(12px);
+  
+  --accent-neon-green: #39ff14; /* Vibrant Neon Green */
+  --accent-hover: #32e011;
+  --text-main: #2c3e50;
+  --text-muted: #7f8c8d;
 }
 
-/* 2. Target Angular Material elements to ensure they are smaller */
-/* This makes buttons, cards, and text tighter. */
-.mat-button, .mat-raised-button, .mat-flat-button {
+html, body { height: 100%; }
+
+body { 
+  margin: 0; 
+  font-family: var(--primary-font); 
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+  color: var(--text-main);
   font-size: 14px;
-  line-height: 1.2; /* Tighter line spacing */
 }
 
-/* 3. Target any specific icons (e.g., Material Icons) */
+/* Glassmorphism Overrides for Angular Material */
+.mat-mdc-card,
+.mat-mdc-dialog-container .mdc-dialog__surface {
+  background: var(--glass-bg) !important;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border) !important;
+  box-shadow: var(--glass-shadow) !important;
+  border-radius: 16px !important;
+  color: var(--text-main) !important;
+}
+
+/* Neon Green Buttons (Support both legacy and MDC classes) */
+.mat-mdc-raised-button, .mat-raised-button,
+.mat-mdc-unelevated-button, .mat-flat-button,
+.mat-mdc-fab, .mat-fab,
+.mat-mdc-mini-fab, .mat-mini-fab {
+  background-color: var(--accent-neon-green) !important;
+  color: #111 !important; /* Dark text for contrast against neon */
+  font-family: var(--primary-font) !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 4px 15px rgba(57, 255, 20, 0.4) !important;
+  font-size: 14px;
+}
+
+.mat-mdc-raised-button:hover, .mat-raised-button:hover,
+.mat-mdc-unelevated-button:hover, .mat-flat-button:hover,
+.mat-mdc-fab:hover, .mat-fab:hover,
+.mat-mdc-mini-fab:hover, .mat-mini-fab:hover {
+  background-color: var(--accent-hover) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(57, 255, 20, 0.6) !important;
+}
+
+/* Base button and font overrides */
+.mat-mdc-button, .mat-button, 
+.mat-mdc-outlined-button, .mat-stroked-button {
+  font-family: var(--primary-font) !important;
+  font-size: 14px;
+  line-height: 1.2;
+  border-radius: 8px !important;
+}
+
+/* Material Form Field adjustments for softer look */
+.mdc-text-field--outlined {
+  border-radius: 8px !important;
+  background-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Target any specific icons (e.g., Material Icons) */
 .material-icons {
   font-size: 16px; /* Ensure icons are visually balanced with the 14px text */
   width: 16px;
   height: 16px;
 }
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .green-snackbar {
     background: green !important ;
