@@ -1,0 +1,76 @@
+<mat-card style="min-height: 500px;">
+    <mat-card-header>
+        <h1>{{'STUDENT_REGISTRATION.LIST_TITLE' | translate}}</h1>
+        <button (click)="addStudentRegistration()" mat-fab color="primary" style="margin-left: 70%;">
+            <mat-icon>add</mat-icon>
+        </button>
+    </mat-card-header>
+    <mat-card-content>
+        <div *ngIf="errormessage">
+            <h1>{{errormessage}}</h1>
+        </div> 
+        <form [formGroup]="filterForm" (ngSubmit)="applyFilter()">
+            <mat-card-content [style.overflow]="'auto'">
+                <mat-form-field>
+                    <input matInput formControlName="studentLastName" (keyup)="applyFilter()" placeholder="{{'STUDENT.FILTER_LASTNAME' | translate}}">
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput formControlName="studentFirstName" (keyup)="applyFilter()" placeholder="{{'STUDENT.FILTER_FIRSTNAME' | translate}}" >
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput formControlName="academicYearYear" type="number" (keyup)="applyFilter()" placeholder="{{'ACADEMIC_YEAR.YEAR' | translate}}">
+                </mat-form-field>
+                <button mat-fab color="primary" aria-label="Search">
+                    <mat-icon>search</mat-icon>
+                </button>
+            </mat-card-content>
+        </form>
+        <table *ngIf="!errormessage" matSort mat-table [dataSource]="dataSource" (matSortChange)="sortData($event)" class="mat-elevation-z8">
+            <ng-container matColumnDef="id">
+                <th mat-sort-header mat-header-cell *matHeaderCellDef> {{'COMMON.ID' | translate}}</th>
+                <td mat-cell *matCellDef="let element">{{element.id}}</td>
+            </ng-container>
+            <ng-container matColumnDef="studentLastName">
+                <th mat-sort-header mat-header-cell *matHeaderCellDef>{{'STUDENT.LAST_NAME' | translate}}</th>
+                <td mat-cell *matCellDef="let element">{{element.studentLastName}}</td>
+            </ng-container>
+            <ng-container matColumnDef="studentFirstName">
+                <th mat-sort-header mat-header-cell *matHeaderCellDef> {{'STUDENT.FIRT_NAME' | translate}} </th>
+                <td mat-cell *matCellDef="let element">{{element.studentFirstName}}</td>
+            </ng-container>
+            <ng-container matColumnDef="academicYearYear">
+                <th mat-sort-header mat-header-cell *matHeaderCellDef> {{'ACADEMIC_YEAR.YEAR' | translate}} </th>
+                <td mat-cell *matCellDef="let element">{{element.academicYearYear}}</td>
+            </ng-container>
+            <ng-container matColumnDef="gradeLevelGradeNumber">
+                <th mat-sort-header mat-header-cell *matHeaderCellDef> {{'GRADE_LEVEL.NUMBER' | translate}} </th>
+                <td mat-cell *matCellDef="let element">{{element.gradeLevelGradeNumber}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef>{{'COMMON.GRID_ACTIONS' | translate}}</th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-fab (click)="studentRegistrationEdit(element.id)" color="primary" matTooltip="{{'COMMON.GRID_ACTION_EDIT_TOOLTIP' | translate}}">
+                        <mat-icon>edit</mat-icon>
+                    </button>                
+                    <button mat-fab (click)="studentRegistrationDetails(element.id)" color="accent" matTooltip="{{'COMMON.GRID_ACTION_VIEW_TOOLTIP' | translate}}">
+                        <mat-icon>info</mat-icon>   
+                    </button>
+                    <button mat-fab (click)="studentRegistrationDelete(element.id)" color="warn" matTooltip="{{'COMMON.GRID_ACTION_DELETE_TOOLTIP' | translate}}">
+                        <mat-icon>delete</mat-icon> 
+                    </button>                    
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row;columns:displayedColumns"></tr>
+        </table>
+    </mat-card-content>
+    <mat-card-footer>
+        <mat-paginator [length]="total()"
+                       [pageSize]="pageSize()"
+                       [pageSizeOptions]="pageSizeOptions"
+                       (page)="onPageChange($event)">
+        </mat-paginator>
+    </mat-card-footer>
+</mat-card>

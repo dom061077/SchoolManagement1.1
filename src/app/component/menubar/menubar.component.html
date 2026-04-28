@@ -45,7 +45,10 @@
                         <button mat-button routerLink=""><mat-icon>home</mat-icon>Home</button>
                     </mat-list-item>
                     <mat-list-item *appIfRole="'preceptor'">
-                        <button mat-button routerLink="student"><mat-icon>people</mat-icon>{{'STUDENTS.MENU_TITLE'}}</button>
+                        <button mat-button routerLink="student"><mat-icon>people</mat-icon>{{'STUDENTS.MENU_TITLE' | translate}}</button>
+                    </mat-list-item>
+                    <mat-list-item *appIfRole="'preceptor'">
+                        <button mat-button routerLink="student-registrations"><mat-icon>school</mat-icon>{{'STUDENT_REGISTRATIONS.MENU_TITLE' | translate}}</button>
                     </mat-list-item>
 
             </mat-nav-list>
