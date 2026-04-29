@@ -22,13 +22,13 @@ import { Department } from '@app/core/model/department.model';
 
 // Define a shape for the raw form data, where everything is a string or null/undefined
 interface RawStudentData {
-    [key: string]: any; // A simple index signature to allow all fields
+  [key: string]: any; // A simple index signature to allow all fields
 }
 
 
 @Component({
   selector: 'app-studentaddedit',
-  templateUrl: './studentaddedit.component.html', 
+  templateUrl: './studentaddedit.component.html',
   styleUrl: './studentaddedit.component.css'
 })
 export class StudentaddeditComponent implements OnInit {
@@ -36,143 +36,143 @@ export class StudentaddeditComponent implements OnInit {
   @ViewChild('localitySelect') localitySelect: any; // Reference to the locality ng-select component
   @ViewChild('departmentSelect') departmentSelect: any; // Reference to the department ng-select component
 
-onProvinceChange($event: Province) {
-  console.log("Available selectors: ", Object.keys(LocalitySelectors));
-  if ($event) {
-    this.localityFacade.selectProvince($event.id);
-  }else{
-    this.localityFacade.selectProvince(0);
+  onProvinceChange($event: Province) {
+    console.log("Available selectors: ", Object.keys(LocalitySelectors));
+    if ($event) {
+      this.localityFacade.selectProvince($event.id);
+    } else {
+      this.localityFacade.selectProvince(0);
+    }
+    this.localitySelect.clearModel(); // Clear the selected value in the locality ng-select
+    this.departmentSelect.clearModel(); // Clear the selected value in the department ng-select
+    this.personalDataForm?.get('localidadId')?.setValue(null); // Clear the form control value for localidad
+
   }
-  this.localitySelect.clearModel(); // Clear the selected value in the locality ng-select
-  this.departmentSelect.clearModel(); // Clear the selected value in the department ng-select
-  this.personalDataForm?.get('localidadId')?.setValue(null); // Clear the form control value for localidad
-  
-}
 
-onDepartmentChange($event: any) {
-  this.localitySelect.clearModel(); // Clear the selected value in the locality ng-select
-  this.localityFacade.selectDepartment($event ? $event.id : 0);
-  console.log("Available selectors on deparment change: ", Object.keys(LocalitySelectors));
-  console.log("Localidades: "+this.localtyData());
-}
+  onDepartmentChange($event: any) {
+    this.localitySelect.clearModel(); // Clear the selected value in the locality ng-select
+    this.localityFacade.selectDepartment($event ? $event.id : 0);
+    console.log("Available selectors on deparment change: ", Object.keys(LocalitySelectors));
+    console.log("Localidades: " + this.localtyData());
+  }
 
-  selectEntities = this.store.selectSignal(studentSelectors.selectEntities) as Signal<{[id: number]: Student}>;
+  selectEntities = this.store.selectSignal(studentSelectors.selectEntities) as Signal<{ [id: number]: Student }>;
   dateformat: string;
   title: string = 'STUDENT.ADD_STUDENT';
-  dialogdata : any;
+  dialogdata: any;
   editcode!: number;
-  editdata!: Student;  
+  editdata!: Student;
   readonly: boolean = false;
   toDelete: boolean = false;
   estudioEnumData: Signal<EstudioEnum[]>;
-  localtyData: Signal<Locality[]> ;
+  localtyData: Signal<Locality[]>;
   provinceData: Signal<Province[]>;
-  departmentData: Signal<Department[]> ;
-  loading : Signal<boolean>;
-  
+  departmentData: Signal<Department[]>;
+  loading: Signal<boolean>;
 
 
-    advisorDocForm = this.builder.group({
-      apellidoTutor: [''],
-      nombreTutor: [''],
-      estudioPrimarioTutor: [''],
-      estudioSecundarioTutor: [''],
-      estudioTerUnivTutor: [''],
-      dniTutor: ['',Validators.pattern(/^\d{8}$/)],
-      cuilTutor: [''/*, Validators.pattern(/^\d{2}-\d{8}-\d{1}$/)*/],
-      parentescoTutor: ['']
-    });
+
+  advisorDocForm = this.builder.group({
+    apellidoTutor: [''],
+    nombreTutor: [''],
+    estudioPrimarioTutor: [''],
+    estudioSecundarioTutor: [''],
+    estudioTerUnivTutor: [''],
+    dniTutor: ['', Validators.pattern(/^\d{8}$/)],
+    cuilTutor: [''/*, Validators.pattern(/^\d{2}-\d{8}-\d{1}$/)*/],
+    parentescoTutor: ['']
+  });
 
 
-    personalDataForm = this.builder.group({
+  personalDataForm = this.builder.group({
 
-      id: [''],
-      lastName: ['',Validators.required],
-      firstName: ['', Validators.required],
-      birthDate: ['', Validators.required],
-      // Regex:
-        // ^      : Start of string
-        // \d+    : One or more digits (0-9). Use \d* for optional.
-        // $      : End of string      
-      dni: ['', [Validators.required, Validators.pattern(/^\d{8}$/)]],
-      //cuil: [''],
-      direccion: [''],
-      planSocial: [''],
-      trabaja: [''],
-      localidadId: [''],
-      provinciaId: [''],
-      departamentoId: [''],
-      telefono1: [''],
-      telefono2: [''],
+    id: [''],
+    lastName: ['', Validators.required],
+    firstName: ['', Validators.required],
+    birthDate: ['', Validators.required],
+    // Regex:
+    // ^      : Start of string
+    // \d+    : One or more digits (0-9). Use \d* for optional.
+    // $      : End of string      
+    dni: ['', [Validators.required, Validators.pattern(/^\d{8}$/)]],
+    //cuil: [''],
+    direccion: [''],
+    planSocial: [''],
+    trabaja: [''],
+    localidadId: [''],
+    provinciaId: [''],
+    departamentoId: [''],
+    telefono1: [''],
+    telefono2: [''],
 
-    });
+  });
 
-    personDocForm = this.builder.group({
-      fotoDni: [''],
-      constanciaCuil: [''],
-      constancia6grado: [''],
-      actaNacimiento: [''],
-      constanciaRegular: [''],
-      foto4x4: [''],
+  personDocForm = this.builder.group({
+    fotoDni: [''],
+    constanciaCuil: [''],
+    constancia6grado: [''],
+    actaNacimiento: [''],
+    constanciaRegular: [''],
+    foto4x4: [''],
 
-    });
+  });
 
-    additionalDocForm = this.builder.group({
-      fotoCarnetVac: [''],
-      fichaMedica: [''],
-      aptitudFisica: [''],
-      grupoSanguineo: [''],
-      fichaInscripcion: [''],
-      libreta6grado: [''],
-      fotocopiaLibroMatriz: ['']
+  additionalDocForm = this.builder.group({
+    fotoCarnetVac: [''],
+    fichaMedica: [''],
+    aptitudFisica: [''],
+    grupoSanguineo: [''],
+    fichaInscripcion: [''],
+    libreta6grado: [''],
+    fotocopiaLibroMatriz: ['']
 
-    });
+  });
 
 
-populateForms(student: Student) {
-  // 1. Transform the Student object into the flattened rawData object
-  const rawData = this.transformStudentToRawData(student);
-  this.localityFacade.selectProvince((student.provinciaId?student.provinciaId:0));
-  this.localityFacade.selectDepartment((student.departamentoId?student.departamentoId:0));
+  populateForms(student: Student) {
+    // 1. Transform the Student object into the flattened rawData object
+    const rawData = this.transformStudentToRawData(student);
+    this.localityFacade.selectProvince((student.provinciaId ? student.provinciaId : 0));
+    this.localityFacade.selectDepartment((student.departamentoId ? student.departamentoId : 0));
 
-  // 2. Use patchValue() on each form group to populate it
-  //    It will only set the values for controls that exist in the group
-  this.personalDataForm.patchValue(rawData);
-  this.advisorDocForm.patchValue(rawData);
-  this.personDocForm.patchValue(rawData);
-  this.additionalDocForm.patchValue(rawData);
-}
+    // 2. Use patchValue() on each form group to populate it
+    //    It will only set the values for controls that exist in the group
+    this.personalDataForm.patchValue(rawData);
+    this.advisorDocForm.patchValue(rawData);
+    this.personDocForm.patchValue(rawData);
+    this.additionalDocForm.patchValue(rawData);
+  }
 
-  get lastNameControl() : AbstractControl | null{
+  get lastNameControl(): AbstractControl | null {
     return this.personalDataForm.get('lastName');
   }
 
-  get dniControl() : AbstractControl | null{
+  get dniControl(): AbstractControl | null {
     return this.personalDataForm.get('dni');
   }
 
-  constructor( private facade: StudentFacade, private provinceFacade: ProvinceFacade, private localityFacade: LocaltyFacade, private estudioEnumFacade: EstudioEnumFacade, private builder: FormBuilder, private translate: TranslateService, private ref: MatDialogRef<StudentaddeditComponent>
-     ,@Inject(MAT_DIALOG_DATA) public data:{code:number, title: string}
-     , private store: Store, private dialog: MatDialog, private uiService: UiService) {
-      this.title = this.translate.instant(this.title);
-      this.estudioEnumData = this.store.selectSignal(estudioenumSelectors.selectAll) as Signal<EstudioEnum []>;  
-      this.localtyData = this.store.selectSignal(LocalitySelectors.selectLocalities as unknown as Signal<Locality []> );
-      this.provinceData = this.store.selectSignal(provinceSelectors.selectAll) as Signal<Province []>;
-      this.departmentData = this.store.selectSignal(LocalitySelectors.selectDepartments) as Signal<Department []>;
-      this.loading = this.store.selectSignal(LocalitySelectors.selectLoading);
-      this.dateformat = this.uiService.getDateFormat();
-      console.log("Available selectors: ", Object.keys(LocalitySelectors));
-    }  
+  constructor(private facade: StudentFacade, private provinceFacade: ProvinceFacade, private localityFacade: LocaltyFacade, private estudioEnumFacade: EstudioEnumFacade, private builder: FormBuilder, private translate: TranslateService, private ref: MatDialogRef<StudentaddeditComponent>
+    , @Inject(MAT_DIALOG_DATA) public data: { code: number, title: string }
+    , private store: Store, private dialog: MatDialog, private uiService: UiService) {
+    this.title = this.translate.instant(this.title);
+    this.estudioEnumData = this.store.selectSignal(estudioenumSelectors.selectAll) as Signal<EstudioEnum[]>;
+    this.localtyData = this.store.selectSignal(LocalitySelectors.selectLocalities as unknown as Signal<Locality[]>);
+    this.provinceData = this.store.selectSignal(provinceSelectors.selectAll) as Signal<Province[]>;
+    this.departmentData = this.store.selectSignal(LocalitySelectors.selectDepartments) as Signal<Department[]>;
+    this.loading = this.store.selectSignal(LocalitySelectors.selectLoading);
+    this.dateformat = this.uiService.getDateFormat();
+    console.log("Available selectors: ", Object.keys(LocalitySelectors));
+  }
 
-  
+
   ngOnInit(): void {
     this.dialogdata = this.data;
     this.title = this.translate.instant(this.dialogdata.title);
     this.editcode = this.dialogdata.code;
-    this.estudioEnumFacade.loadAll(0,100,'[]','[]','AND');
-    this.localityFacade.loadAll(0,100,'[]','[]','AND');
-    this.provinceFacade.loadAll(0,100,'[]','[]','AND');
-    
+    this.estudioEnumFacade.loadAll(0, 100, '[]', '[]', 'AND');
+    this.localityFacade.loadAll(0, 100, '[]', '[]', 'AND');
+    this.provinceFacade.loadAll(0, 100, '[]', '[]', 'AND');
+
 
     /*
     this.store.select(studentSelectors.selectEntities).subscribe(entities => {
@@ -180,21 +180,21 @@ populateForms(student: Student) {
       this.markFormasAsTouched();
     });
     */
-    if(this.editcode && this.editcode > 0){
+    if (this.editcode && this.editcode > 0) {
       this.populateForms(this.selectEntities()[this.editcode] as Student);
       this.readonly = this.dialogdata.readOnly;
       this.toDelete = this.dialogdata.toDelete;
-      if (this.readonly){
+      if (this.readonly) {
         this.personalDataForm.disable();
         this.advisorDocForm.disable();
         this.personDocForm.disable();
         this.additionalDocForm.disable();
       }
     }
-    
+
   }
 
-transformStudentToRawData(student: Student): RawStudentData {
+  transformStudentToRawData(student: Student): RawStudentData {
     const rawData: RawStudentData = {};
     // --- 1. HANDLE PERSONAL DATA ---
     rawData['id'] = student?.id?.toString() || '';
@@ -216,37 +216,37 @@ transformStudentToRawData(student: Student): RawStudentData {
     rawData['telefono2'] = student.telefono2 || '';
     // --- 2. HANDLE BOOLEAN DOCUMENTATION FIELDS ---
     const booleanDocFields = [
-        'fotoDni', 'constanciaCuil', 'constancia6grado', 'actaNacimiento', 'constanciaRegular', 'foto4x4',
-        'fotoCarnetVac', 'fichaMedica', 'aptitudFisica', 'grupoSanguineo', 'fichaInscripcion',  
-        'libreta6grado', 'fotocopiaLibroMatriz', 'fotocopiaDniTutor', 'constanciaCuilTutor'
+      'fotoDni', 'constanciaCuil', 'constancia6grado', 'actaNacimiento', 'constanciaRegular', 'foto4x4',
+      'fotoCarnetVac', 'fichaMedica', 'aptitudFisica', 'grupoSanguineo', 'fichaInscripcion',
+      'libreta6grado', 'fotocopiaLibroMatriz', 'fotocopiaDniTutor', 'constanciaCuilTutor'
     ];
     booleanDocFields.forEach(field => {
-        rawData[field] = (student as any)[field];
+      rawData[field] = (student as any)[field];
     });
     // --- 3. HANDLE TUTOR DATA ---
     rawData['apellidoTutor'] = student.apellidoTutor || '';
     rawData['nombreTutor'] = student.nombreTutor || '';
     rawData['estudioPrimarioTutor'] = student.estudioPrimarioTutor || null;
-    rawData['estudioSecundarioTutor'] = student.estudioSecundarioTutor || null ;
+    rawData['estudioSecundarioTutor'] = student.estudioSecundarioTutor || null;
     rawData['estudioTerUnivTutor'] = student.estudioTerUnivTutor || null;
     rawData['dniTutor'] = student.dniTutor?.toString() || '';
     rawData['cuilTutor'] = student.cuilTutor || '';
     rawData['parentescoTutor'] = student.parentescoTutor || '';
     return rawData;
-}
+  }
 
 
- transformRawDataToStudent(rawData: any): Student {
+  transformRawDataToStudent(rawData: any): Student {
     const student: Student = {} as Student;
 
     // --- 1. HANDLE PERSONAL DATA ---
     student.id = rawData.id ? parseInt(rawData.id, 10) : 0; // Convert to number, use 0 as default if needed
     student.lastName = rawData.lastName || '';
     student.firstName = rawData.firstName || '';
-    
+
     // Dates from forms often come as strings, convert to Date object
-    student.birthDate = rawData.birthDate ? new Date(rawData.birthDate) : new Date(0); 
-    
+    student.birthDate = rawData.birthDate ? new Date(rawData.birthDate) : new Date(0);
+
     // DNI/Number fields conversion
     student.dni = rawData.dni ? parseInt(rawData.dni, 10) : null;
     student.cuil = rawData.cuil || '';
@@ -255,9 +255,9 @@ transformStudentToRawData(student: Student): RawStudentData {
     student.direccion = rawData.direccion || '';
     student.localidadId = parseInt(rawData.localidadId, 10); // Convert localidad ID to number
     student.localidadNombre = rawData.localidadNombre || '';
-    student.departamentoId = parseInt(rawData.departamentoId, 10) ;
+    student.departamentoId = parseInt(rawData.departamentoId, 10);
     student.departamentoNombre = rawData.departamentoNombre || '';
-    student.provinciaId = parseInt(rawData.provinciaId, 10) ;
+    student.provinciaId = parseInt(rawData.provinciaId, 10);
     student.provinciaNombre = rawData.provinciaNombre || '';
     student.telefono1 = rawData.telefono1 || '';
     student.telefono2 = rawData.telefono2 || '';
@@ -271,14 +271,14 @@ transformStudentToRawData(student: Student): RawStudentData {
     // If the form field is a checkbox, it might be true/false. If it's a file path string, it might be non-empty string.
     // Assuming you check if the string value exists to determine 'true'
     const booleanDocFields = [
-        'fotoDni', 'constanciaCuil', 'constancia6grado', 'actaNacimiento', 'constanciaRegular', 'foto4x4',
-        'fotoCarnetVac', 'fichaMedica', 'aptitudFisica', 'grupoSanguineo', 'fichaInscripcion', 
-        'libreta6grado', 'fotocopiaLibroMatriz', 'fotocopiaDniTutor', 'constanciaCuilTutor'
+      'fotoDni', 'constanciaCuil', 'constancia6grado', 'actaNacimiento', 'constanciaRegular', 'foto4x4',
+      'fotoCarnetVac', 'fichaMedica', 'aptitudFisica', 'grupoSanguineo', 'fichaInscripcion',
+      'libreta6grado', 'fotocopiaLibroMatriz', 'fotocopiaDniTutor', 'constanciaCuilTutor'
     ];
 
     booleanDocFields.forEach(field => {
-        // Sets boolean to true if the form value is a truthy value (e.g., true, 'true', or a non-empty string file path)
-        (student as any)[field] = !!rawData[field]; 
+      // Sets boolean to true if the form value is a truthy value (e.g., true, 'true', or a non-empty string file path)
+      (student as any)[field] = !!rawData[field];
     });
 
 
@@ -286,15 +286,15 @@ transformStudentToRawData(student: Student): RawStudentData {
     student.apellidoTutor = rawData.apellidoTutor || '';
     student.nombreTutor = rawData.nombreTutor || '';
     student.estudioPrimarioTutor = rawData.estudioPrimarioTutor || null;
-    student.estudioSecundarioTutor = rawData.estudioSecundarioTutor || null ;
+    student.estudioSecundarioTutor = rawData.estudioSecundarioTutor || null;
     student.estudioTerUnivTutor = rawData.estudioTerUnivTutor || null;
     student.dniTutor = rawData.dniTutor ? parseInt(rawData.dniTutor, 10) : 0;
     student.cuilTutor = rawData.cuilTutor || '';
-    student.parentescoTutorId = parseInt(rawData.parentescoTutorId, 10) ;
+    student.parentescoTutorId = parseInt(rawData.parentescoTutorId, 10);
     student.parentescoTutorNombre = rawData.parentescoTutorNombre || '';
 
     return student;
-}
+  }
 
   onSubmit() {
     if (this.personalDataForm.valid && this.dniControl?.valid && this.lastNameControl?.valid) {
@@ -307,9 +307,9 @@ transformStudentToRawData(student: Student): RawStudentData {
       const studentData: Student = this.transformRawDataToStudent(rawStudentData);
 
       if (this.editcode && this.editcode > 0) {
-        if(this.toDelete){
+        if (this.toDelete) {
           this.dialog
-        }else{
+        } else {
           studentData.id = this.editcode;
           this.facade.update(studentData);
           //this.store.dispatch(NotificationActions.showNotification({ message: this.translate.instant('STUDENT.STUDENT_UPDATED_SUCCESS') }));

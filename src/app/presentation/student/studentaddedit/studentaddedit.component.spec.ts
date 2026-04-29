@@ -80,9 +80,9 @@ describe('StudentaddeditComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [StudentaddeditComponent],
       imports: [
-        ReactiveFormsModule, 
-        TranslateModule.forRoot(), 
-        NgSelectModule, 
+        ReactiveFormsModule,
+        TranslateModule.forRoot(),
+        NgSelectModule,
         FormsModule,
         MatCheckboxModule,
         MatInputModule,
@@ -156,6 +156,36 @@ describe('StudentaddeditComponent', () => {
     expect(student.provinciaId).toBe(30);
   });
 
+  it('should transform student to raw data properly', () => {
+    const student = {
+      id: 1,
+      lastName: 'Doe',
+      firstName: 'John',
+      birthDate: new Date('2000-01-01T00:00:00Z'),
+      dni: 12345678,
+      localidadId: 10,
+      departamentoId: 20,
+      provinciaId: 30,
+      fotoDni: true,
+      constanciaCuil: false,
+      dniTutor: 87654321
+    } as any;
+
+    const rawData = component.transformStudentToRawData(student);
+    
+    expect(rawData['id']).toBe('1');
+    expect(rawData['lastName']).toBe('Doe');
+    expect(rawData['firstName']).toBe('John');
+    expect(rawData['birthDate']).toEqual(new Date('2000-01-01T00:00:00Z'));
+    expect(rawData['dni']).toBe('12345678');
+    expect(rawData['localidadId']).toBe(10);
+    expect(rawData['departamentoId']).toBe(20);
+    expect(rawData['provinciaId']).toBe(30);
+    expect(rawData['fotoDni']).toBe(true);
+    expect(rawData['constanciaCuil']).toBe(false);
+    expect(rawData['dniTutor']).toBe('87654321');
+  });
+
   it('should call facade create on submit if editcode is 0 and forms are valid', () => {
     component.editcode = 0;
 
@@ -171,5 +201,59 @@ describe('StudentaddeditComponent', () => {
 
     expect(mockStudentFacade.create).toHaveBeenCalled();
     expect(mockMatDialogRef.close).toHaveBeenCalledWith(true);
+  });
+
+  it('should call facade update on submit if editcode > 0 and forms are valid', () => {
+    component.editcode = 1;
+
+    // Setup valid form
+    component.personalDataForm.patchValue({
+      lastName: 'Smith',
+      firstName: 'Jane',
+      birthDate: '2000-01-01',
+      dni: '12345678'
+    });
+
+    component.onSubmit();
+
+    expect(mockStudentFacade.update).toHaveBeenCalled();
+    expect(mockMatDialogRef.close).toHaveBeenCalledWith(true);
+  });
+
+  it('should call loadAll on relevant facades during ngOnInit', () => {
+    component.ngOnInit();
+    expect(mockEstudioEnumFacade.loadAll).toHaveBeenCalledWith(0, 100, '[]', '[]', 'AND');
+    expect(mockLocaltyFacade.loadAll).toHaveBeenCalledWith(0, 100, '[]', '[]', 'AND');
+    expect(mockProvinceFacade.loadAll).toHaveBeenCalledWith(0, 100, '[]', '[]', 'AND');
+  });
+
+  it('should dispatch selectProvince via localityFacade when province changes', () => {
+    component.localitySelect = { clearModel: jasmine.createSpy('clearModel') };
+    component.departmentSelect = { clearModel: jasmine.createSpy('clearModel') };
+    
+    component.onProvinceChange({ id: 10, nombre: 'Test Province' } as any);
+    
+    expect(mockLocaltyFacade.selectProvince).toHaveBeenCalledWith(10);
+    expect(component.localitySelect.clearModel).toHaveBeenCalled();
+    expect(component.departmentSelect.clearModel).toHaveBeenCalled();
+    expect(component.personalDataForm.get('localidadId')?.value).toBeNull();
+  });
+
+  it('should dispatch selectProvince(0) via localityFacade when province is cleared', () => {
+    component.localitySelect = { clearModel: jasmine.createSpy('clearModel') };
+    component.departmentSelect = { clearModel: jasmine.createSpy('clearModel') };
+    
+    component.onProvinceChange(null as any);
+    
+    expect(mockLocaltyFacade.selectProvince).toHaveBeenCalledWith(0);
+  });
+
+  it('should dispatch selectDepartment via localityFacade when department changes', () => {
+    component.localitySelect = { clearModel: jasmine.createSpy('clearModel') };
+    
+    component.onDepartmentChange({ id: 20, nombre: 'Test Dept' } as any);
+    
+    expect(mockLocaltyFacade.selectDepartment).toHaveBeenCalledWith(20);
+    expect(component.localitySelect.clearModel).toHaveBeenCalled();
   });
 });

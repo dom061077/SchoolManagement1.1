@@ -13,9 +13,9 @@
                         <div class="form-grid" >
 
 
-                            <mat-form-field appearance="outline">
+                            <mat-form-field>
                                 <mat-label>{{'STUDENT.DNI' | translate}}</mat-label>
-                                <input formControlName="dni" matInput [showMaskTyped]="true" mask="00000000">
+                                <input formControlName="dni" matInput mask="00000000">
                                    <div *ngIf="dniControl && dniControl.invalid || dniControl?.errors?.['pattern']"
                                         class="validation-error">
                                         <p *ngIf="dniControl?.errors?.['required']">
