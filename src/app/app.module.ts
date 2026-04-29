@@ -7,7 +7,7 @@ import { MenubarComponent } from './component/menubar/menubar.component';
 import { AddpersonComponent } from './component/addperson/addperson.component';
 import { PersonlistingComponent } from './component/personlisting/personlisting.component';
 import { MaterialModule } from './presentation/shared/material.module';
-import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -30,7 +30,6 @@ import { UserProfileEffects } from './user-profile/store/user-profile.effects';
 import { NotificationComponent } from './shared/notification/notification.component';
 import { notificationFeatureKey, notificationReducer } from './core/state/notification/notification.reducer';
 import { NotificationEffects } from './core/state/notification/notification.effects';
-import { StudentModule } from './presentation/student/student.module';
 import { ConfirmDialogDirective } from './directive/confirm-dialog.directive';
 import { NumbersOnlyDirective } from './presentation/shared/directives/numbers-only.directive';
 import { ConfirmationDialogComponent } from './component/dialog/confirm-dialog/confirm-dialog.component';
@@ -47,12 +46,12 @@ import 'moment/min/locales';
 import { IfPermissionDirective } from './directive/if-permission.directive';
 import { IfRoleDirective } from './directive/if-role.directive';
 
-export function kcFactory(kcService: KeycloakService){
+export function kcFactory(kcService: KeycloakService) {
   return () => kcService.init();
 }
 
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, config.apiUrl+'/api/v1/translation/messages/', '');
+  return new TranslateHttpLoader(http, config.apiUrl + '/api/v1/translation/messages/', '');
 }
 
 // 'L' is the Moment.js token for a Localized Date (e.g., DD/MM/YYYY or MM/DD/YYYY)
@@ -69,7 +68,7 @@ export const DYNAMIC_LOCALE_FORMATS = {
 };
 
 @NgModule({
-  declarations: [ 
+  declarations: [
     AppComponent,
     AddpersonComponent,
     PersonlistingComponent,
@@ -87,17 +86,17 @@ export const DYNAMIC_LOCALE_FORMATS = {
     AppRoutingModule,
     MaterialModule,
     HttpClientModule,
-    StudentModule,
-    StoreModule.forRoot({user:UserReducer, userprofile: (state, action) =>{
-        console.log('User reducer caugth action: ',action);
+    StoreModule.forRoot({
+      user: UserReducer, userprofile: (state, action) => {
+        console.log('User reducer caugth action: ', action);
         return USER_PROFILEreducer(state, action);
       },
-      
-      USER_PROFILEreducer,person: PERSONreducer
+
+      USER_PROFILEreducer, person: PERSONreducer
       , pdfreport: PDFREPORTreducer
-      
+
     }),
-    EffectsModule.forRoot([UserProfileEffects,UserEffect,AppEffects,PersonEffects,PdfReportEffects, UserProfileEffects, NotificationEffects]),
+    EffectsModule.forRoot([UserProfileEffects, UserEffect, AppEffects, PersonEffects, PdfReportEffects, UserProfileEffects, NotificationEffects]),
     StoreModule.forFeature(notificationFeatureKey, notificationReducer),
     StoreRouterConnectingModule.forRoot(),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
@@ -108,14 +107,14 @@ export const DYNAMIC_LOCALE_FORMATS = {
         useFactory: HttpLoaderFactory,
         deps: [HttpClient],
       },
-    }),    
+    }),
   ],
   providers: [
-    
+
     provideNgxMask(),
     { provide: MAT_DATE_LOCALE, useValue: navigator.language },
     provideMomentDateAdapter(DYNAMIC_LOCALE_FORMATS),
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi:true },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
     { provide: MatPaginatorIntl, useClass: CustomPaginatorIntlService },
     provideAnimationsAsync(),
     {

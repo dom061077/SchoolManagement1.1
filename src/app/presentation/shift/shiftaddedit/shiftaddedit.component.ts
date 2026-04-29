@@ -1,9 +1,10 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, Signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { ShiftFacade } from '../../../core/state/shift/shift.facade';
+import { shiftSelectors } from '../../../core/state/shift/shift.reducer';
 import { Shift } from '../../../core/model/shift.model';
 import { TranslateService } from '@ngx-translate/core';
 import { UiService } from '../../shared/ui.service';
@@ -14,6 +15,7 @@ import { UiService } from '../../shared/ui.service';
   styleUrls: ['./shiftaddedit.component.css']
 })
 export class ShiftaddeditComponent implements OnInit, OnDestroy {
+  selectEntities = this.store.selectSignal(shiftSelectors.selectEntities) as Signal<{ [id: number]: Shift }>;
   title = '';
   shiftForm!: FormGroup;
   shiftData!: Shift;
@@ -42,17 +44,14 @@ export class ShiftaddeditComponent implements OnInit, OnDestroy {
     });
 
     if (this.data.code > 0) {
-      this.subscriptions.push(
-        this.facade.getById(this.data.code).subscribe((shift) => {
-          if (shift) {
-            this.shiftData = shift;
-            this.shiftForm.patchValue({
-              id: shift.id,
-              name: shift.name
-            });
-          }
-        })
-      );
+      const shift = this.selectEntities()[this.data.code];
+      if (shift) {
+        this.shiftData = shift;
+        this.shiftForm.patchValue({
+          id: shift.id,
+          name: shift.name
+        });
+      }
     }
   }
 
