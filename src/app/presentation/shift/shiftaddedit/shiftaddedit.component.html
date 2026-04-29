@@ -1,0 +1,33 @@
+<mat-card-header>
+    <mat-card-title class="white-text">{{title}}</mat-card-title>
+</mat-card-header>
+
+<mat-dialog-content class="dialog-container">
+    <form [formGroup]="shiftForm" (ngSubmit)="onSubmit()">
+        <mat-card-content [style.overflow]="'auto'">
+            <div class="form-grid">
+                <mat-form-field *ngIf="data.code > 0">
+                    <mat-label>{{'SHIFT.ID' | translate}}</mat-label>
+                    <input formControlName="id" matInput>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>{{'SHIFT.NAME' | translate}}</mat-label>
+                    <input formControlName="name" matInput required>
+                    <div *ngIf="nameControl && nameControl.invalid" class="validation-error">
+                        <p *ngIf="nameControl?.errors?.['required']">
+                            {{'SHIFT.NAME_VALIDATION' | translate}}
+                        </p>
+                    </div>
+                </mat-form-field>
+            </div>
+        </mat-card-content>
+
+        <mat-dialog-actions align="end">
+            <button mat-button mat-dialog-close cdkFocusInitial>{{'COMMON.CANCEL' | translate}}</button>
+            <button mat-raised-button color="primary" [disabled]="shiftForm.invalid || readonly" type="submit">
+                {{'COMMON.SAVE' | translate}}
+            </button>
+        </mat-dialog-actions>
+    </form>
+</mat-dialog-content>

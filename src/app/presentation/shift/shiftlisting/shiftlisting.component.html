@@ -1,0 +1,54 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title class="white-text">{{'SHIFT.LIST' | translate}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <form [formGroup]="filterForm" (ngSubmit)="applyFilter()" class="filter-form">
+            <mat-form-field appearance="outline">
+                <mat-label>{{'SHIFT.NAME' | translate}}</mat-label>
+                <input matInput formControlName="name" placeholder="{{'SHIFT.NAME' | translate}}">
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="submit">{{'COMMON.SEARCH' | translate}}</button>
+            <button mat-raised-button color="accent" type="button" (click)="clearFilter()">{{'COMMON.CLEAR' | translate}}</button>
+        </form>
+
+        <div class="table-container mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)">
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'SHIFT.ID' | translate}} </th>
+                    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'SHIFT.NAME' | translate}} </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef> {{'COMMON.ACTION' | translate}} </th>
+                    <td mat-cell *matCellDef="let element">
+                        <button mat-icon-button color="primary" (click)="shiftDetails(element.id)">
+                            <mat-icon>visibility</mat-icon>
+                        </button>
+                        <button mat-icon-button color="accent" (click)="shiftEdit(element.id)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-icon-button color="warn" (click)="shiftDelete(element.id)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+
+            <mat-paginator [length]="total()" [pageSize]="pageSize()" [pageSizeOptions]="pageSizeOptions"
+                (page)="onPageChange($event)" showFirstLastButtons>
+            </mat-paginator>
+        </div>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="addShift()">{{'SHIFT.ADD_SHIFT' | translate}}</button>
+    </mat-card-actions>
+</mat-card>
