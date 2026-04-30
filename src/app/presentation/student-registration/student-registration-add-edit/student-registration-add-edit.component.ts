@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { StudentRegistration } from '../../../core/model/student-registration.model';
 import { StudentRegistrationFacade } from '../../../core/state/student-registration/student-registration.facade';
 import { studentRegistrationSelectors } from '../../../core/state/student-registration/student-registration-reducer';
+import { ShiftFacade } from '@app/core/state/shift/shift.facade';
 
 @Component({
   selector: 'app-student-registration-add-edit',
@@ -31,6 +32,7 @@ export class StudentRegistrationAddEditComponent implements OnInit {
 
   constructor(
     private facade: StudentRegistrationFacade,
+    private shiftFacade: ShiftFacade,
     private builder: FormBuilder,
     private translate: TranslateService,
     public ref: MatDialogRef<StudentRegistrationAddEditComponent>,
@@ -42,7 +44,7 @@ export class StudentRegistrationAddEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.editcode = this.data.code;
-    
+    this.shiftFacade.loadAll(0, 100, '[]', '[]', 'AND');
     if (this.editcode && this.editcode > 0) {
       const entity = this.selectEntities()[this.editcode];
       if (entity) {

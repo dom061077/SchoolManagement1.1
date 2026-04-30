@@ -12,6 +12,8 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpLoaderFactory } from '../../app.module';
 import { SharedModule } from '../shared/shared.module';
+import { shiftFeature } from '@app/core/state/shift/shift.reducer';
+import { ShiftEffects } from '@app/core/state/shift/shift.effects';
 
 @NgModule({
   declarations: [
@@ -23,9 +25,11 @@ import { SharedModule } from '../shared/shared.module';
     SharedModule,
     StoreModule.forFeature(studentRegistrationFeature.name, studentRegistrationFeature.reducer),
     EffectsModule.forFeature([StudentRegistrationEffects]),
+    StoreModule.forFeature(shiftFeature.name, shiftFeature.reducer),
+    EffectsModule.forFeature([ShiftEffects]),
     MaterialModule,
     StudentRegistrationRoutingModule,
-    TranslateModule.forRoot({
+    TranslateModule.forChild({
       defaultLanguage: 'es',
       loader: {
         provide: TranslateLoader,
