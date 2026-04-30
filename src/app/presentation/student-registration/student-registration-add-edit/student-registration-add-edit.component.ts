@@ -9,6 +9,9 @@ import { studentRegistrationSelectors } from '../../../core/state/student-regist
 import { ShiftFacade } from '@app/core/state/shift/shift.facade';
 import { shiftSelectors } from '@app/core/state/shift/shift.reducer';
 import { Shift } from '@app/core/model/shift.model';
+import { StudentFacade } from '@app/core/state/student/student.facade';
+import { studentSelectors } from '@app/core/state/student/student-reducer';
+import { Student } from '@app/core/model/student.model';
 
 @Component({
   selector: 'app-student-registration-add-edit',
@@ -23,6 +26,7 @@ export class StudentRegistrationAddEditComponent implements OnInit {
   editcode!: number;
   readonly: boolean = false;
   toDelete: boolean = false;
+  studentData = this.store.selectSignal(studentSelectors.selectAll) as Signal<Student[]>;
 
   registrationForm = this.builder.group({
     id: [''],
@@ -36,6 +40,7 @@ export class StudentRegistrationAddEditComponent implements OnInit {
   constructor(
     private facade: StudentRegistrationFacade,
     private shiftFacade: ShiftFacade,
+    private studentFacade: StudentFacade,
     private builder: FormBuilder,
     private translate: TranslateService,
     public ref: MatDialogRef<StudentRegistrationAddEditComponent>,
@@ -48,6 +53,7 @@ export class StudentRegistrationAddEditComponent implements OnInit {
   ngOnInit(): void {
     this.editcode = this.data.code;
     this.shiftFacade.loadAll(0, 100, '[]', '[]', 'AND');
+    this.studentFacade.loadAll(0, 100, '[]', '[]', 'AND');
     if (this.editcode && this.editcode > 0) {
       const entity = this.selectEntities()[this.editcode];
       if (entity) {

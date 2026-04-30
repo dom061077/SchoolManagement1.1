@@ -2,12 +2,10 @@
 <mat-dialog-content>
   <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
     <div class="row">
-      <div class="col-md-12">
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>{{'STUDENT.ID' | translate}}</mat-label>
-          <input matInput formControlName="studentId" type="number" required>
-        </mat-form-field>
-      </div>
+      <ng-select [items]="studentData()" [searchable]="true" appendTo=".select-wrapper" bindLabel="firstName"
+        bindValue="id" appendTo="body" class="material-style-select" dropdownPosition="bottom"
+        placeholder="{{'COMMON.SELECT_STUDENT' | translate}}" formControlName="studentId" required>
+      </ng-select>
       <div class="col-md-12">
         <mat-form-field appearance="fill" class="full-width">
           <mat-label>{{'ACADEMIC_YEAR.ID' | translate}}</mat-label>

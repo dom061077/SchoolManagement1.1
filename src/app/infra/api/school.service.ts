@@ -1,0 +1,11 @@
+import { Injectable } from '@angular/core';
+import { config } from './config';
+import { School } from '../../core/model/school.model';
+import { PersistenceService } from '../../core/ports/persistence.service';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class SchoolService extends PersistenceService<School> {
+  protected override baseUrl = config.apiUrl + '/api/v1/school';
+}

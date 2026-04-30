@@ -15,6 +15,8 @@ import { SharedModule } from '../shared/shared.module';
 import { shiftFeature } from '@app/core/state/shift/shift.reducer';
 import { ShiftEffects } from '@app/core/state/shift/shift.effects';
 import { NgSelectModule } from "@ng-select/ng-select";
+import { StudentEffects } from '@app/core/state/student/student-effects';
+import { studentFeature } from '@app/core/state/student/student-reducer';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,8 @@ import { NgSelectModule } from "@ng-select/ng-select";
     EffectsModule.forFeature([StudentRegistrationEffects]),
     StoreModule.forFeature(shiftFeature.name, shiftFeature.reducer),
     EffectsModule.forFeature([ShiftEffects]),
+    StoreModule.forFeature(studentFeature.name, studentFeature.reducer),
+    EffectsModule.forFeature([StudentEffects]),
     MaterialModule,
     StudentRegistrationRoutingModule,
     TranslateModule.forChild({
