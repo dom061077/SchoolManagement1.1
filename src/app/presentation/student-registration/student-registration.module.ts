@@ -14,6 +14,7 @@ import { HttpLoaderFactory } from '../../app.module';
 import { SharedModule } from '../shared/shared.module';
 import { shiftFeature } from '@app/core/state/shift/shift.reducer';
 import { ShiftEffects } from '@app/core/state/shift/shift.effects';
+import { NgSelectModule } from "@ng-select/ng-select";
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { ShiftEffects } from '@app/core/state/shift/shift.effects';
         deps: [HttpClient],
       },
     }),
+    NgSelectModule
   ]
 })
 export class StudentRegistrationModule { }

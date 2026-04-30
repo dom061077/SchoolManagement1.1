@@ -7,6 +7,8 @@ import { StudentRegistration } from '../../../core/model/student-registration.mo
 import { StudentRegistrationFacade } from '../../../core/state/student-registration/student-registration.facade';
 import { studentRegistrationSelectors } from '../../../core/state/student-registration/student-registration-reducer';
 import { ShiftFacade } from '@app/core/state/shift/shift.facade';
+import { shiftSelectors } from '@app/core/state/shift/shift.reducer';
+import { Shift } from '@app/core/model/shift.model';
 
 @Component({
   selector: 'app-student-registration-add-edit',
@@ -16,6 +18,7 @@ import { ShiftFacade } from '@app/core/state/shift/shift.facade';
 export class StudentRegistrationAddEditComponent implements OnInit {
 
   selectEntities = this.store.selectSignal(studentRegistrationSelectors.selectEntities) as Signal<{ [id: number]: StudentRegistration }>;
+  shiftData = this.store.selectSignal(shiftSelectors.selectAll) as Signal<Shift[]>;
   title: string = 'STUDENT_REGISTRATION.ADD_REGISTRATION';
   editcode!: number;
   readonly: boolean = false;
