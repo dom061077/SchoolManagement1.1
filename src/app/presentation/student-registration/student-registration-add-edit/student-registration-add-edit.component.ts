@@ -30,11 +30,11 @@ export class StudentRegistrationAddEditComponent implements OnInit {
 
   registrationForm = this.builder.group({
     id: [''],
-    studentId: ['', Validators.required],
-    academicYearId: ['', Validators.required],
-    gradeLevelId: ['', Validators.required],
-    shiftId: ['', Validators.required],
-    sectionId: ['', Validators.required]
+    studentId: [null as number | null, Validators.required],
+    academicYearId: [null as number | null, Validators.required],
+    gradeLevelId: [null as number | null, Validators.required],
+    shiftId: [null as number | null, Validators.required],
+    sectionId: [null as number | null, Validators.required]
   });
 
   constructor(
@@ -53,7 +53,7 @@ export class StudentRegistrationAddEditComponent implements OnInit {
   ngOnInit(): void {
     this.editcode = this.data.code;
     this.shiftFacade.loadAll(0, 100, '[]', '[]', 'AND');
-    this.studentFacade.loadAll(0, 100, '[]', '[]', 'AND');
+    this.studentFacade.loadAll(0, 100, '[]', '[{"property": "lastName","value": "ASC"},{"property": "firstName","value": "ASC"} ]', 'AND');
     if (this.editcode && this.editcode > 0) {
       const entity = this.selectEntities()[this.editcode];
       if (entity) {
@@ -70,23 +70,23 @@ export class StudentRegistrationAddEditComponent implements OnInit {
   populateForm(registration: StudentRegistration) {
     this.registrationForm.patchValue({
       id: registration.id?.toString() || '',
-      studentId: registration.studentId?.toString() || '',
-      academicYearId: registration.academicYearId?.toString() || '',
-      gradeLevelId: registration.gradeLevelId?.toString() || '',
-      shiftId: registration.shiftId?.toString() || '',
-      sectionId: registration.sectionId?.toString() || ''
+      studentId: Number(registration.studentId) || null,
+      academicYearId: Number(registration.academicYearId) || null,
+      gradeLevelId: Number(registration.gradeLevelId) || null,
+      shiftId: Number(registration.shiftId) || null,
+      sectionId: Number(registration.sectionId) || null
     });
   }
 
   transformToRegistration(): StudentRegistration {
     const rawData = this.registrationForm.value;
     return {
-      id: rawData.id ? parseInt(rawData.id, 10) : 0,
-      studentId: rawData.studentId ? parseInt(rawData.studentId, 10) : undefined,
-      academicYearId: rawData.academicYearId ? parseInt(rawData.academicYearId, 10) : undefined,
-      gradeLevelId: rawData.gradeLevelId ? parseInt(rawData.gradeLevelId, 10) : undefined,
-      shiftId: rawData.shiftId ? parseInt(rawData.shiftId, 10) : undefined,
-      sectionId: rawData.sectionId ? parseInt(rawData.sectionId, 10) : undefined
+      id: rawData.id ? Number(rawData.id) : null,
+      studentId: rawData.studentId ? Number(rawData.studentId) : null,
+      academicYearId: rawData.academicYearId ? Number(rawData.academicYearId) : null,
+      gradeLevelId: rawData.gradeLevelId ? Number(rawData.gradeLevelId) : null,
+      shiftId: rawData.shiftId ? Number(rawData.shiftId) : null,
+      sectionId: rawData.sectionId ? Number(rawData.sectionId) : null
     } as StudentRegistration;
   }
 

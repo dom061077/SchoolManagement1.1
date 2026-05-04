@@ -18,18 +18,18 @@ export class EffectFactory<T> {
       update: (item: T) => any;
       delete: (id: string | number) => any;
     }*/
-  ) {}
+  ) { }
 
   loadAll$ = createEffect(() =>
     this.actions$.pipe(
       ofType(this.crudActions.loadAll),
       switchMap((action: { pageIndex: number; pageSize: number; qfilter: string; sorts: string }) =>
-        this.service.list(action.pageIndex,action.pageSize, action.qfilter,action.sorts,'AND').pipe(
+        this.service.list(action.pageIndex, action.pageSize, action.qfilter, action.sorts, 'AND').pipe(
           tap((response) => console.log('[Effect] API response:', response)),
           map((response) => {
-            return this.crudActions.loadAllSuccess({ items:response.content, total: response.totalElements });
+            return this.crudActions.loadAllSuccess({ items: response.content, total: response.totalElements });
           }),
-          catchError((e) => of(this.crudActions.loadAllFailure({ error:e.error })))
+          catchError((e) => of(this.crudActions.loadAllFailure({ error: e.error })))
         )
       )
     )
@@ -38,12 +38,12 @@ export class EffectFactory<T> {
   loadInstance$ = createEffect(() =>
     this.actions$.pipe(
       ofType(this.crudActions.loadInstance),
-      switchMap(( action )=>
+      switchMap((action) =>
         this.service.getById(action.id).pipe(
           map((response) => {
             return this.crudActions.loadInstanceSuccess(response);
           }),
-          catchError((e) => of(this.crudActions.loadInstanceFailure({error: e.error})))
+          catchError((e) => of(this.crudActions.loadInstanceFailure({ error: e.error })))
         )
       )
     )
@@ -55,26 +55,33 @@ export class EffectFactory<T> {
       mergeMap(({ item }) =>
         this.service.create(item).pipe(
           mergeMap((created) => [
-             this.crudActions.createSuccess({ item: created }),
-             NotificationActions.showNotification({ message: this.translate.instant('NOTIFICATION.CREATED_SUCCESS'), kind: 'success' })
+            this.crudActions.createSuccess({ item: created }),
+            NotificationActions.showNotification({ message: this.translate.instant('NOTIFICATION.CREATED_SUCCESS'), kind: 'success' })
           ]),
           catchError((error) => of(this.crudActions.createFailure({ error })))
+
         )
       )
     )
   );
-
+  createSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(this.crudActions.createSuccess),
+      map((action) => {
+        return this.crudActions.loadAll({ pageIndex: 0, pageSize: 10, qfilter: '', sorts: '' });
+      })
+    )
+  );
   update$ = createEffect(() =>
     this.actions$.pipe(
       ofType(this.crudActions.update),
       mergeMap(({ item }) =>
         this.service.update(item.id, item).pipe(
-          map((updated) =>{
-            return  this.crudActions.updateSuccess({ item: updated });      
-            
-
-          })
-          ,catchError((error) =>{
+          mergeMap((updated) => [
+            this.crudActions.updateSuccess({ item: updated }),
+            NotificationActions.showNotification({ message: this.translate.instant('NOTIFICATION.UPDATED_SUCCESS'), kind: 'success' })
+          ])
+          , catchError((error) => {
             //return of(this.crudActions.updateFailure({ error }))
             return of(NotificationActions.showNotification({ message: this.translate.instant('NOTIFICATION.UPDATE_ERROR. '), kind: 'error' }))
           })
@@ -85,8 +92,10 @@ export class EffectFactory<T> {
 
   updateSuccess$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(this.crudActions.updateSuccess),   
-      map(() => NotificationActions.showNotification({ message: this.translate.instant('NOTIFICATION.UPDATED_SUCCESS'), kind: 'success' }))
+      ofType(this.crudActions.updateSuccess),
+      map((action) => {
+        return this.crudActions.loadAll({ pageIndex: 0, pageSize: 10, qfilter: '', sorts: '' });
+      })
     )
   );
 

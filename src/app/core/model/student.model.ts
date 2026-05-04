@@ -56,10 +56,11 @@ export interface Student {
     firstName: string;
     birthDate: Date;
     dni: number | null;
+    dniLastNameFirstName?: string;
     cuil?: string;
     direccion?: string;
     planSocial?: boolean;
-    trabaja?: boolean;      
+    trabaja?: boolean;
     localidadId?: number;
     localidadNombre?: string;
     departamentoId?: number;
@@ -70,7 +71,7 @@ export interface Student {
     parentescoTutorNombre?: string;
 
     telefono1?: string;
-    telefono2?: string;    
+    telefono2?: string;
 
     //Documentación personal
     fotoDni?: boolean;
@@ -83,7 +84,7 @@ export interface Student {
     //Documentacion adicional
     fotoCarnetVac?: boolean;
     fichaMedica?: boolean;
-    aptitudFisica?: boolean;    
+    aptitudFisica?: boolean;
     grupoSanguineo?: boolean;
     fichaInscripcion?: boolean;
     libreta6grado?: boolean;
@@ -106,7 +107,7 @@ export interface Student {
 
 
 
-    
+
 
 }
 

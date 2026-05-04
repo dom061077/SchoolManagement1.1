@@ -2,7 +2,7 @@
 <mat-dialog-content>
   <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
     <div class="row">
-      <ng-select [items]="studentData()" [searchable]="true" appendTo=".select-wrapper" bindLabel="firstName"
+      <ng-select [items]="studentData()" [searchable]="true" appendTo=".select-wrapper" bindLabel="dniLastNameFirstName"
         bindValue="id" appendTo="body" class="material-style-select" dropdownPosition="bottom"
         placeholder="{{'COMMON.SELECT_STUDENT' | translate}}" formControlName="studentId" required>
       </ng-select>
@@ -21,7 +21,7 @@
 
       <ng-select [items]="shiftData()" [searchable]="true" appendTo=".select-wrapper" bindLabel="name" bindValue="id"
         appendTo="body" class="material-style-select" dropdownPosition="bottom"
-        placeholder="{{'COMMON.SELECT_SHIFT' | translate}}">
+        placeholder="{{'COMMON.SELECT_SHIFT' | translate}}" formControlName="shiftId" required>
       </ng-select>
 
       <div class="col-md-12">

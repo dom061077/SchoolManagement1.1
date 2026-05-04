@@ -1,9 +1,6 @@
 export interface StudentRegistration {
     id: number;
     studentId?: number;
-    studentFirstName?: string;
-    studentLastName?: string;
-    studentDni?: number;
 
     academicYearId?: number;
     academicYearYear?: number;
