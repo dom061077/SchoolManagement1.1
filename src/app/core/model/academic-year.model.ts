@@ -1,5 +1,5 @@
 export interface AcademicYear {
     id: number;
-    anio: string;
-
+    year: number;
+    is_active: boolean;
 }
