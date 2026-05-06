@@ -17,6 +17,8 @@ import { ShiftEffects } from '@app/core/state/shift/shift.effects';
 import { NgSelectModule } from "@ng-select/ng-select";
 import { StudentEffects } from '@app/core/state/student/student-effects';
 import { studentFeature } from '@app/core/state/student/student-reducer';
+import { academicYearFeature } from '@app/core/state/academicyear/academic-year.reducer';
+import { AcademicYearEffects } from '@app/core/state/academicyear/academic-year.effects';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,8 @@ import { studentFeature } from '@app/core/state/student/student-reducer';
     EffectsModule.forFeature([ShiftEffects]),
     StoreModule.forFeature(studentFeature.name, studentFeature.reducer),
     EffectsModule.forFeature([StudentEffects]),
+    StoreModule.forFeature(academicYearFeature.name, academicYearFeature.reducer),
+    EffectsModule.forFeature([AcademicYearEffects]),
     MaterialModule,
     StudentRegistrationRoutingModule,
     TranslateModule.forChild({

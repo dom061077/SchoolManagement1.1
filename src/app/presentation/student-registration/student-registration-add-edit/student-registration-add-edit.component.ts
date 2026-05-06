@@ -12,6 +12,9 @@ import { Shift } from '@app/core/model/shift.model';
 import { StudentFacade } from '@app/core/state/student/student.facade';
 import { studentSelectors } from '@app/core/state/student/student-reducer';
 import { Student } from '@app/core/model/student.model';
+import { AcademicYearFacade } from '@app/core/state/academicyear/academic-year.facade';
+import { academicYearSelectors } from '@app/core/state/academicyear/academic-year.reducer';
+import { AcademicYear } from '@app/core/model/academic-year.model';
 
 @Component({
   selector: 'app-student-registration-add-edit',
@@ -22,6 +25,7 @@ export class StudentRegistrationAddEditComponent implements OnInit {
 
   selectEntities = this.store.selectSignal(studentRegistrationSelectors.selectEntities) as Signal<{ [id: number]: StudentRegistration }>;
   shiftData = this.store.selectSignal(shiftSelectors.selectAll) as Signal<Shift[]>;
+  academicYearData = this.store.selectSignal(academicYearSelectors.selectAll) as Signal<AcademicYear[]>;
   title: string = 'STUDENT_REGISTRATION.ADD_REGISTRATION';
   editcode!: number;
   readonly: boolean = false;
@@ -41,6 +45,7 @@ export class StudentRegistrationAddEditComponent implements OnInit {
     private facade: StudentRegistrationFacade,
     private shiftFacade: ShiftFacade,
     private studentFacade: StudentFacade,
+    private academicYearFacade: AcademicYearFacade,
     private builder: FormBuilder,
     private translate: TranslateService,
     public ref: MatDialogRef<StudentRegistrationAddEditComponent>,
@@ -54,6 +59,7 @@ export class StudentRegistrationAddEditComponent implements OnInit {
     this.editcode = this.data.code;
     this.shiftFacade.loadAll(0, 100, '[]', '[]', 'AND');
     this.studentFacade.loadAll(0, 100, '[]', '[{"property": "lastName","value": "ASC"},{"property": "firstName","value": "ASC"} ]', 'AND');
+    this.academicYearFacade.loadAll(0, 100, '[]', '[]', 'AND');
     if (this.editcode && this.editcode > 0) {
       const entity = this.selectEntities()[this.editcode];
       if (entity) {
