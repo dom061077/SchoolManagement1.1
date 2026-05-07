@@ -19,6 +19,8 @@ import { StudentEffects } from '@app/core/state/student/student-effects';
 import { studentFeature } from '@app/core/state/student/student-reducer';
 import { academicYearFeature } from '@app/core/state/academicyear/academic-year.reducer';
 import { AcademicYearEffects } from '@app/core/state/academicyear/academic-year.effects';
+import { gradeLevelFeature } from '@app/core/state/grade-level/grade-level.reducer';
+import { GradeLevelEffects } from '@app/core/state/grade-level/grade-level.effects';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,8 @@ import { AcademicYearEffects } from '@app/core/state/academicyear/academic-year.
     EffectsModule.forFeature([StudentEffects]),
     StoreModule.forFeature(academicYearFeature.name, academicYearFeature.reducer),
     EffectsModule.forFeature([AcademicYearEffects]),
+    StoreModule.forFeature(gradeLevelFeature.name, gradeLevelFeature.reducer),
+    EffectsModule.forFeature([GradeLevelEffects]),
     MaterialModule,
     StudentRegistrationRoutingModule,
     TranslateModule.forChild({
