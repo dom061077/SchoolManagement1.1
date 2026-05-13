@@ -3,9 +3,9 @@ import { FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
-import { StudentRegistration } from '../../../core/model/student-registration.model';
-import { StudentRegistrationFacade } from '../../../core/state/student-registration/student-registration.facade';
-import { studentRegistrationSelectors } from '../../../core/state/student-registration/student-registration-reducer';
+import { StudentRegistration } from '@app/core/model/student-registration.model';
+import { StudentRegistrationFacade } from '@app/core/state/student-registration/student-registration.facade';
+import { studentRegistrationSelectors } from '@app/core/state/student-registration/student-registration-reducer';
 import { ShiftFacade } from '@app/core/state/shift/shift.facade';
 import { shiftSelectors } from '@app/core/state/shift/shift.reducer';
 import { Shift } from '@app/core/model/shift.model';
@@ -18,6 +18,9 @@ import { AcademicYear } from '@app/core/model/academic-year.model';
 import { GradeLevelFacade } from '@app/core/state/grade-level/grade-level.facade';
 import { gradeLevelSelectors } from '@app/core/state/grade-level/grade-level.reducer';
 import { GradeLevel } from '@app/core/model/grade-level.model';
+import { SectionFacade } from '@app/core/state/section/section.facade';
+import { sectionSelectors } from '@app/core/state/section/section.reducer';
+import { Section } from '@app/core/model/section.model';
 
 @Component({
   selector: 'app-student-registration-add-edit',
@@ -30,6 +33,7 @@ export class StudentRegistrationAddEditComponent implements OnInit {
   shiftData = this.store.selectSignal(shiftSelectors.selectAll) as Signal<Shift[]>;
   academicYearData = this.store.selectSignal(academicYearSelectors.selectAll) as Signal<AcademicYear[]>;
   gradeLevelData = this.store.selectSignal(gradeLevelSelectors.selectAll) as Signal<GradeLevel[]>;
+  sectionData = this.store.selectSignal(sectionSelectors.selectAll) as Signal<Section[]>;
   title: string = 'STUDENT_REGISTRATION.ADD_REGISTRATION';
   editcode!: number;
   readonly: boolean = false;
@@ -51,6 +55,7 @@ export class StudentRegistrationAddEditComponent implements OnInit {
     private studentFacade: StudentFacade,
     private academicYearFacade: AcademicYearFacade,
     private gradeLevelFacade: GradeLevelFacade,
+    private sectionFacade: SectionFacade,
     private builder: FormBuilder,
     private translate: TranslateService,
     public ref: MatDialogRef<StudentRegistrationAddEditComponent>,
@@ -66,6 +71,7 @@ export class StudentRegistrationAddEditComponent implements OnInit {
     this.studentFacade.loadAll(0, 100, '[]', '[{"property": "lastName","value": "ASC"},{"property": "firstName","value": "ASC"} ]', 'AND');
     this.academicYearFacade.loadAll(0, 100, '[]', '[]', 'AND');
     this.gradeLevelFacade.loadAll(0, 100, '[]', '[]', 'AND');
+    this.sectionFacade.loadAll(0, 100, '[]', '[]', 'AND');
     if (this.editcode && this.editcode > 0) {
       const entity = this.selectEntities()[this.editcode];
       if (entity) {
