@@ -39,6 +39,9 @@ export class StudentRegistrationAddEditComponent implements OnInit {
   readonly: boolean = false;
   toDelete: boolean = false;
   studentData = this.store.selectSignal(studentSelectors.selectAll) as Signal<Student[]>;
+  studentTotal = this.store.selectSignal(studentSelectors.selectTotalRest) as Signal<number>;
+  studentLoading = this.store.selectSignal(studentSelectors.selectLoading) as Signal<boolean>;
+  studentPageSize = 100;
 
   registrationForm = this.builder.group({
     id: [''],
@@ -128,5 +131,24 @@ export class StudentRegistrationAddEditComponent implements OnInit {
 
   getControl(name: string): AbstractControl | null {
     return this.registrationForm.get(name);
+  }
+
+  onScrollToEnd() {
+    this.fetchMoreStudents();
+  }
+
+  onScroll(event: { start: number; end: number }) {
+    // Optional: custom logic during scrolling if required
+  }
+
+  private fetchMoreStudents() {
+    if (this.studentLoading()) {
+      return;
+    }
+    const total = this.studentTotal();
+    if (this.studentData().length < total) {
+      this.studentPageSize += 100;
+      this.studentFacade.loadAll(0, this.studentPageSize, '[]', '[{"property": "lastName","value": "ASC"},{"property": "firstName","value": "ASC"} ]', 'AND');
+    }
   }
 }

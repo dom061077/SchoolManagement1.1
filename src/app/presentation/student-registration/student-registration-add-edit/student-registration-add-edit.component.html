@@ -4,7 +4,8 @@
     <div class="row">
       <ng-select [items]="studentData()" [searchable]="true" appendTo=".select-wrapper" bindLabel="dniLastNameFirstName"
         bindValue="id" appendTo="body" class="material-style-select" dropdownPosition="bottom"
-        placeholder="{{'COMMON.SELECT_STUDENT' | translate}}" formControlName="studentId" required>
+        placeholder="{{'COMMON.SELECT_STUDENT' | translate}}" formControlName="studentId" [virtualScroll]="true"
+        (scroll)="onScroll($event)" (scrollToEnd)="onScrollToEnd()" required>
       </ng-select>
       <ng-select [items]="academicYearData()" [searchable]="true" appendTo=".select-wrapper" bindLabel="year"
         bindValue="id" appendTo="body" class="material-style-select" dropdownPosition="bottom"
