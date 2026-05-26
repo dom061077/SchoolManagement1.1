@@ -1,5 +1,7 @@
 import { Component, Inject, OnInit, Signal } from '@angular/core';
 import { FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
@@ -42,6 +44,8 @@ export class StudentRegistrationAddEditComponent implements OnInit {
   studentTotal = this.store.selectSignal(studentSelectors.selectTotalRest) as Signal<number>;
   studentLoading = this.store.selectSignal(studentSelectors.selectLoading) as Signal<boolean>;
   studentPageSize = 100;
+  studentTypeahead$ = new Subject<string>();
+  currentStudentTerm = '';
 
   registrationForm = this.builder.group({
     id: [''],
@@ -71,10 +75,34 @@ export class StudentRegistrationAddEditComponent implements OnInit {
   ngOnInit(): void {
     this.editcode = this.data.code;
     this.shiftFacade.loadAll(0, 100, '[]', '[]', 'AND');
-    this.studentFacade.loadAll(0, 100, '[]', '[{"property": "lastName","value": "ASC"},{"property": "firstName","value": "ASC"} ]', 'AND');
+    this.studentFacade.loadAll(0, 100, '[]', '[{"property": "lastName","value": "ASC"},{"property": "firstName","value": "ASC"} ]', 'OR');
     this.academicYearFacade.loadAll(0, 100, '[]', '[]', 'AND');
     this.gradeLevelFacade.loadAll(0, 100, '[]', '[]', 'AND');
     this.sectionFacade.loadAll(0, 100, '[]', '[]', 'AND');
+
+    this.studentTypeahead$.pipe(
+      debounceTime(400),
+      distinctUntilChanged()
+    ).subscribe(term => {
+      this.currentStudentTerm = term || '';
+      this.studentPageSize = 100;
+      let filter = '[]';
+      let filterObj: any[] = [];
+      let termValues = term.split(' ');
+      termValues.forEach(value => {
+        if (filterObj.length == 0)
+          filterObj.push({ property: "lastName:like", value: value });
+        filterObj.push({ property: "firstName:like", value: value });
+        if (typeof value == 'number' && Number.isInteger(value)) {
+          filterObj.push({ property: "dni:eq", value: value });
+        }
+      });
+
+      if (this.currentStudentTerm) {
+        filter = JSON.stringify(filterObj);
+      }
+      this.studentFacade.loadAll(0, this.studentPageSize, filter, '[{"property": "lastName","value": "ASC"},{"property": "firstName","value": "ASC"} ]', 'OR');
+    });
     if (this.editcode && this.editcode > 0) {
       const entity = this.selectEntities()[this.editcode];
       if (entity) {
@@ -148,7 +176,11 @@ export class StudentRegistrationAddEditComponent implements OnInit {
     const total = this.studentTotal();
     if (this.studentData().length < total) {
       this.studentPageSize += 100;
-      this.studentFacade.loadAll(0, this.studentPageSize, '[]', '[{"property": "lastName","value": "ASC"},{"property": "firstName","value": "ASC"} ]', 'AND');
+      let filter = '[]';
+      if (this.currentStudentTerm) {
+        filter = JSON.stringify([{ property: 'dniLastNameFirstName', value: this.currentStudentTerm, operator: 'like' }]);
+      }
+      this.studentFacade.loadAll(0, this.studentPageSize, filter, '[{"property": "lastName","value": "ASC"},{"property": "firstName","value": "ASC"} ]', 'OR');
     }
   }
 }
