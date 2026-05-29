@@ -10,7 +10,7 @@ export class EffectFactory<T> {
   constructor(
     public actions$: Actions,
     private crudActions: any,
-    private service: IPersistencePort<T>,
+    protected service: IPersistencePort<T>,
     private translate: TranslateService
     /*{
       list: () => any;

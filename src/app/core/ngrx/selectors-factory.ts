@@ -22,6 +22,8 @@ export function createEntitySelectors<T>(
   const selectPageSize = createSelector(selectFeature, state => state.pageSize ?? 10);
   const selectTotalRest = createSelector(selectFeature, state => state.total ?? 0);
 
-  return { selectFeature, selectAll, selectEntities, selectIds, selectTotalRest, selectLoading
-    , selectError, selectPageIndex, selectPageSize };
+  return {
+    selectFeature, selectAll, selectEntities, selectIds, selectTotalRest, selectLoading
+    , selectError, selectPageIndex, selectPageSize
+  };
 }

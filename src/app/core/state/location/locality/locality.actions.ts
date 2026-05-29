@@ -6,10 +6,12 @@ import { Department } from '@app/core/model/department.model';
 
 // A) Generate the Standard CRUD Actions (Load All, Create, Update, Delete)
 // This gives us the actions for the 24,000 items
+// Grouped/domain actions → plural/object style define with first letter capitalized
 export const LocalityCrudActions = createCrudActions<Locality>('Locality');
 
 // B) Define the Specific "Cascade" Actions
 // These are unique to the Location domain
+//Single/unique/global actions → singular style define with first letter lowercase
 export const selectProvince = createAction(
   '[Locality] Select Province',
   props<{ provinceId: number | string }>()
