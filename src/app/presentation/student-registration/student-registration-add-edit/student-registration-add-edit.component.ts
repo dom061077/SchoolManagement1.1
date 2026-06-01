@@ -46,6 +46,7 @@ export class StudentRegistrationAddEditComponent implements OnInit {
   studentPageSize = 100;
   studentTypeahead$ = new Subject<string>();
   currentStudentTerm = '';
+  filterObj: any[] = [];
 
   registrationForm = this.builder.group({
     id: [''],
@@ -75,7 +76,6 @@ export class StudentRegistrationAddEditComponent implements OnInit {
   ngOnInit(): void {
     this.editcode = this.data.code;
     this.shiftFacade.loadAll(0, 100, '[]', '[]', 'AND');
-    this.studentFacade.loadAll(0, 100, '[]', '[{"property": "lastName","value": "ASC"},{"property": "firstName","value": "ASC"} ]', 'OR');
     this.academicYearFacade.loadAll(0, 100, '[]', '[]', 'AND');
     this.gradeLevelFacade.loadAll(0, 100, '[]', '[]', 'AND');
     this.sectionFacade.loadAll(0, 100, '[]', '[]', 'AND');
@@ -84,27 +84,39 @@ export class StudentRegistrationAddEditComponent implements OnInit {
       debounceTime(400),
       distinctUntilChanged()
     ).subscribe(term => {
-      this.currentStudentTerm = term || '';
       this.studentPageSize = 100;
       let filter = '[]';
-      let filterObj: any[] = [];
+      let firstName = '';
+      this.filterObj = [];
       let termValues = term.split(' ');
+
       termValues.forEach(value => {
-        if (filterObj.length == 0)
-          filterObj.push({ property: "lastName:like", value: value });
-        filterObj.push({ property: "firstName:like", value: value });
-        if (typeof value == 'number' && Number.isInteger(value)) {
-          filterObj.push({ property: "dni:eq", value: value });
+        if (this.filterObj.length == 0) {
+          if (Number.isInteger(Number(value))) {
+            this.filterObj.push({ property: "dni:eq", value: value });
+          } else {
+            this.filterObj.push({ property: "lastName:like", value: value });
+          }
+        } else {
+          firstName += value + ' ';
         }
       });
-
-      if (this.currentStudentTerm) {
-        filter = JSON.stringify(filterObj);
+      if (firstName.trim() && this.filterObj.length > 0) {
+        this.filterObj.push({ property: "firstName:like", value: firstName.trim() });
       }
+      if (!term.trim()) {
+        this.filterObj = [];
+      }
+      filter = JSON.stringify(this.filterObj);
       this.studentFacade.loadAll(0, this.studentPageSize, filter, '[{"property": "lastName","value": "ASC"},{"property": "firstName","value": "ASC"} ]', 'OR');
     });
     if (this.editcode && this.editcode > 0) {
       const entity = this.selectEntities()[this.editcode];
+      this.filterObj = [];
+      this.filterObj.push({ property: "dni:eq", value: entity.studentDni });
+      let filter = JSON.stringify(this.filterObj);
+
+      this.studentFacade.loadAll(0, 100, filter, '[{"property": "lastName","value": "ASC"},{"property": "firstName","value": "ASC"} ]', 'OR');
       if (entity) {
         this.populateForm(entity);
       }
@@ -113,6 +125,8 @@ export class StudentRegistrationAddEditComponent implements OnInit {
       if (this.readonly) {
         this.registrationForm.disable();
       }
+    } else {
+      this.studentFacade.loadAll(0, this.studentPageSize, '[]', '[{"property": "lastName","value": "ASC"},{"property": "firstName","value": "ASC"} ]', 'OR');
     }
   }
 
@@ -177,9 +191,7 @@ export class StudentRegistrationAddEditComponent implements OnInit {
     if (this.studentData().length < total) {
       this.studentPageSize += 100;
       let filter = '[]';
-      if (this.currentStudentTerm) {
-        filter = JSON.stringify([{ property: 'dniLastNameFirstName', value: this.currentStudentTerm, operator: 'like' }]);
-      }
+      filter = JSON.stringify(this.filterObj);
       this.studentFacade.loadAll(0, this.studentPageSize, filter, '[{"property": "lastName","value": "ASC"},{"property": "firstName","value": "ASC"} ]', 'OR');
     }
   }

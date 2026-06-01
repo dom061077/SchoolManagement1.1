@@ -7,6 +7,13 @@
         placeholder="{{'COMMON.SELECT_STUDENT' | translate}}" formControlName="studentId" [virtualScroll]="true"
         (scroll)="onScroll($event)" (scrollToEnd)="onScrollToEnd()" [typeahead]="studentTypeahead$" required>
       </ng-select>
+      <div *ngIf="studentId && studentId?.errors?.['required']" class="validation-error">
+        <p>
+          {{registrationForm.get('studentDni')?.value}} {{registrationForm.get('studentLastName')?.value}}
+          {{registrationForm.get('studentFirstName')?.value}}
+        </p>
+
+      </div>
       <ng-select [items]="academicYearData()" [searchable]="true" appendTo=".select-wrapper" bindLabel="year"
         bindValue="id" appendTo="body" class="material-style-select" dropdownPosition="bottom"
         placeholder="{{'COMMON.SELECT_ACADEMIC_YEAR' | translate}}" formControlName="academicYearId" required>
