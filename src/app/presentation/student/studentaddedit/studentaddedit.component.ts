@@ -90,6 +90,7 @@ export class StudentaddeditComponent implements OnInit {
     lastName: ['', Validators.required],
     firstName: ['', Validators.required],
     birthDate: ['', Validators.required],
+    estudioEnumId: ['', Validators.required],
     // Regex:
     // ^      : Start of string
     // \d+    : One or more digits (0-9). Use \d* for optional.
@@ -100,7 +101,7 @@ export class StudentaddeditComponent implements OnInit {
     planSocial: [''],
     trabaja: [''],
     localidadId: [''],
-    provinciaId: [''],
+    provinciaId: ['', Validators.required],
     departamentoId: [''],
     telefono1: [''],
     telefono2: [''],
@@ -150,6 +151,20 @@ export class StudentaddeditComponent implements OnInit {
   get dniControl(): AbstractControl | null {
     return this.personalDataForm.get('dni');
   }
+
+  get provinciaIdControl(): AbstractControl | null {
+    return this.personalDataForm.get('provinciaId');
+  }
+
+  get departamentoIdControl(): AbstractControl | null {
+    return this.personalDataForm.get('departamentoId');
+  }
+
+  get localidadIdControl(): AbstractControl | null {
+    return this.personalDataForm.get('localidadId');
+  }
+
+
 
   constructor(private facade: StudentFacade, private provinceFacade: ProvinceFacade, private localityFacade: LocaltyFacade, private estudioEnumFacade: EstudioEnumFacade, private builder: FormBuilder, private translate: TranslateService, private ref: MatDialogRef<StudentaddeditComponent>
     , @Inject(MAT_DIALOG_DATA) public data: { code: number, title: string }
@@ -203,6 +218,7 @@ export class StudentaddeditComponent implements OnInit {
     rawData['birthDate'] = student.birthDate ? student.birthDate : '';//student.birthDate ? student.birthDate.toISOString().substring(0,10) : '';
     rawData['dni'] = student.dni?.toString() || '';
     rawData['cuil'] = student.cuil || '';
+    rawData['estudio'] = student.estudio || '';
     rawData['direccion'] = student.direccion || '';
     rawData['planSocial'] = student.planSocial;
     rawData['trabaja'] = student.trabaja;
@@ -214,6 +230,7 @@ export class StudentaddeditComponent implements OnInit {
     rawData['provinciaNombre'] = student.provinciaNombre || '';
     rawData['telefono1'] = student.telefono1 || '';
     rawData['telefono2'] = student.telefono2 || '';
+
     // --- 2. HANDLE BOOLEAN DOCUMENTATION FIELDS ---
     const booleanDocFields = [
       'fotoDni', 'constanciaCuil', 'constancia6grado', 'actaNacimiento', 'constanciaRegular', 'foto4x4',

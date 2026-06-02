@@ -1,274 +1,236 @@
-
 <mat-card-header>
-        <mat-card-title class="white-text  ">{{title}}</mat-card-title>
+    <mat-card-title class="white-text  ">{{title}}</mat-card-title>
 </mat-card-header>
 
 <mat-dialog-content class="dialog-container">
-<mat-stepper orientation="vertical" [linear]="true" #stepper>
-    <mat-step [stepControl]="personalDataForm" errorMessage="Name is required.">
-        <form [formGroup]="personalDataForm"  >
-            <ng-template matStepLabel> {{'STUDENT.STEP_PERSONAL_DATA' | translate}}  </ng-template>
-                    <mat-card-content [style.overflow]="'auto'" >
+    <mat-stepper orientation="vertical" [linear]="true" #stepper>
+        <mat-step [stepControl]="personalDataForm" errorMessage="Name is required.">
+            <form [formGroup]="personalDataForm">
+                <ng-template matStepLabel> {{'STUDENT.STEP_PERSONAL_DATA' | translate}} </ng-template>
+                <mat-card-content [style.overflow]="'auto'">
 
-                        <div class="form-grid" >
-
-
-                            <mat-form-field>
-                                <mat-label>{{'STUDENT.DNI' | translate}}</mat-label>
-                                <input formControlName="dni" matInput mask="00000000">
-                                   <div *ngIf="dniControl && dniControl.invalid || dniControl?.errors?.['pattern']"
-                                        class="validation-error">
-                                        <p *ngIf="dniControl?.errors?.['required']">
-                                            {{'STUDENT.DNI_VALIDATION' | translate}}
-                                        </p>
-                                        <p *ngIf="dniControl?.errors?.['pattern']">
-                                            {{'STUDENT.DNI_VALIDATION_PATTERN' | translate}}
-                                        </p>
-                                        
-                                    </div>
-
-                            </mat-form-field>
-
-                                <mat-form-field>
-                                    <mat-label>{{'STUDENT.LAST_NAME' | translate}}</mat-label>
-                                    <input formControlName="lastName" matInput class=".align-middle">
-                                    <div *ngIf="lastNameControl && lastNameControl.invalid"
-                                        class="validation-error">
-                                        <p *ngIf="lastNameControl?.errors?.['required']">
-                                            {{'STUDENT.LAST_NAME_VALIDATION' | translate}}
-                                        </p>
-                                        
-                                    </div>
-
-                                </mat-form-field>            
-                                <mat-form-field>
-                                    <mat-label>{{'STUDENT.FIRST_NAME' | translate}}</mat-label>
-                                    <input formControlName="firstName" matInput class=".align-middle">
-                                </mat-form-field>  
+                    <div class="form-grid">
 
 
-                            <mat-form-field>
-                                <mat-label>{{'STUDENT.BIRTHDATE' | translate}}</mat-label>
-                                <input   formControlName="birthDate" [matDatepicker]="pickerBirthDate" matInput 
-                                    class=".align-middle">
-                                    
-                                    <mat-hint>{{dateformat}}</mat-hint>
-                                    <mat-datepicker-toggle matIconSuffix [for]="pickerBirthDate"></mat-datepicker-toggle>
-                                    <mat-datepicker #pickerBirthDate></mat-datepicker>                      
-                            </mat-form-field>
-                            <ng-select [items]="estudioEnumData()"
-                                        [searchable]="true"
-                                        appendTo=".select-wrapper"
-                                        bindLabel="description"
-                                        bindValue="id"
-                                        appendTo="body"
-                                        class="material-style-select"
-                                        dropdownPosition="bottom"
-                                        placeholder="{{'COMMON.SELECT_EDUCATION_STATE' | translate}}">
-                            </ng-select>
-                            <ng-select [searchable]="true" [items] = "provinceData()"
-                                appendTo=".select-wrapper"
-                                bindLabel="nombre"
-                                bindValue="id"
-                                appendTo="body"
-                                class="material-style-select"
-                                dropdownPosition="bottom"
-                                formControlName="provinciaId"
-                                placeholder="{{'COMMON.SELECT_PROVINCE' | translate}}"
-                                (change)="onProvinceChange($event)">
+                        <mat-form-field>
+                            <mat-label>{{'STUDENT.DNI' | translate}}</mat-label>
+                            <input formControlName="dni" matInput mask="00000000">
+                            <div *ngIf="dniControl && dniControl.invalid || dniControl?.errors?.['pattern']"
+                                class="validation-error">
+                                <p *ngIf="dniControl?.errors?.['required']">
+                                    {{'STUDENT.DNI_VALIDATION' | translate}}
+                                </p>
+                                <p *ngIf="dniControl?.errors?.['pattern']">
+                                    {{'STUDENT.DNI_VALIDATION_PATTERN' | translate}}
+                                </p>
 
-                                
-                            </ng-select>
-                            <ng-select #departmentSelect [searchable]="true" [items] = "departmentData()"
-                                
-                                appendTo=".select-wrapper"
-                                bindLabel="nombre"
-                                bindValue="id"
-                                appendTo="body"
-                                class="material-style-select"
-                                dropdownPosition="bottom"
-                                formControlName="departamentoId"
-                                placeholder="{{'COMMON.SELECT_DEPARTMENT' | translate}}"
-                                (change)="onDepartmentChange($event)">
-                            </ng-select>
-                            <ng-select #localitySelect [searchable]="true" [items] = "localtyData()"
-                                [loading] = "loading()"
-                                appendTo=".select-wrapper"
-                                bindLabel="nombre"
-                                bindValue="id"
-                                appendTo="body"
-                                class="material-style-select"
-                                dropdownPosition="bottom"
-                                formControlName="localidadId"
-                                placeholder="{{'COMMON.SELECT_LOCALITY' | translate}}">
-                                <ng-template ng-loadingspinner-tmp>
-                                        <div class="lds-ellipsis">
-                                            <div></div>
-                                            <div></div>
-                                            <div></div>
-                                            <div></div>
-                                        </div>
-                                </ng-template>                                
-                            </ng-select>                                                
-                        </div>   
+                            </div>
 
-                    </mat-card-content>
-                    <div>
-                        
-                        <button mat-raised-button color="primary" [disabled]="personalDataForm.invalid"  matStepperNext>{{'COMMON.NEXT_BTN' | translate}}</button>
-                    </div>                    
+                        </mat-form-field>
 
-        </form>
-    </mat-step>
-    <mat-step [stepControl]="personDocForm" >
-        <form [formGroup]="personDocForm"  >
-            <ng-template matStepLabel> {{'STUDENT.STEP_DOCUMENTATION' | translate}}  </ng-template>
+                        <mat-form-field>
+                            <mat-label>{{'STUDENT.LAST_NAME' | translate}}</mat-label>
+                            <input formControlName="lastName" matInput class=".align-middle">
+                            <div *ngIf="lastNameControl && lastNameControl.invalid" class="validation-error">
+                                <p *ngIf="lastNameControl?.errors?.['required']">
+                                    {{'STUDENT.LAST_NAME_VALIDATION' | translate}}
+                                </p>
 
-                    <mat-card-content [style.overflow]="'auto'" >
+                            </div>
 
-                        <mat-checkbox formControlName="fotoDni" class="align-middle">
-                            {{'STUDENT.FOTO_DNI' | translate}}
-                        </mat-checkbox>
-                        <mat-checkbox formControlName="constanciaCuil" matInput class="align-middle">
-                            {{'STUDENT.CONSTANCIA_CUIL' | translate}}
-                        </mat-checkbox>
-                            
-                        <mat-checkbox formControlName="constancia6grado" matInput class=".align-middle">
-                            {{'STUDENT.FIRST_NAME' | translate}}
-                        </mat-checkbox>
-
-                        <mat-checkbox formControlName="actaNacimiento" matInput class=".align-middle">
-                            {{'STUDENT.ACTA_NAC' | translate}}
-                        </mat-checkbox>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>{{'STUDENT.FIRST_NAME' | translate}}</mat-label>
+                            <input formControlName="firstName" matInput class=".align-middle">
+                        </mat-form-field>
 
 
-                            
-                        <mat-checkbox formControlName="constanciaRegular" matInput class=".align-middle">
-                            {{'STUDENT.CONSTANCIA_REG' | translate}}
-                        </mat-checkbox>
+                        <mat-form-field>
+                            <mat-label>{{'STUDENT.BIRTHDATE' | translate}}</mat-label>
+                            <input formControlName="birthDate" [matDatepicker]="pickerBirthDate" matInput
+                                class=".align-middle">
 
-                            
-                        <mat-checkbox formControlName="foto4x4" matInput class=".align-middle">
-                            {{'STUDENT.FOTO_4X4' | translate}}
-                        </mat-checkbox>
-                    </mat-card-content>
-                    <div>
-                        <button mat-raised-button color="primary" matStepperPrevious>{{'COMMON.BACK_BTN' | translate}}></button>
-                        <button mat-raised-button color="primary"  matStepperNext>{{'COMMON.NEXT_BTN' | translate}}></button>
+                            <mat-hint>{{dateformat}}</mat-hint>
+                            <mat-datepicker-toggle matIconSuffix [for]="pickerBirthDate"></mat-datepicker-toggle>
+                            <mat-datepicker #pickerBirthDate></mat-datepicker>
+                        </mat-form-field>
+                        <ng-select [items]="estudioEnumData()" [searchable]="true" appendTo=".select-wrapper"
+                            bindLabel="description" bindValue="id" appendTo="body" class="material-style-select"
+                            dropdownPosition="bottom" formControlName="estudio"
+                            placeholder="{{'COMMON.SELECT_EDUCATION_STATE' | translate}}">
+                        </ng-select>
+                        <ng-select [searchable]="true" [items]="provinceData()" appendTo=".select-wrapper"
+                            bindLabel="nombre" bindValue="id" appendTo="body" class="material-style-select"
+                            dropdownPosition="bottom" formControlName="provinciaId"
+                            placeholder="{{'COMMON.SELECT_PROVINCE' | translate}}" (change)="onProvinceChange($event)">
+                        </ng-select>
+                        <ng-select #departmentSelect [searchable]="true" [items]="departmentData()"
+                            appendTo=".select-wrapper" bindLabel="nombre" bindValue="id" appendTo="body"
+                            class="material-style-select" dropdownPosition="bottom" formControlName="departamentoId"
+                            placeholder="{{'COMMON.SELECT_DEPARTMENT' | translate}}"
+                            (change)="onDepartmentChange($event)">
+                        </ng-select>
+                        <ng-select #localitySelect [searchable]="true" [items]="localtyData()" [loading]="loading()"
+                            appendTo=".select-wrapper" bindLabel="nombre" bindValue="id" appendTo="body"
+                            class="material-style-select" dropdownPosition="bottom" formControlName="localidadId"
+                            placeholder="{{'COMMON.SELECT_LOCALITY' | translate}}">
+                            <ng-template ng-loadingspinner-tmp>
+                                <div class="lds-ellipsis">
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                </div>
+                            </ng-template>
+                        </ng-select>
                     </div>
 
-        </form>
-    </mat-step>
+                </mat-card-content>
+                <div>
 
-    <mat-step [stepControl]="additionalDocForm">
-        <form [formGroup]="additionalDocForm">
-            <ng-template matStepLabel> {{'STUDENT.STEP_ADDITIONAL_DOCS' | translate}}  </ng-template>
-                <mat-card-content >
-                            
-                            <mat-checkbox formControlName="fotoCarnetVac" matInput class=".align-middle">
-                                {{'STUDENT.CARNET_VAC' | translate}}
-                            </mat-checkbox>
+                    <button mat-raised-button color="primary" [disabled]="personalDataForm.invalid"
+                        matStepperNext>{{'COMMON.NEXT_BTN' | translate}}</button>
+                </div>
 
-                            <mat-checkbox formControlName="fichaMedica" matInput class=".align-middle">
-                                {{'STUDENT.FICHA_MEDIC' | translate}}
-                            </mat-checkbox>
+            </form>
+        </mat-step>
+        <mat-step [stepControl]="personDocForm">
+            <form [formGroup]="personDocForm">
+                <ng-template matStepLabel> {{'STUDENT.STEP_DOCUMENTATION' | translate}} </ng-template>
 
-                            <mat-checkbox formControlName="aptitudFisica" matInput class=".align-middle">
-                                {{'STUDENT.APTITUD_FISICA' | translate}}
-                            </mat-checkbox>    
+                <mat-card-content [style.overflow]="'auto'">
 
-                            <mat-checkbox formControlName="grupoSanguineo" matInput class=".align-middle">
-                                {{'STUDENT.GRUPO_SANG' | translate}}
-                            </mat-checkbox>    
+                    <mat-checkbox formControlName="fotoDni" class="align-middle">
+                        {{'STUDENT.FOTO_DNI' | translate}}
+                    </mat-checkbox>
+                    <mat-checkbox formControlName="constanciaCuil" matInput class="align-middle">
+                        {{'STUDENT.CONSTANCIA_CUIL' | translate}}
+                    </mat-checkbox>
 
-                            <mat-checkbox formControlName="fichaInscripcion" matInput class=".align-middle">
-                                {{'STUDENT.FICHA_INS' | translate}}
-                            </mat-checkbox>    
+                    <mat-checkbox formControlName="constancia6grado" matInput class=".align-middle">
+                        {{'STUDENT.FIRST_NAME' | translate}}
+                    </mat-checkbox>
 
-                            <mat-checkbox formControlName="libreta6grado" matInput class=".align-middle">
-                                {{'STUDENT.LIBRETA_6GRADO' | translate}}
-                            </mat-checkbox>    
+                    <mat-checkbox formControlName="actaNacimiento" matInput class=".align-middle">
+                        {{'STUDENT.ACTA_NAC' | translate}}
+                    </mat-checkbox>
 
-                            <mat-checkbox formControlName="fotocopiaLibroMatriz" matInput class=".align-middle">
-                                {{'STUDENT.LIBRO_MATRIZ' | translate}}
-                            </mat-checkbox>
 
-                        <div>
-                            <button mat-raised-button color="primary" matStepperPrevious>{{'COMMON.BACK_BTN' | translate}}></button>
-                            <button mat-raised-button color="primary" matStepperNext>{{'COMMON.NEXT_BTN' | translate}} ></button>
-                        </div>
+
+                    <mat-checkbox formControlName="constanciaRegular" matInput class=".align-middle">
+                        {{'STUDENT.CONSTANCIA_REG' | translate}}
+                    </mat-checkbox>
+
+
+                    <mat-checkbox formControlName="foto4x4" matInput class=".align-middle">
+                        {{'STUDENT.FOTO_4X4' | translate}}
+                    </mat-checkbox>
+                </mat-card-content>
+                <div>
+                    <button mat-raised-button color="primary" matStepperPrevious>{{'COMMON.BACK_BTN' |
+                        translate}}></button>
+                    <button mat-raised-button color="primary" matStepperNext>{{'COMMON.NEXT_BTN' | translate}}></button>
+                </div>
+
+            </form>
+        </mat-step>
+
+        <mat-step [stepControl]="additionalDocForm">
+            <form [formGroup]="additionalDocForm">
+                <ng-template matStepLabel> {{'STUDENT.STEP_ADDITIONAL_DOCS' | translate}} </ng-template>
+                <mat-card-content>
+
+                    <mat-checkbox formControlName="fotoCarnetVac" matInput class=".align-middle">
+                        {{'STUDENT.CARNET_VAC' | translate}}
+                    </mat-checkbox>
+
+                    <mat-checkbox formControlName="fichaMedica" matInput class=".align-middle">
+                        {{'STUDENT.FICHA_MEDIC' | translate}}
+                    </mat-checkbox>
+
+                    <mat-checkbox formControlName="aptitudFisica" matInput class=".align-middle">
+                        {{'STUDENT.APTITUD_FISICA' | translate}}
+                    </mat-checkbox>
+
+                    <mat-checkbox formControlName="grupoSanguineo" matInput class=".align-middle">
+                        {{'STUDENT.GRUPO_SANG' | translate}}
+                    </mat-checkbox>
+
+                    <mat-checkbox formControlName="fichaInscripcion" matInput class=".align-middle">
+                        {{'STUDENT.FICHA_INS' | translate}}
+                    </mat-checkbox>
+
+                    <mat-checkbox formControlName="libreta6grado" matInput class=".align-middle">
+                        {{'STUDENT.LIBRETA_6GRADO' | translate}}
+                    </mat-checkbox>
+
+                    <mat-checkbox formControlName="fotocopiaLibroMatriz" matInput class=".align-middle">
+                        {{'STUDENT.LIBRO_MATRIZ' | translate}}
+                    </mat-checkbox>
+
+                    <div>
+                        <button mat-raised-button color="primary" matStepperPrevious>{{'COMMON.BACK_BTN' |
+                            translate}}></button>
+                        <button mat-raised-button color="primary" matStepperNext>{{'COMMON.NEXT_BTN' | translate}}
+                            ></button>
+                    </div>
                 </mat-card-content>
 
-        </form>
-    </mat-step>
-    <mat-step [stepControl]="advisorDocForm">
-        <form [formGroup]="advisorDocForm">
-            <ng-template matStepLabel> {{'STUDENT.STEP_ADVISOR_DOC' | translate}}  </ng-template>
-            <mat-card-content >
-                <p>{{'STUDENT.REVIEW_SUBMIT_INSTRUCTION' | translate}}</p>
-                <mat-form-field>
-                    <mat-label>{{'STUDENT.ADVISOR_LAST_NAME' | translate}}</mat-label>
-                    <input formControlName="apellidoTutor" matInput class=".align-middle">
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>{{'STUDENT.ADVISOR_FIRST_NAME' | translate}}</mat-label>
-                    <input formControlName="nombreTutor" matInput class=".align-middle">
-                </mat-form-field>
-                <ng-select [items]="estudioEnumData()"
-                    [searchable]="true"
-                    appendTo=".select-wrapper"
-                    bindLabel="description"
-                    bindValue="id"
-                    appendTo="body"
-                    class="material-style-select"
-                    dropdownPosition="bottom"
-                    placeholder="{{'STUDENT.ADVISOR_PRIMARY_EDU' | translate}}"
-                    formControlName="estudioPrimarioTutor"  
-                    >
-                </ng-select>
+            </form>
+        </mat-step>
+        <mat-step [stepControl]="advisorDocForm">
+            <form [formGroup]="advisorDocForm">
+                <ng-template matStepLabel> {{'STUDENT.STEP_ADVISOR_DOC' | translate}} </ng-template>
+                <mat-card-content>
+                    <p>{{'STUDENT.REVIEW_SUBMIT_INSTRUCTION' | translate}}</p>
+                    <mat-form-field>
+                        <mat-label>{{'STUDENT.ADVISOR_LAST_NAME' | translate}}</mat-label>
+                        <input formControlName="apellidoTutor" matInput class=".align-middle">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>{{'STUDENT.ADVISOR_FIRST_NAME' | translate}}</mat-label>
+                        <input formControlName="nombreTutor" matInput class=".align-middle">
+                    </mat-form-field>
+                    <ng-select [items]="estudioEnumData()" [searchable]="true" appendTo=".select-wrapper"
+                        bindLabel="description" bindValue="id" appendTo="body" class="material-style-select"
+                        dropdownPosition="bottom" placeholder="{{'STUDENT.ADVISOR_PRIMARY_EDU' | translate}}"
+                        formControlName="estudioPrimarioTutor">
+                    </ng-select>
 
-                <ng-select [items]="estudioEnumData()"
-                    [searchable]="true"
-                    appendTo=".select-wrapper"
-                    bindLabel="description"
-                    bindValue="id"
-                    appendTo="body"
-                    class="material-style-select"
-                    dropdownPosition="bottom"
-                    placeholder="{{'STUDENT.ADVISOR_SECONDARY_EDU' | translate}}"
-                    formControlName="estudioSecundarioTutor">
-                </ng-select>
+                    <ng-select [items]="estudioEnumData()" [searchable]="true" appendTo=".select-wrapper"
+                        bindLabel="description" bindValue="id" appendTo="body" class="material-style-select"
+                        dropdownPosition="bottom" placeholder="{{'STUDENT.ADVISOR_SECONDARY_EDU' | translate}}"
+                        formControlName="estudioSecundarioTutor">
+                    </ng-select>
 
-                <ng-select [items]="estudioEnumData()"
-                    [searchable]="true"
-                    appendTo=".select-wrapper"                   
-                    bindLabel="description"
-                    bindValue="id"
-                    appendTo="body"
-                    class="material-style-select"
-                    dropdownPosition="bottom"
-                    placeholder="{{'STUDENT.ADVISOR_UNIV_EDU' | translate}}"
-                    formControlName="estudioTerUnivTutor">
-                </ng-select>
+                    <ng-select [items]="estudioEnumData()" [searchable]="true" appendTo=".select-wrapper"
+                        bindLabel="description" bindValue="id" appendTo="body" class="material-style-select"
+                        dropdownPosition="bottom" placeholder="{{'STUDENT.ADVISOR_UNIV_EDU' | translate}}"
+                        formControlName="estudioTerUnivTutor">
+                    </ng-select>
 
-                <mat-form-field>
-                    <mat-label>{{'STUDENT.ADVISOR_DNI' | translate}}</mat-label>
-                    <input formControlName="dniTutor" matInput class=".align-middle" [showMaskTyped]="true" mask="00000000">
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>{{'STUDENT.ADVISOR_CUIL' | translate}}</mat-label>
-                    <input formControlName="cuilTutor" matInput class=".align-middle" [showMaskTyped]="true" mask="00-00000000-0">
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>{{'STUDENT.ADVISOR_RELATIONSHIP' | translate}}</mat-label>
-                    <input formControlName="parentescoTutor" matInput class=".align-middle">
-                </mat-form-field>
-                <div>
-                    <button mat-raised-button color="primary" matStepperPrevious>{{'COMMON.BACK_BTN' | translate}}></button>
-                    <button mat-raised-button color="accent" [disabled]="advisorDocForm.invalid || readonly" (click)="onSubmit()">{{'COMMON.SUBMIT_BTN' | translate}}></button>
-                </div>
-            </mat-card-content>
-        </form>
-    </mat-step>
-</mat-stepper>
+                    <mat-form-field>
+                        <mat-label>{{'STUDENT.ADVISOR_DNI' | translate}}</mat-label>
+                        <input formControlName="dniTutor" matInput class=".align-middle" [showMaskTyped]="true"
+                            mask="00000000">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>{{'STUDENT.ADVISOR_CUIL' | translate}}</mat-label>
+                        <input formControlName="cuilTutor" matInput class=".align-middle" [showMaskTyped]="true"
+                            mask="00-00000000-0">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>{{'STUDENT.ADVISOR_RELATIONSHIP' | translate}}</mat-label>
+                        <input formControlName="parentescoTutor" matInput class=".align-middle">
+                    </mat-form-field>
+                    <div>
+                        <button mat-raised-button color="primary" matStepperPrevious>{{'COMMON.BACK_BTN' |
+                            translate}}></button>
+                        <button mat-raised-button color="accent" [disabled]="advisorDocForm.invalid || readonly"
+                            (click)="onSubmit()">{{'COMMON.SUBMIT_BTN' | translate}}></button>
+                    </div>
+                </mat-card-content>
+            </form>
+        </mat-step>
+    </mat-stepper>
 </mat-dialog-content>

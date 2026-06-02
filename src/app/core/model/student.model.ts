@@ -58,6 +58,7 @@ export interface Student {
     dni: number | null;
     dniLastNameFirstName?: string;
     cuil?: string;
+    estudio?: string;
     direccion?: string;
     planSocial?: boolean;
     trabaja?: boolean;
