@@ -63,6 +63,9 @@
                             bindLabel="nombre" bindValue="id" appendTo="body" class="material-style-select"
                             dropdownPosition="bottom" formControlName="provinciaId"
                             placeholder="{{'COMMON.SELECT_PROVINCE' | translate}}" (change)="onProvinceChange($event)">
+                            <div *ngIf="provinciaIdControl && provinciaIdControl?.errors?.['required']">
+                                {{'COMMON.PROVINCE_REQUIRED_VALIDATION' | translate}}
+                            </div>
                         </ng-select>
                         <ng-select #departmentSelect [searchable]="true" [items]="departmentData()"
                             appendTo=".select-wrapper" bindLabel="nombre" bindValue="id" appendTo="body"
