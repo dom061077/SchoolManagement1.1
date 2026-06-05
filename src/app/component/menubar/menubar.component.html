@@ -1,66 +1,115 @@
-
-<div *ngIf="ismenuvisible">
-    <mat-toolbar class="glass-toolbar">
-        <button  (click)="(drawer.toggle())" mat-icon-button>
-            <mat-icon>menu</mat-icon>
-        </button>
-        <span>Menú</span>
+<div *ngIf="ismenuvisible" class="dashboard-shell">
+    <mat-toolbar class="main-toolbar">
+        <div class="toolbar-left">
+            <button (click)="drawer.toggle()" mat-icon-button class="toolbar-icon-btn toggle-btn">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <span class="toolbar-title">SchoolAdmin</span>
+        </div>
+        
         <span class="example-spacer"></span>
        
-        <button [matMenuTriggerFor]="dropdownMenu" (click) = "showProfile()"  mat-icon-button  ><mat-icon >account_circle</mat-icon></button>
-        <mat-menu  #dropdownMenu x-position="before"> <!-- Menu is positioned before the button -->
-            <div *ngIf="(profile$ | async) as profile">
+        <div class="toolbar-right">
+            <button mat-icon-button class="toolbar-icon-btn" title="Toggle Theme">
+                <mat-icon>nights_stay</mat-icon>
+            </button>
+            <button mat-icon-button class="toolbar-icon-btn" title="Customize Layout">
+                <mat-icon>palette</mat-icon>
+            </button>
+            <button mat-icon-button class="toolbar-icon-btn badge-btn" title="Notifications">
+                <mat-icon>notifications</mat-icon>
+                <span class="toolbar-badge">2</span>
+            </button>
+            
+            <button [matMenuTriggerFor]="dropdownMenu" (click)="showProfile()" class="toolbar-profile-btn" mat-icon-button>
+                <div class="toolbar-avatar" *ngIf="(profile$ | async) as profile; else defaultAvatar">
+                    <span>{{ profile.name | slice:0:2 | uppercase }}</span>
+                </div>
+                <ng-template #defaultAvatar>
+                    <mat-icon>account_circle</mat-icon>
+                </ng-template>
+            </button>
+        </div>
 
-                <mat-card class="example-card" appearance="outlined">
-                    <mat-card-content>
-                        <p>{{'COMMON.USER_PROFILE' | translate}}</p>
-                        </mat-card-content>                    
-                    <mat-card-header>
-                    <mat-card-title> {{profile.name}} </mat-card-title>
-                    <mat-card-title> {{profile.preferred_username}} </mat-card-title>
-                    </mat-card-header>
-
-
-                </mat-card>
-                
-                <!-- Logout menu item -->
-                <a mat-menu-item  (click)="logout()" >
-                <mat-icon>exit_to_app</mat-icon>
-                <span>{{'COMMON.CLOSE_SESION' | translate}}</span>
+        <mat-menu #dropdownMenu x-position="before">
+            <div *ngIf="(profile$ | async) as profile" class="profile-dropdown-container">
+                <div class="profile-dropdown-header">
+                    <div class="profile-dropdown-avatar">
+                        <span>{{ profile.name | slice:0:2 | uppercase }}</span>
+                    </div>
+                    <div class="profile-dropdown-info">
+                        <h4>{{profile.name}}</h4>
+                        <p>{{profile.preferred_username}}</p>
+                    </div>
+                </div>
+                <hr class="dropdown-divider">
+                <a mat-menu-item (click)="logout()">
+                    <mat-icon>exit_to_app</mat-icon>
+                    <span>{{'COMMON.CLOSE_SESION' | translate}}</span>
                 </a>
-                
-                <!-- About menu item -->
-                <!-- a mat-menu-item href="" routerLink="/about">
-                <mat-icon>info_outline</mat-icon>
-                <span>About</span>
-                </a -->
             </div>
-
         </mat-menu>        
     </mat-toolbar>
-    <mat-drawer-container autosize>
-        <mat-drawer #drawer opened="true" mode="side" position="start">
-            <mat-nav-list>
-                    <mat-list-item>
-                        <button mat-button routerLink=""><mat-icon>home</mat-icon>Home</button>
-                    </mat-list-item>
-                    <mat-list-item *appIfRole="'preceptor'">
-                        <button mat-button routerLink="student"><mat-icon>people</mat-icon>{{'STUDENTS.MENU_TITLE' | translate}}</button>
-                    </mat-list-item>
-                    <mat-list-item *appIfRole="'preceptor'">
-                        <button mat-button routerLink="student-registrations"><mat-icon>school</mat-icon>{{'STUDENT_REGISTRATIONS.MENU_TITLE' | translate}}</button>
-                    </mat-list-item>
 
-            </mat-nav-list>
+    <mat-drawer-container autosize class="main-drawer-container">
+        <mat-drawer #drawer opened="true" mode="side" position="start" class="sidebar-drawer">
+            <div class="sidebar-wrapper">
+                <div class="sidebar-header">
+                    <div class="logo-box">
+                        <mat-icon>school</mat-icon>
+                    </div>
+                    <span class="logo-text">SchoolAdmin</span>
+                </div>
+                
+                <div class="sidebar-content">
+                    <div class="sidebar-section-title">Navigation</div>
+                    <mat-nav-list class="sidebar-nav-list">
+                        <mat-list-item class="sidebar-nav-item">
+                            <button mat-button routerLink="" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">
+                                <mat-icon class="menu-icon">home</mat-icon>
+                                <span class="menu-label">Home</span>
+                            </button>
+                        </mat-list-item>
+                        
+                        <div class="sidebar-section-title" *appIfRole="'preceptor'">Management</div>
+                        <mat-list-item *appIfRole="'preceptor'" class="sidebar-nav-item">
+                            <button mat-button routerLink="student" routerLinkActive="active-link">
+                                <mat-icon class="menu-icon">people</mat-icon>
+                                <span class="menu-label">{{'STUDENTS.MENU_TITLE' | translate}}</span>
+                            </button>
+                        </mat-list-item>
+                        <mat-list-item *appIfRole="'preceptor'" class="sidebar-nav-item">
+                            <button mat-button routerLink="student-registrations" routerLinkActive="active-link">
+                                <mat-icon class="menu-icon">school</mat-icon>
+                                <span class="menu-label">{{'STUDENT_REGISTRATIONS.MENU_TITLE' | translate}}</span>
+                            </button>
+                        </mat-list-item>
+                    </mat-nav-list>
+                </div>
+                
+                <div class="sidebar-footer" *ngIf="(profile$ | async) as profile">
+                    <div class="user-avatar">
+                        <span>{{ profile.name | slice:0:2 | uppercase }}</span>
+                    </div>
+                    <div class="user-info">
+                        <span class="user-name">{{ profile.name }}</span>
+                        <span class="user-role">{{ profile.preferred_username }}</span>
+                    </div>
+                    <button mat-icon-button (click)="logout()" class="logout-btn" title="{{'COMMON.CLOSE_SESION' | translate}}">
+                        <mat-icon>exit_to_app</mat-icon>
+                    </button>
+                </div>
+            </div>
         </mat-drawer>
-        <mat-drawer-content>
-            <div style="text-align: center;min-height: 600px;">
+
+        <mat-drawer-content class="main-content-area">
+            <div class="page-container">
                 <router-outlet></router-outlet>
             </div>
         </mat-drawer-content>
     </mat-drawer-container>
 </div>
-<div style="text-align: center;min-height: 600px;" *ngIf="!ismenuvisible">
+
+<div class="non-logged-container" *ngIf="!ismenuvisible">
     <router-outlet></router-outlet>
 </div>
-

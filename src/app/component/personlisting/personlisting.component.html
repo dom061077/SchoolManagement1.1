@@ -1,8 +1,7 @@
 <mat-card style="min-height: 500px;">
     <mat-card-header>
         <h1>{{'PERSON.TITULO_LISTADO' | translate}}</h1>
-        <button (click)="addPerson()" mat-raised-button color="primary" style="margin-left: 70%;">{{'PERSON.ADD_OPTION' | translate}}
-            (+)</button>
+        <button (click)="addPerson()" mat-raised-button color="primary">{{'PERSON.ADD_OPTION' | translate}} (+)</button>
     </mat-card-header>
     <mat-card-content>
         <div *ngIf="errormessage">
