@@ -6,9 +6,9 @@
             </button>
             <span class="toolbar-title">SchoolAdmin</span>
         </div>
-        
+
         <span class="example-spacer"></span>
-       
+
         <div class="toolbar-right">
             <button mat-icon-button class="toolbar-icon-btn" title="Toggle Theme">
                 <mat-icon>nights_stay</mat-icon>
@@ -20,10 +20,10 @@
                 <mat-icon>notifications</mat-icon>
                 <span class="toolbar-badge">2</span>
             </button>
-            
-            <button [matMenuTriggerFor]="dropdownMenu" (click)="showProfile()" class="toolbar-profile-btn" mat-icon-button>
+
+            <button [matMenuTriggerFor]="dropdownMenu" class="toolbar-profile-btn" mat-icon-button>
                 <div class="toolbar-avatar" *ngIf="(profile$ | async) as profile; else defaultAvatar">
-                    <span>{{ profile.name | slice:0:2 | uppercase }}</span>
+                    <span>{{ profile.username | slice:0:2 | uppercase }}</span>
                 </div>
                 <ng-template #defaultAvatar>
                     <mat-icon>account_circle</mat-icon>
@@ -35,11 +35,11 @@
             <div *ngIf="(profile$ | async) as profile" class="profile-dropdown-container">
                 <div class="profile-dropdown-header">
                     <div class="profile-dropdown-avatar">
-                        <span>{{ profile.name | slice:0:2 | uppercase }}</span>
+                        <span>{{ profile.username | slice:0:2 | uppercase }}</span>
                     </div>
                     <div class="profile-dropdown-info">
-                        <h4>{{profile.name}}</h4>
-                        <p>{{profile.preferred_username}}</p>
+                        <h4>{{profile.firstName}}</h4>
+                        <p>{{profile.lastName}}</p>
                     </div>
                 </div>
                 <hr class="dropdown-divider">
@@ -48,7 +48,7 @@
                     <span>{{'COMMON.CLOSE_SESION' | translate}}</span>
                 </a>
             </div>
-        </mat-menu>        
+        </mat-menu>
     </mat-toolbar>
 
     <mat-drawer-container autosize class="main-drawer-container">
@@ -60,17 +60,18 @@
                     </div>
                     <span class="logo-text">SchoolAdmin</span>
                 </div>
-                
+
                 <div class="sidebar-content">
                     <div class="sidebar-section-title">Navigation</div>
                     <mat-nav-list class="sidebar-nav-list">
                         <mat-list-item class="sidebar-nav-item">
-                            <button mat-button routerLink="" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">
+                            <button mat-button routerLink="" routerLinkActive="active-link"
+                                [routerLinkActiveOptions]="{exact: true}">
                                 <mat-icon class="menu-icon">home</mat-icon>
                                 <span class="menu-label">Home</span>
                             </button>
                         </mat-list-item>
-                        
+
                         <div class="sidebar-section-title" *appIfRole="'preceptor'">Management</div>
                         <mat-list-item *appIfRole="'preceptor'" class="sidebar-nav-item">
                             <button mat-button routerLink="student" routerLinkActive="active-link">
@@ -86,16 +87,16 @@
                         </mat-list-item>
                     </mat-nav-list>
                 </div>
-                
+
                 <div class="sidebar-footer" *ngIf="(profile$ | async) as profile">
                     <div class="user-avatar">
-                        <span>{{ profile.name | slice:0:2 | uppercase }}</span>
+                        <span>{{ profile.username | slice:0:2 | uppercase }}</span>
                     </div>
                     <div class="user-info">
-                        <span class="user-name">{{ profile.name }}</span>
-                        <span class="user-role">{{ profile.preferred_username }}</span>
+                        <span class="user-name">{{ profile.username }}</span>
                     </div>
-                    <button mat-icon-button (click)="logout()" class="logout-btn" title="{{'COMMON.CLOSE_SESION' | translate}}">
+                    <button mat-icon-button (click)="logout()" class="logout-btn"
+                        title="{{'COMMON.CLOSE_SESION' | translate}}">
                         <mat-icon>exit_to_app</mat-icon>
                     </button>
                 </div>

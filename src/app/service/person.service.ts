@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Person } from '../person/person.model';
 import { config } from '../infra/api/config';
-import { Userinfo } from '../auth/user.model';
 import { PersonDataSource } from '../person/person.datasource.model';
 import { ɵnormalizeQueryParams } from '@angular/common';
 import { Observable } from 'rxjs';
@@ -11,12 +10,12 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PersonService {
-  baseurl = config.apiUrl+'/api/v1/person';
+  baseurl = config.apiUrl + '/api/v1/person';
   constructor(private http: HttpClient) {
 
   }
- 
-  getAll(offset:number, limit: number, qfilter: string, sorts: string) {
+
+  getAll(offset: number, limit: number, qfilter: string, sorts: string) {
     /*
           this.dataSource.data = data;
       this.dataSource.paginator = this.paginator; // Set the paginator
@@ -24,19 +23,19 @@ export class PersonService {
     
     */
     let queryParams = new HttpParams();
-    queryParams = queryParams.append("offset",offset);
-    queryParams = queryParams.append("limit",limit);
+    queryParams = queryParams.append("offset", offset);
+    queryParams = queryParams.append("limit", limit);
     queryParams = queryParams.append("qfilters", qfilter);
-    queryParams = queryParams.append("sorts",sorts);
-    
-    
-    return this.http.get<PersonDataSource>(this.baseurl+'/list',{params: queryParams});
+    queryParams = queryParams.append("sorts", sorts);
+
+
+    return this.http.get<PersonDataSource>(this.baseurl + '/list', { params: queryParams });
   }
 
-  getPersonCertificate(id:number){
+  getPersonCertificate(id: number) {
     let queryParams = new HttpParams();
-    queryParams = queryParams.append("personId",id);
-    return this.http.get(this.baseurl+'/certificate?personId='+id,{ responseType: 'blob' });
+    queryParams = queryParams.append("personId", id);
+    return this.http.get(this.baseurl + '/certificate?personId=' + id, { responseType: 'blob' });
   }
 
   Getbycode(code: number) {
@@ -50,8 +49,8 @@ export class PersonService {
   }
   Create(data: Person) {
 
-   
-    return this.http.post(this.baseurl+'/create', data );
+
+    return this.http.post(this.baseurl + '/create', data);
   }
 
 }

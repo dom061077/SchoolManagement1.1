@@ -1,14 +1,8 @@
 import { Store } from '@ngrx/store';
-import { Roleaccess, Userinfo } from '../../auth/user.model';
-import { getmenubyrole } from '../../auth/store/user.selectors';
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { beginLogout, fetchmenu } from '../../auth/store/user.actions';
 import { KeycloakService } from '../../auth/keycloak/keycloak.service';
-import { UserProfile } from '../../user-profile/user-profile.model';
-import { Observable } from 'rxjs';
-import { selectProfile } from '../../user-profile/store/user-profile.selectors';
-import * as UserProfileActions from '../../user-profile/store/user-profile.actions';
+import { KeycloakProfile } from 'keycloak-js';
 //import { fetchmenu } from 'src/app/Store/User/User.action';
 
 
@@ -23,29 +17,15 @@ import * as UserProfileActions from '../../user-profile/store/user-profile.actio
 export class MenubarComponent implements DoCheck, OnInit {
 
   openSidebar: boolean = true;
+  profile$: Promise<KeycloakProfile>;
 
 
-
-  profile$: Observable<UserProfile | null>;
   ismenuvisible = false;
-  menulist !: Roleaccess[]
+
   constructor(private router: Router, private store: Store, private ks: KeycloakService) {
-    this.profile$ = this.store.select(selectProfile);
+    this.profile$ = this.ks.keycloak.loadUserProfile();
   }
   ngOnInit(): void {
-    this.store.dispatch(UserProfileActions.loadProfile());
-    if (localStorage.getItem('userdata') != null) {
-      let jsonstring = localStorage.getItem('userdata') as string;
-      const _obj = JSON.parse(jsonstring) as Userinfo;
-      this.store.dispatch(fetchmenu());
-    }
-    /*this.store.select(selectProfile).subscribe(profile => {
-      console.log('Profile data:', profile);
-    });
-    */
-    this.profile$.subscribe(profile=>{
-      console.log('Profile data: ',profile);
-    })
 
 
   }
@@ -58,20 +38,12 @@ export class MenubarComponent implements DoCheck, OnInit {
     }
   }
 
- async logout() { 
-    console.log("Cerrando sesión");
-    this.store.dispatch(beginLogout());
+  logout() {
+    this.ks.keycloak.logout();
   }
 
-  showProfile() {
-    console.log('ShowProfile event!!!');
-    this.store.dispatch(UserProfileActions.loadProfile());
-  }  
 
 
 
-  showSubmenu(itemEl: HTMLElement) {
-    itemEl.classList.toggle("showMenu");
-  }
 
 }

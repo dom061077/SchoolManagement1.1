@@ -4,7 +4,6 @@ import { Route, Router } from '@angular/router';
 import { catchError, exhaustMap, map, of, switchMap } from 'rxjs';
 import { PersonService } from '../../service/person.service';
 import { emptyaction, showalert } from '../../common/store/app.action';
-import { Userinfo } from '../../auth/user.model';
 import { addPERSON, addPERSONsuccess, deletePERSONsuccess, deleteePERSON, getPERSON, getPERSONsuccess, loadPERSON, loadPERSONfail, loadPERSONsuccess, loadPERSONtotalrows, updatePERSON, updatePERSONsuccess } from './person.actions';
 import { Person } from '../person.model';
 import { Update } from '@ngrx/entity';
@@ -13,9 +12,9 @@ import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export class PersonEffects {
-    
 
-    constructor(private actin$: Actions, private service:PersonService, private route: Router
+
+    constructor(private actin$: Actions, private service: PersonService, private route: Router
         , private translate: TranslateService
     ) {
 
@@ -25,7 +24,7 @@ export class PersonEffects {
         this.actin$.pipe(
             ofType(loadPERSON),
             exhaustMap((action) => {
-                return this.service.getAll(action.offset,action.limit, action.qfilter,action.sorts).pipe(
+                return this.service.getAll(action.offset, action.limit, action.qfilter, action.sorts).pipe(
                     map((datax) => {
                         return loadPERSONsuccess({ list: datax.data, totalCount: datax.total });
                     }),
@@ -39,7 +38,7 @@ export class PersonEffects {
         this.actin$.pipe(
             ofType(loadPERSONsuccess),
             exhaustMap((action) => {
-                return of(loadPERSONtotalrows({totalRows:action.totalCount}));
+                return of(loadPERSONtotalrows({ totalRows: action.totalCount }));
             })
         )
     )
@@ -50,7 +49,7 @@ export class PersonEffects {
             exhaustMap((action) => {
                 return this.service.Getbycode(action.id).pipe(
                     map((data) => {
-                         return getPERSONsuccess({ obj: data })
+                        return getPERSONsuccess({ obj: data })
                     }),
                     catchError((_error) => of(showalert({ message: 'Failed to fetch data :' + _error.message, resulttype: 'fail' })))
                 )
@@ -65,7 +64,7 @@ export class PersonEffects {
                 return this.service.Create(action.inputdata).pipe(
                     switchMap((data) => {
                         return of(addPERSONsuccess({ inputdata: action.inputdata }),
-                            showalert({ message: "this.translate.instant( 'PERSON.CREATED_SUCCESSFULLY')", resulttype: 'pass' }))                        
+                            showalert({ message: "this.translate.instant( 'PERSON.CREATED_SUCCESSFULLY')", resulttype: 'pass' }))
                         //return of(loadPERSON(),
                         //    showalert({ message: 'Created successfully.', resulttype: 'pass' }))
                     }),
@@ -74,11 +73,11 @@ export class PersonEffects {
             })
         )
     )
-    _addedPerson = createEffect(()=>
+    _addedPerson = createEffect(() =>
         this.actin$.pipe(
             ofType(addPERSONsuccess),
             switchMap(() => {
-                return of(loadPERSON({offset:0,limit: 5, qfilter: "", sorts:""}))
+                return of(loadPERSON({ offset: 0, limit: 5, qfilter: "", sorts: "" }))
             })
         )
     )
@@ -115,7 +114,7 @@ export class PersonEffects {
             })
         )
     )
-    
+
     /*_loadPERSONfail = createEffect(() =>
         this.actin$.pipe(
             ofType(loadPERSONfail),

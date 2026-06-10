@@ -3,36 +3,40 @@
 :root {
   /* Clean Solid Modern Theme - Admindek style */
   --primary-font: 'Outfit', 'Roboto', sans-serif;
-  
+
   --primary-color: #4099ff;
   --primary-hover: #337ab7;
   --primary-light: rgba(64, 153, 255, 0.1);
-  --accent-color: #2ed8b6; /* Mint/Cyan */
+  --accent-color: #2ed8b6;
+  /* Mint/Cyan */
   --accent-hover: #22a88c;
-  --warn-color: #ff5370; /* Rose Red */
+  --warn-color: #ff5370;
+  /* Rose Red */
   --warn-hover: #d43f58;
-  
-  --text-color: #2c3e50;
+
+  --text-color: #3e6388;
   --text-muted: #8a94a6;
-  --bg-color: #f2f7fb;
+  --bg-color: #70b1e2;
   --card-bg: #ffffff;
   --border-color: #e3e6ef;
 }
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
-body { 
-  margin: 0; 
-  font-family: var(--primary-font); 
+body {
+  margin: 0;
+  font-family: var(--primary-font);
   background-color: var(--bg-color);
   color: var(--text-color);
   font-size: 14px;
 }
 
 /* Redefining Cards - Admindek solid style */
-.mat-mdc-card, .mat-card {
+.mat-mdc-card,
+.mat-card {
   background: var(--card-bg) !important;
   border: 1px solid var(--border-color) !important;
   box-shadow: 0 1px 20px 0 rgba(69, 90, 100, 0.08) !important;
@@ -42,11 +46,13 @@ body {
   overflow: hidden;
 }
 
-.mat-mdc-card:hover, .mat-card:hover {
+.mat-mdc-card:hover,
+.mat-card:hover {
   box-shadow: 0 5px 25px 0 rgba(69, 90, 100, 0.12) !important;
 }
 
-.mat-mdc-card-header, .mat-card-header {
+.mat-mdc-card-header,
+.mat-card-header {
   border-bottom: 1px solid var(--border-color) !important;
   padding: 16px 20px !important;
   display: flex !important;
@@ -55,7 +61,10 @@ body {
   justify-content: space-between !important;
 }
 
-.mat-mdc-card-title, .mat-card-title, .mat-mdc-card-header h1, .mat-card-header h1 {
+.mat-mdc-card-title,
+.mat-card-title,
+.mat-mdc-card-header h1,
+.mat-card-header h1 {
   font-size: 16px !important;
   font-weight: 600 !important;
   color: var(--text-color) !important;
@@ -63,11 +72,13 @@ body {
   padding: 0 !important;
 }
 
-.mat-mdc-card-content, .mat-card-content {
+.mat-mdc-card-content,
+.mat-card-content {
   padding: 20px !important;
 }
 
-.mat-mdc-card-footer, .mat-card-footer {
+.mat-mdc-card-footer,
+.mat-card-footer {
   padding: 12px 20px !important;
   background-color: #fcfdfe !important;
   border-top: 1px solid var(--border-color) !important;
@@ -78,17 +89,20 @@ body {
 .mat-mdc-dialog-container .mdc-dialog__surface {
   background: var(--card-bg) !important;
   border: 1px solid var(--border-color) !important;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.1) !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1) !important;
   border-radius: 6px !important;
 }
 
-.mat-stepper-vertical, .mat-stepper-horizontal {
+.mat-stepper-vertical,
+.mat-stepper-horizontal {
   background: transparent !important;
 }
 
 /* Buttons Styles Override */
-.mat-mdc-raised-button, .mat-raised-button,
-.mat-mdc-unelevated-button, .mat-flat-button {
+.mat-mdc-raised-button,
+.mat-raised-button,
+.mat-mdc-unelevated-button,
+.mat-flat-button {
   font-family: var(--primary-font) !important;
   font-weight: 500 !important;
   border-radius: 4px !important;
@@ -100,38 +114,55 @@ body {
   padding: 0 18px !important;
 }
 
-.mat-mdc-raised-button.mat-primary, .mat-raised-button.mat-primary,
-.mat-mdc-unelevated-button.mat-primary, .mat-flat-button.mat-primary {
+.mat-mdc-raised-button.mat-primary,
+.mat-raised-button.mat-primary,
+.mat-mdc-unelevated-button.mat-primary,
+.mat-flat-button.mat-primary {
   background-color: var(--primary-color) !important;
   color: #ffffff !important;
 }
-.mat-mdc-raised-button.mat-primary:hover, .mat-raised-button.mat-primary:hover,
-.mat-mdc-unelevated-button.mat-primary:hover, .mat-flat-button.mat-primary:hover {
+
+.mat-mdc-raised-button.mat-primary:hover,
+.mat-raised-button.mat-primary:hover,
+.mat-mdc-unelevated-button.mat-primary:hover,
+.mat-flat-button.mat-primary:hover {
   background-color: var(--primary-hover) !important;
 }
 
-.mat-mdc-raised-button.mat-accent, .mat-raised-button.mat-accent,
-.mat-mdc-unelevated-button.mat-accent, .mat-flat-button.mat-accent {
+.mat-mdc-raised-button.mat-accent,
+.mat-raised-button.mat-accent,
+.mat-mdc-unelevated-button.mat-accent,
+.mat-flat-button.mat-accent {
   background-color: var(--accent-color) !important;
   color: #ffffff !important;
 }
-.mat-mdc-raised-button.mat-accent:hover, .mat-raised-button.mat-accent:hover,
-.mat-mdc-unelevated-button.mat-accent:hover, .mat-flat-button.mat-accent:hover {
+
+.mat-mdc-raised-button.mat-accent:hover,
+.mat-raised-button.mat-accent:hover,
+.mat-mdc-unelevated-button.mat-accent:hover,
+.mat-flat-button.mat-accent:hover {
   background-color: var(--accent-hover) !important;
 }
 
-.mat-mdc-raised-button.mat-warn, .mat-raised-button.mat-warn,
-.mat-mdc-unelevated-button.mat-warn, .mat-flat-button.mat-warn {
+.mat-mdc-raised-button.mat-warn,
+.mat-raised-button.mat-warn,
+.mat-mdc-unelevated-button.mat-warn,
+.mat-flat-button.mat-warn {
   background-color: var(--warn-color) !important;
   color: #ffffff !important;
 }
-.mat-mdc-raised-button.mat-warn:hover, .mat-raised-button.mat-warn:hover,
-.mat-mdc-unelevated-button.mat-warn:hover, .mat-flat-button.mat-warn:hover {
+
+.mat-mdc-raised-button.mat-warn:hover,
+.mat-raised-button.mat-warn:hover,
+.mat-mdc-unelevated-button.mat-warn:hover,
+.mat-flat-button.mat-warn:hover {
   background-color: var(--warn-hover) !important;
 }
 
-.mat-mdc-button, .mat-button, 
-.mat-mdc-outlined-button, .mat-stroked-button {
+.mat-mdc-button,
+.mat-button,
+.mat-mdc-outlined-button,
+.mat-stroked-button {
   font-family: var(--primary-font) !important;
   border-radius: 4px !important;
   transition: all 0.2s ease-in-out !important;
@@ -155,34 +186,42 @@ body {
 }
 
 /* Floating Action Buttons */
-.mat-mdc-fab, .mat-fab,
-.mat-mdc-mini-fab, .mat-mini-fab {
+.mat-mdc-fab,
+.mat-fab,
+.mat-mdc-mini-fab,
+.mat-mini-fab {
   background-color: var(--primary-color) !important;
   color: #ffffff !important;
   box-shadow: 0 2px 8px rgba(64, 153, 255, 0.3) !important;
   border-radius: 4px !important;
 }
-.mat-mdc-fab:hover, .mat-fab:hover,
-.mat-mdc-mini-fab:hover, .mat-mini-fab:hover {
+
+.mat-mdc-fab:hover,
+.mat-fab:hover,
+.mat-mdc-mini-fab:hover,
+.mat-mini-fab:hover {
   background-color: var(--primary-hover) !important;
   box-shadow: 0 4px 12px rgba(64, 153, 255, 0.4) !important;
 }
 
 /* Tables Styling */
-.mat-mdc-table, .mat-table {
+.mat-mdc-table,
+.mat-table {
   width: 100% !important;
   background-color: transparent !important;
   border-collapse: collapse !important;
   margin-top: 15px;
 }
 
-.mat-mdc-header-row, .mat-header-row {
+.mat-mdc-header-row,
+.mat-header-row {
   background-color: #f8f9fa !important;
   border-bottom: 2px solid var(--border-color) !important;
   height: 48px !important;
 }
 
-.mat-mdc-header-cell, .mat-header-cell {
+.mat-mdc-header-cell,
+.mat-header-cell {
   font-family: var(--primary-font) !important;
   font-size: 13px !important;
   font-weight: 600 !important;
@@ -193,16 +232,19 @@ body {
   letter-spacing: 0.5px;
 }
 
-.mat-mdc-row, .mat-row {
+.mat-mdc-row,
+.mat-row {
   height: 48px !important;
   transition: background-color 0.2s ease !important;
 }
 
-.mat-mdc-row:hover, .mat-row:hover {
+.mat-mdc-row:hover,
+.mat-row:hover {
   background-color: #f5f7f8 !important;
 }
 
-.mat-mdc-cell, .mat-cell {
+.mat-mdc-cell,
+.mat-cell {
   font-family: var(--primary-font) !important;
   font-size: 13.5px !important;
   color: #4f5d73 !important;
@@ -212,8 +254,10 @@ body {
 }
 
 /* Table Row Action Buttons Compaction */
-table td button.mat-mdc-fab, table td button.mat-fab,
-table td button.mat-mdc-mini-fab, table td button.mat-mini-fab,
+table td button.mat-mdc-fab,
+table td button.mat-fab,
+table td button.mat-mdc-mini-fab,
+table td button.mat-mini-fab,
 table td button.mat-icon-button {
   width: 32px !important;
   height: 32px !important;
@@ -228,8 +272,10 @@ table td button.mat-icon-button {
   justify-content: center !important;
 }
 
-table td button.mat-mdc-fab .mat-icon, table td button.mat-fab .mat-icon,
-table td button.mat-mdc-mini-fab .mat-icon, table td button.mat-mini-fab .mat-icon,
+table td button.mat-mdc-fab .mat-icon,
+table td button.mat-fab .mat-icon,
+table td button.mat-mdc-mini-fab .mat-icon,
+table td button.mat-mini-fab .mat-icon,
 table td button.mat-icon-button .mat-icon {
   font-size: 16px !important;
   width: 16px !important;
@@ -241,6 +287,7 @@ table td button.mat-primary {
   background-color: rgba(64, 153, 255, 0.12) !important;
   color: var(--primary-color) !important;
 }
+
 table td button.mat-primary:hover {
   background-color: var(--primary-color) !important;
   color: #ffffff !important;
@@ -250,6 +297,7 @@ table td button.mat-accent {
   background-color: rgba(46, 216, 182, 0.12) !important;
   color: var(--accent-color) !important;
 }
+
 table td button.mat-accent:hover {
   background-color: var(--accent-color) !important;
   color: #ffffff !important;
@@ -259,6 +307,7 @@ table td button.mat-warn {
   background-color: rgba(255, 83, 112, 0.12) !important;
   color: var(--warn-color) !important;
 }
+
 table td button.mat-warn:hover {
   background-color: var(--warn-color) !important;
   color: #ffffff !important;
@@ -303,28 +352,30 @@ table td button.mat-warn:hover {
 
 /* Snackbars */
 .green-snackbar {
-    background: #2ed8b6 !important ;
-    color: white;
+  background: #2ed8b6 !important;
+  color: white;
 }
+
 .green-snackbar button {
-    background-color: #2ed8b6;
-    color: white !important;
-    border: none;
+  background-color: #2ed8b6;
+  color: white !important;
+  border: none;
 }
 
 .red-snackbar {
-    background: #ff5370 ;
-    color: white;
+  background: #ff5370;
+  color: white;
 }
+
 .red-snackbar button {
-    background-color: #ff5370;
-    color: white !important;
-    border: none;
+  background-color: #ff5370;
+  color: white !important;
+  border: none;
 }
 
 /* Clear button positioning in select */
 .mat-mdc-text-field-wrapper {
-    position: relative;
+  position: relative;
 }
 
 .clearable-select-button {
@@ -342,12 +393,12 @@ table td button.mat-warn:hover {
 
 :host ::ng-deep .clearable-select-host.mat-mdc-select-empty .mat-mdc-select-trigger,
 :host ::ng-deep .clearable-select-host .mat-mdc-select-trigger {
-    padding-right: 2.5rem !important;
+  padding-right: 2.5rem !important;
 }
 
-.clearable-select-button:not([style*="display: none"]) ~ .mat-mdc-select-arrow-wrapper {
-    opacity: 0;
-    pointer-events: none;
+.clearable-select-button:not([style*="display: none"])~.mat-mdc-select-arrow-wrapper {
+  opacity: 0;
+  pointer-events: none;
 }
 
 /* Custom ng-select styling */
@@ -398,13 +449,14 @@ table td button.mat-warn:hover {
 
 .ng-dropdown-panel.ng-select-bottom {
   border: none !important;
-  box-shadow: 0 5px 25px rgba(0,0,0,0.1) !important;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1) !important;
   background: white;
   border-radius: 4px !important;
 }
 
 /* List Filters layouts alignment */
-form mat-card-content, .filter-container {
+form mat-card-content,
+.filter-container {
   display: flex !important;
   flex-direction: row !important;
   flex-wrap: wrap !important;
@@ -438,66 +490,69 @@ form mat-card-content button .mat-icon {
 
 /* ng-select ellipsis loading spinner */
 .lds-ellipsis {
-	display: inline-block;
-	position: relative;
-	width: 32px;
-	height: 32px;
-	margin-right: 10px;
+  display: inline-block;
+  position: relative;
+  width: 32px;
+  height: 32px;
+  margin-right: 10px;
 }
 
 .lds-ellipsis div {
-	position: absolute;
-	top: 14px;
-	width: 8px;
-	height: 8px;
-	border-radius: 50%;
-	background: #c2c2c2;
-	animation-timing-function: cubic-bezier(0, 1, 1, 0);
+  position: absolute;
+  top: 14px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #c2c2c2;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
 }
 
 .lds-ellipsis div:nth-child(1) {
-	left: -9px;
-	animation: lds-ellipsis1 0.6s infinite;
+  left: -9px;
+  animation: lds-ellipsis1 0.6s infinite;
 }
 
 .lds-ellipsis div:nth-child(2) {
-	left: -10px;
-	animation: lds-ellipsis2 0.6s infinite;
+  left: -10px;
+  animation: lds-ellipsis2 0.6s infinite;
 }
 
 .lds-ellipsis div:nth-child(3) {
-	left: 2px;
-	animation: lds-ellipsis2 0.6s infinite;
+  left: 2px;
+  animation: lds-ellipsis2 0.6s infinite;
 }
 
 .lds-ellipsis div:nth-child(4) {
-	left: 24px;
-	animation: lds-ellipsis3 0.6s infinite;
+  left: 24px;
+  animation: lds-ellipsis3 0.6s infinite;
 }
 
 @keyframes lds-ellipsis1 {
-	0% {
-		transform: scale(0);
-	}
-	100% {
-		transform: scale(1);
-	}
+  0% {
+    transform: scale(0);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
 @keyframes lds-ellipsis3 {
-	0% {
-		transform: scale(1);
-	}
-	100% {
-		transform: scale(0);
-	}
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(0);
+  }
 }
 
 @keyframes lds-ellipsis2 {
-	0% {
-		transform: translate(0, 0);
-	}
-	100% {
-		transform: translate(19px, 0);
-	}
+  0% {
+    transform: translate(0, 0);
+  }
+
+  100% {
+    transform: translate(19px, 0);
+  }
 }

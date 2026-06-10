@@ -17,16 +17,12 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { LoginComponent } from './component/login/login.component';
-import { UserEffect } from './auth/store/user.effects';
 import { AppEffects } from './common/store/app.effects';
-import { UserReducer } from './auth/store/user.reducer';
 import { PERSONreducer } from './person/store/person.reducer';
 import { PersonEffects } from './person/store/person.effects';
 import { PDFREPORTreducer } from './common/store/pdfreport.reducer';
 import { PdfReportEffects } from './common/store/pdfreport.effects';
 import { KeycloakService } from './auth/keycloak/keycloak.service';
-import { USER_PROFILEreducer } from './user-profile/store/user-profile.reducer';
-import { UserProfileEffects } from './user-profile/store/user-profile.effects';
 import { NotificationComponent } from './shared/notification/notification.component';
 import { notificationFeatureKey, notificationReducer } from './core/state/notification/notification.reducer';
 import { NotificationEffects } from './core/state/notification/notification.effects';
@@ -87,16 +83,12 @@ export const DYNAMIC_LOCALE_FORMATS = {
     MaterialModule,
     HttpClientModule,
     StoreModule.forRoot({
-      user: UserReducer, userprofile: (state, action) => {
-        console.log('User reducer caugth action: ', action);
-        return USER_PROFILEreducer(state, action);
-      },
 
-      USER_PROFILEreducer, person: PERSONreducer
+      person: PERSONreducer
       , pdfreport: PDFREPORTreducer
 
     }),
-    EffectsModule.forRoot([UserProfileEffects, UserEffect, AppEffects, PersonEffects, PdfReportEffects, UserProfileEffects, NotificationEffects]),
+    EffectsModule.forRoot([AppEffects, PersonEffects, PdfReportEffects, NotificationEffects]),
     StoreModule.forFeature(notificationFeatureKey, notificationReducer),
     StoreRouterConnectingModule.forRoot(),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),

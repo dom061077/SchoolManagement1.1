@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import Keycloak from 'keycloak-js';
-import { UserProfile } from '../user.profile';
 
 @Injectable({
   providedIn: 'root'
@@ -8,13 +7,12 @@ import { UserProfile } from '../user.profile';
 export class KeycloakService {
 
   private _keycloak: Keycloak | undefined;
-  private _profile: UserProfile | undefined;
   private isRefreshing = false;
 
-  get keycloak(){
-    if (!this._keycloak){
+  get keycloak() {
+    if (!this._keycloak) {
       this._keycloak = new Keycloak({
-        
+
         url: 'http://keycloak-sm:8080/',//"https://www.warriorit.site/",//url: "http://warriorit.site:8080/",
         realm: 'book-social-network',
         clientId: 'bsn'
@@ -26,17 +24,21 @@ export class KeycloakService {
            this._keycloak?.updateToken(30).catch(() => this._keycloak?.login());
           }, 20000); // Check every 20s
         }
-      });  */    
+      });  */
     }
     return this._keycloak;
   }
 
-  hastRole(rol:string){
-    return this.keycloak.hasRealmRole(rol);
-   
+  get userProfile() {
+    return this.keycloak.loadUserProfile();
   }
 
-  hasResourceRole(rol:string){
+  hastRole(rol: string) {
+    return this.keycloak.hasRealmRole(rol);
+
+  }
+
+  hasResourceRole(rol: string) {
     return this.keycloak.hasResourceRole(rol);
   }
 
@@ -49,10 +51,10 @@ export class KeycloakService {
 
     this.keycloak.onTokenExpired = () => {
       if (this.isRefreshing) return; // Avoid duplicate refresh calls
-    
+
       console.log('Token expired, attempting to refresh...');
       this.isRefreshing = true;
-    
+
       this.keycloak.updateToken(30).then((refreshed) => {
         if (refreshed) {
           console.log('Token successfully refreshed');
@@ -65,17 +67,16 @@ export class KeycloakService {
       }).finally(() => {
         this.isRefreshing = false; // Reset flag after refresh attempt
       });
-    };    
+    };
     const authenticated = await this.keycloak?.init({
       onLoad: 'login-required'
     }).then((authenticated) => {
       if (authenticated == true) {
-        this._profile = ( this.keycloak.loadUserProfile()) as UserProfile;
-        this._profile.token = this.keycloak.token || '';
-        console.log('User profile: '+this._profile);
-        console.log('Token Parsed: ', this.keycloak.tokenParsed?.realm_access?.roles);        
+        //this._profile = (this.keycloak.loadUserProfile()) as UserProfile;
+        //this._profile.token = this.keycloak.token || '';
+        console.log('Token Parsed: ', this.keycloak.tokenParsed?.realm_access?.roles);
         this.keycloak.onAuthLogout = () => {
-            console.log("User logged out");  
+          console.log("User logged out");
         }
 
       }
@@ -83,7 +84,7 @@ export class KeycloakService {
       console.error('Keycloak initialization failed', err);
     });
 
-    
+
 
 
   }
@@ -91,14 +92,14 @@ export class KeycloakService {
     return this.keycloak.login();
   }
 
-  hasRole(role:string ){
+  hasRole(role: string) {
     return this.keycloak.tokenParsed?.realm_access?.roles.includes(role);// || false;
   }
 
   logout() {
     // this.keycloak.accountManagement();
-    return this.keycloak.logout({redirectUri: 'http://localhost:4200'});
-  }  
+    return this.keycloak.logout({ redirectUri: 'http://localhost:4200' });
+  }
 
 
 
