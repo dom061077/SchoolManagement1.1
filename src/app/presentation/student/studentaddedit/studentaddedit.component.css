@@ -1,4 +1,4 @@
-mat-card{
+mat-card {
   margin: 2%;
   text-align: left;
 }
@@ -7,19 +7,130 @@ mat-card{
   width: 98%;
   margin: 1%;
 }
-.mat-50{
+
+.mat-50 {
   width: 48%;
   margin: 1%;
 }
-.div-50{
+
+.div-50 {
   width: 48%;
   margin: 1%;
   display: inline;
 }
 
-button{
+button {
   margin: 2px;
 }
 
+.form-field-group {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 98%;
+  margin: 1%;
+}
 
+.form-field-group ::ng-deep ng-select,
+.form-field-group ::ng-deep .ng-select,
+.form-field-group ::ng-deep .ng-select-container {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
 
+/* Turn border/underline red when the control is invalid and touched/dirty */
+.form-field-group ::ng-deep ng-select.ng-invalid.ng-touched .ng-select-container::after,
+.form-field-group ::ng-deep ng-select.ng-invalid.ng-dirty .ng-select-container::after,
+.form-field-group ::ng-deep .ng-select.ng-invalid.ng-touched .ng-select-container::after,
+.form-field-group ::ng-deep .ng-select.ng-invalid.ng-dirty .ng-select-container::after,
+.form-field-group ::ng-deep ng-select.ng-invalid.ng-touched.ng-select-opened .ng-select-container::after,
+.form-field-group ::ng-deep ng-select.ng-invalid.ng-touched.ng-select-focused .ng-select-container::after,
+.form-field-group ::ng-deep ng-select.ng-invalid.ng-dirty.ng-select-opened .ng-select-container::after,
+.form-field-group ::ng-deep ng-select.ng-invalid.ng-dirty.ng-select-focused .ng-select-container::after,
+.form-field-group ::ng-deep .ng-select.ng-invalid.ng-touched.ng-select-opened .ng-select-container::after,
+.form-field-group ::ng-deep .ng-select.ng-invalid.ng-touched.ng-select-focused .ng-select-container::after,
+.form-field-group ::ng-deep .ng-select.ng-invalid.ng-dirty.ng-select-opened .ng-select-container::after,
+.form-field-group ::ng-deep .ng-select.ng-invalid.ng-dirty.ng-select-focused .ng-select-container::after {
+  border-bottom: 2px solid var(--warn-color) !important;
+}
+
+/* Turn placeholder label red when invalid and touched/dirty */
+.form-field-group ::ng-deep ng-select.ng-invalid.ng-touched .ng-placeholder,
+.form-field-group ::ng-deep ng-select.ng-invalid.ng-dirty .ng-placeholder,
+.form-field-group ::ng-deep .ng-select.ng-invalid.ng-touched .ng-placeholder,
+.form-field-group ::ng-deep .ng-select.ng-invalid.ng-dirty .ng-placeholder {
+  color: var(--warn-color) !important;
+}
+
+.form-field-group ::ng-deep .ng-placeholder {
+  color: var(--text-muted) !important;
+  font-family: var(--primary-font) !important;
+  left: 12px !important;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Resting state (not focused, not opened, no value): placeholder centered */
+.form-field-group ::ng-deep ng-select:not(.ng-select-focused):not(.ng-select-opened) .ng-select-container:not(.ng-has-value) .ng-placeholder,
+.form-field-group ::ng-deep .ng-select:not(.ng-select-focused):not(.ng-select-opened) .ng-select-container:not(.ng-has-value) .ng-placeholder {
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  font-size: 14px !important;
+}
+
+/* Focused, opened, or has value: placeholder floats to top */
+.form-field-group ::ng-deep ng-select.ng-select-focused .ng-placeholder,
+.form-field-group ::ng-deep ng-select.ng-select-opened .ng-placeholder,
+.form-field-group ::ng-deep ng-select .ng-select-container.ng-has-value .ng-placeholder,
+.form-field-group ::ng-deep .ng-select.ng-select-focused .ng-placeholder,
+.form-field-group ::ng-deep .ng-select.ng-select-opened .ng-placeholder,
+.form-field-group ::ng-deep .ng-select .ng-select-container.ng-has-value .ng-placeholder {
+  top: 8px !important;
+  transform: none !important;
+  font-size: 12px !important;
+}
+
+.form-field-group ::ng-deep .ng-value-container {
+  padding-left: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* Focused, opened, or has value: shift value down */
+.form-field-group ::ng-deep ng-select.ng-select-focused .ng-value-container,
+.form-field-group ::ng-deep ng-select.ng-select-opened .ng-value-container,
+.form-field-group ::ng-deep ng-select .ng-select-container.ng-has-value .ng-value-container,
+.form-field-group ::ng-deep .ng-select.ng-select-focused .ng-value-container,
+.form-field-group ::ng-deep .ng-select.ng-select-opened .ng-value-container,
+.form-field-group ::ng-deep .ng-select .ng-select-container.ng-has-value .ng-value-container {
+  padding-top: 22px !important;
+  padding-bottom: 6px !important;
+  display: block !important;
+}
+
+.form-field-group ::ng-deep .ng-value {
+  color: var(--text-color) !important;
+  font-family: var(--primary-font) !important;
+}
+
+.form-field-group mat-error {
+  font-size: 12px !important;
+  color: var(--warn-color) !important;
+  margin: 0 !important;
+  margin-top: 4px !important;
+  padding: 0 !important;
+  padding-left: 16px !important;
+  display: block !important;
+  animation: mdc-error-fade-in 150ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+@keyframes mdc-error-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

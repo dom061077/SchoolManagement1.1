@@ -410,36 +410,104 @@ table td button.mat-warn:hover {
   width: 100%;
 }
 
-.ng-select.material-style-select .ng-control {
-  background-color: #ffffff !important;
-  border: 1px solid var(--border-color) !important;
-  border-radius: 4px !important;
-  min-height: 48px !important;
+.form-grid > * {
+  flex: none !important;
+}
+
+
+
+.ng-select.material-style-select .ng-select-container {
+  background-color: transparent !important;
+  border: none !important;
+  border-radius: 4px 4px 0 0 !important;
+  min-height: 56px !important;
   align-items: center;
   padding: 0 12px;
   box-shadow: none !important;
   transition: all 0.2s ease;
+  position: relative !important;
 }
 
-.ng-select.material-style-select:hover .ng-control {
-  border-color: #b0b5c1 !important;
+.ng-select.material-style-select.ng-select-opened .ng-select-container,
+.ng-select.material-style-select.ng-select-focused .ng-select-container,
+.ng-select.material-style-select:hover .ng-select-container {
+  background-color: #f5f5f5 !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
-.ng-select.material-style-select.ng-select-opened .ng-control,
-.ng-select.material-style-select.ng-select-focused .ng-control {
-  border-color: var(--primary-color) !important;
-  border-width: 2px !important;
+/* Custom underline using pseudo-element ::after */
+.ng-select.material-style-select .ng-select-container::after {
+  content: '' !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.42) !important;
+  transition: border-color 0.3s cubic-bezier(0.55, 0, 0.55, 0.2), border-width 0.3s ease !important;
+  display: block !important;
+}
+
+.ng-select.material-style-select:hover .ng-select-container::after {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.87) !important;
+}
+
+.ng-select.material-style-select.ng-select-opened .ng-select-container::after,
+.ng-select.material-style-select.ng-select-focused .ng-select-container::after {
+  border-bottom: 2px solid var(--primary-color) !important;
+}
+
+/* Validation styles for underline */
+.ng-select.material-style-select.ng-invalid.ng-touched .ng-select-container::after,
+.ng-select.material-style-select.ng-invalid.ng-dirty .ng-select-container::after,
+.ng-select.material-style-select.ng-invalid.ng-touched.ng-select-opened .ng-select-container::after,
+.ng-select.material-style-select.ng-invalid.ng-touched.ng-select-focused .ng-select-container::after,
+.ng-select.material-style-select.ng-invalid.ng-dirty.ng-select-opened .ng-select-container::after,
+.ng-select.material-style-select.ng-invalid.ng-dirty.ng-select-focused .ng-select-container::after {
+  border-bottom: 2px solid var(--warn-color) !important;
+}
+
+.ng-select.material-style-select.ng-invalid.ng-touched .ng-placeholder,
+.ng-select.material-style-select.ng-invalid.ng-dirty .ng-placeholder {
+  color: var(--warn-color) !important;
 }
 
 .ng-select.material-style-select .ng-placeholder {
   color: var(--text-muted) !important;
   font-family: var(--primary-font) !important;
-  top: 14px !important;
   left: 12px !important;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Resting state (not focused, not opened, no value): placeholder centered */
+.ng-select.material-style-select:not(.ng-select-focused):not(.ng-select-opened) .ng-select-container:not(.ng-has-value) .ng-placeholder {
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  font-size: 14px !important;
+}
+
+/* Focused, opened, or has value: placeholder floats to top */
+.ng-select.material-style-select.ng-select-focused .ng-placeholder,
+.ng-select.material-style-select.ng-select-opened .ng-placeholder,
+.ng-select.material-style-select .ng-select-container.ng-has-value .ng-placeholder {
+  top: 8px !important;
+  transform: none !important;
+  font-size: 12px !important;
 }
 
 .ng-select.material-style-select .ng-value-container {
   padding-left: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* Focused, opened, or has value: padding shifts value down */
+.ng-select.material-style-select.ng-select-focused .ng-value-container,
+.ng-select.material-style-select.ng-select-opened .ng-value-container,
+.ng-select.material-style-select .ng-select-container.ng-has-value .ng-value-container {
+  padding-top: 22px !important;
+  padding-bottom: 6px !important;
+  display: block !important;
 }
 
 .ng-select.material-style-select .ng-value {

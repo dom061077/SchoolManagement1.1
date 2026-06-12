@@ -14,11 +14,9 @@
                 <mat-form-field>
                     <mat-label>{{'SHIFT.NAME' | translate}}</mat-label>
                     <input formControlName="name" matInput required>
-                    <div *ngIf="nameControl && nameControl.invalid" class="validation-error">
-                        <p *ngIf="nameControl?.errors?.['required']">
-                            {{'SHIFT.NAME_VALIDATION' | translate}}
-                        </p>
-                    </div>
+                    <mat-error *ngIf="nameControl?.errors?.['required']">
+                        {{'SHIFT.NAME_VALIDATION' | translate}}
+                    </mat-error>
                 </mat-form-field>
             </div>
         </mat-card-content>

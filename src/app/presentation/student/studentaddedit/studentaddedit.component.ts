@@ -90,7 +90,7 @@ export class StudentaddeditComponent implements OnInit {
     lastName: ['', Validators.required],
     firstName: ['', Validators.required],
     birthDate: ['', Validators.required],
-    estudioEnumId: ['', Validators.required],
+    estudioId: ['', Validators.required],
     // Regex:
     // ^      : Start of string
     // \d+    : One or more digits (0-9). Use \d* for optional.
@@ -148,8 +148,20 @@ export class StudentaddeditComponent implements OnInit {
     return this.personalDataForm.get('lastName');
   }
 
+  get firstNameControl(): AbstractControl | null {
+    return this.personalDataForm.get('firstName');
+  }
+
+  get birthDateControl(): AbstractControl | null {
+    return this.personalDataForm.get('birthDate');
+  }
+
   get dniControl(): AbstractControl | null {
     return this.personalDataForm.get('dni');
+  }
+
+  get estudioIdControl(): AbstractControl | null {
+    return this.personalDataForm.get('estudioId');
   }
 
   get provinciaIdControl(): AbstractControl | null {

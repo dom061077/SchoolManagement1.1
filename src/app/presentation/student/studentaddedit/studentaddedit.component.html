@@ -15,33 +15,27 @@
                         <mat-form-field>
                             <mat-label>{{'STUDENT.DNI' | translate}}</mat-label>
                             <input formControlName="dni" matInput mask="00000000">
-                            <div *ngIf="dniControl && dniControl.invalid || dniControl?.errors?.['pattern']"
-                                class="validation-error">
-                                <p *ngIf="dniControl?.errors?.['required']">
-                                    {{'STUDENT.DNI_VALIDATION' | translate}}
-                                </p>
-                                <p *ngIf="dniControl?.errors?.['pattern']">
-                                    {{'STUDENT.DNI_VALIDATION_PATTERN' | translate}}
-                                </p>
-
-                            </div>
-
+                            <mat-error *ngIf="dniControl?.errors?.['required']">
+                                {{'STUDENT.DNI_VALIDATION' | translate}}
+                            </mat-error>
+                            <mat-error *ngIf="dniControl?.errors?.['pattern']">
+                                {{'STUDENT.DNI_VALIDATION_PATTERN' | translate}}
+                            </mat-error>
                         </mat-form-field>
 
                         <mat-form-field>
                             <mat-label>{{'STUDENT.LAST_NAME' | translate}}</mat-label>
                             <input formControlName="lastName" matInput class=".align-middle">
-                            <div *ngIf="lastNameControl && lastNameControl.invalid" class="validation-error">
-                                <p *ngIf="lastNameControl?.errors?.['required']">
-                                    {{'STUDENT.LAST_NAME_VALIDATION' | translate}}
-                                </p>
-
-                            </div>
-
+                            <mat-error *ngIf="lastNameControl?.errors?.['required']">
+                                {{'STUDENT.LAST_NAME_VALIDATION' | translate}}
+                            </mat-error>
                         </mat-form-field>
                         <mat-form-field>
                             <mat-label>{{'STUDENT.FIRST_NAME' | translate}}</mat-label>
                             <input formControlName="firstName" matInput class=".align-middle">
+                            <mat-error *ngIf="firstNameControl?.errors?.['required']">
+                                {{'STUDENT.FIRST_NAME_VALIDATION' | translate}}
+                            </mat-error>
                         </mat-form-field>
 
 
@@ -49,24 +43,38 @@
                             <mat-label>{{'STUDENT.BIRTHDATE' | translate}}</mat-label>
                             <input formControlName="birthDate" [matDatepicker]="pickerBirthDate" matInput
                                 class=".align-middle">
-
                             <mat-hint>{{dateformat}}</mat-hint>
                             <mat-datepicker-toggle matIconSuffix [for]="pickerBirthDate"></mat-datepicker-toggle>
                             <mat-datepicker #pickerBirthDate></mat-datepicker>
+                            <mat-error *ngIf="birthDateControl?.errors?.['required']">
+                                {{'STUDENT.BIRTHDATE_VALIDATION' | translate}}
+                            </mat-error>
+                            <mat-error *ngIf="birthDateControl?.errors?.['pattern']">
+                                {{'COMMON.INVALID_DATE' | translate}}
+                            </mat-error>
                         </mat-form-field>
-                        <ng-select [items]="estudioEnumData()" [searchable]="true" appendTo=".select-wrapper"
-                            bindLabel="description" bindValue="id" appendTo="body" class="material-style-select"
-                            dropdownPosition="bottom" formControlName="estudio"
-                            placeholder="{{'COMMON.SELECT_EDUCATION_STATE' | translate}}">
-                        </ng-select>
-                        <ng-select [searchable]="true" [items]="provinceData()" appendTo=".select-wrapper"
-                            bindLabel="nombre" bindValue="id" appendTo="body" class="material-style-select"
-                            dropdownPosition="bottom" formControlName="provinciaId"
-                            placeholder="{{'COMMON.SELECT_PROVINCE' | translate}}" (change)="onProvinceChange($event)">
-                            <div *ngIf="provinciaIdControl && provinciaIdControl?.errors?.['required']">
+
+                        <div class="form-field-group">
+                            <ng-select [items]="estudioEnumData()" [searchable]="true" appendTo=".select-wrapper"
+                                bindLabel="description" bindValue="id" appendTo="body" class="material-style-select"
+                                dropdownPosition="bottom" formControlName="estudioId"
+                                placeholder="{{'COMMON.SELECT_EDUCATION_STATE' | translate}}">
+                            </ng-select>
+                            <mat-error *ngIf="estudioIdControl?.errors?.['required'] && (estudioIdControl?.touched || estudioIdControl?.dirty)">
+                                {{'STUDENT.ESTUDIO_VALIDATION' | translate}}
+                            </mat-error>
+                        </div>
+
+                        <div class="form-field-group">
+                            <ng-select [searchable]="true" [items]="provinceData()" appendTo=".select-wrapper"
+                                bindLabel="nombre" bindValue="id" appendTo="body" class="material-style-select"
+                                dropdownPosition="bottom" formControlName="provinciaId"
+                                placeholder="{{'COMMON.SELECT_PROVINCE' | translate}}" (change)="onProvinceChange($event)">
+                            </ng-select>
+                            <mat-error *ngIf="provinciaIdControl?.errors?.['required'] && (provinciaIdControl?.touched || provinciaIdControl?.dirty)">
                                 {{'COMMON.PROVINCE_REQUIRED_VALIDATION' | translate}}
-                            </div>
-                        </ng-select>
+                            </mat-error>
+                        </div>
                         <ng-select #departmentSelect [searchable]="true" [items]="departmentData()"
                             appendTo=".select-wrapper" bindLabel="nombre" bindValue="id" appendTo="body"
                             class="material-style-select" dropdownPosition="bottom" formControlName="departamentoId"
