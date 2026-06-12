@@ -2,37 +2,56 @@
 <mat-dialog-content>
   <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
     <div class="row">
-      <ng-select [items]="studentData()" [searchable]="true" appendTo=".select-wrapper" bindLabel="dniLastNameFirstName"
-        bindValue="id" appendTo="body" class="material-style-select" dropdownPosition="bottom"
-        placeholder="{{'COMMON.SELECT_STUDENT' | translate}}" formControlName="studentId" [virtualScroll]="true"
-        (scroll)="onScroll($event)" (scrollToEnd)="onScrollToEnd()" [typeahead]="studentTypeahead$" required>
-      </ng-select>
-      <div *ngIf="registrationForm.get('studentId')?.invalid && registrationForm.get('studentId')?.touched"
-        class="validation-error">
-        <p>
+      <div class="form-field-group">
+        <ng-select [items]="studentData()" [searchable]="true" appendTo=".select-wrapper" bindLabel="dniLastNameFirstName"
+          bindValue="id" appendTo="body" class="material-style-select" dropdownPosition="bottom"
+          placeholder="{{'COMMON.SELECT_STUDENT' | translate}}" formControlName="studentId" [virtualScroll]="true"
+          (scroll)="onScroll($event)" (scrollToEnd)="onScrollToEnd()" [typeahead]="studentTypeahead$" required>
+        </ng-select>
+        <mat-error *ngIf="registrationForm.get('studentId')?.errors?.['required'] && (registrationForm.get('studentId')?.touched || registrationForm.get('studentId')?.dirty)">
           {{'COMMON.SELECT_STUDENT_VALIDATION' | translate}}
-        </p>
+        </mat-error>
       </div>
-      <ng-select [items]="academicYearData()" [searchable]="true" appendTo=".select-wrapper" bindLabel="year"
-        bindValue="id" appendTo="body" class="material-style-select" dropdownPosition="bottom"
-        placeholder="{{'COMMON.SELECT_ACADEMIC_YEAR' | translate}}" formControlName="academicYearId" required>
-      </ng-select>
 
-      <ng-select [items]="gradeLevelData()" [searchable]="true" appendTo=".select-wrapper" bindLabel="gradeNumber"
-        bindValue="id" appendTo="body" class="material-style-select" dropdownPosition="bottom"
-        placeholder="{{'COMMON.SELECT_GRADE_LEVEL' | translate}}" formControlName="gradeLevelId" required>
-      </ng-select>
+      <div class="form-field-group">
+        <ng-select [items]="academicYearData()" [searchable]="true" appendTo=".select-wrapper" bindLabel="year"
+          bindValue="id" appendTo="body" class="material-style-select" dropdownPosition="bottom"
+          placeholder="{{'COMMON.SELECT_ACADEMIC_YEAR' | translate}}" formControlName="academicYearId" required>
+        </ng-select>
+        <mat-error *ngIf="registrationForm.get('academicYearId')?.errors?.['required'] && (registrationForm.get('academicYearId')?.touched || registrationForm.get('academicYearId')?.dirty)">
+          {{'COMMON.SELECT_ACADEMIC_YEAR_VALIDATION' | translate}}
+        </mat-error>
+      </div>
 
-      <ng-select [items]="shiftData()" [searchable]="true" appendTo=".select-wrapper" bindLabel="name" bindValue="id"
-        appendTo="body" class="material-style-select" dropdownPosition="bottom"
-        placeholder="{{'COMMON.SELECT_SHIFT' | translate}}" formControlName="shiftId" required>
-      </ng-select>
+      <div class="form-field-group">
+        <ng-select [items]="gradeLevelData()" [searchable]="true" appendTo=".select-wrapper" bindLabel="gradeNumber"
+          bindValue="id" appendTo="body" class="material-style-select" dropdownPosition="bottom"
+          placeholder="{{'COMMON.SELECT_GRADE_LEVEL' | translate}}" formControlName="gradeLevelId" required>
+        </ng-select>
+        <mat-error *ngIf="registrationForm.get('gradeLevelId')?.errors?.['required'] && (registrationForm.get('gradeLevelId')?.touched || registrationForm.get('gradeLevelId')?.dirty)">
+          {{'COMMON.SELECT_GRADE_LEVEL_VALIDATION' | translate}}
+        </mat-error>
+      </div>
 
+      <div class="form-field-group">
+        <ng-select [items]="shiftData()" [searchable]="true" appendTo=".select-wrapper" bindLabel="name" bindValue="id"
+          appendTo="body" class="material-style-select" dropdownPosition="bottom"
+          placeholder="{{'COMMON.SELECT_SHIFT' | translate}}" formControlName="shiftId" required>
+        </ng-select>
+        <mat-error *ngIf="registrationForm.get('shiftId')?.errors?.['required'] && (registrationForm.get('shiftId')?.touched || registrationForm.get('shiftId')?.dirty)">
+          {{'COMMON.SELECT_SHIFT_VALIDATION' | translate}}
+        </mat-error>
+      </div>
 
-      <ng-select [items]="sectionData()" [searchable]="true" appendTo=".select-wrapper" bindLabel="name" bindValue="id"
-        appendTo="body" class="material-style-select" dropdownPosition="bottom"
-        placeholder="{{'COMMON.SELECT_SECTION' | translate}}" formControlName="sectionId" required>
-      </ng-select>
+      <div class="form-field-group">
+        <ng-select [items]="sectionData()" [searchable]="true" appendTo=".select-wrapper" bindLabel="name" bindValue="id"
+          appendTo="body" class="material-style-select" dropdownPosition="bottom"
+          placeholder="{{'COMMON.SELECT_SECTION' | translate}}" formControlName="sectionId" required>
+        </ng-select>
+        <mat-error *ngIf="registrationForm.get('sectionId')?.errors?.['required'] && (registrationForm.get('sectionId')?.touched || registrationForm.get('sectionId')?.dirty)">
+          {{'COMMON.SELECT_SECTION_VALIDATION' | translate}}
+        </mat-error>
+      </div>
     </div>
   </form>
 </mat-dialog-content>
