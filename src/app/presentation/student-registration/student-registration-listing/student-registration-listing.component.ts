@@ -36,8 +36,8 @@ export class StudentRegistrationListingComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
   constructor(public facade: StudentRegistrationFacade, private store: Store, private translate: TranslateService
-      , private fb: FormBuilder, private dialog: MatDialog, private uiService: UiService) {
-    
+    , private fb: FormBuilder, private dialog: MatDialog, private uiService: UiService) {
+
     this.filterForm = this.fb.group({
       studentLastName: [''],
       studentFirstName: [''],
@@ -63,15 +63,15 @@ export class StudentRegistrationListingComponent implements OnInit, OnDestroy {
       sorts = '[{"property": "' + sortField + '","value":"' + sortDirection + '"}]';
     }
     const qfilter: QueryFIlterCriterion[] = [];
-    
+
     if (this.filterForm.value.studentLastName) {
-      qfilter.push({ property: 'studentLastName:like', value: this.filterForm.value.studentLastName });
+      qfilter.push({ property: 'student.lastName:like', value: this.filterForm.value.studentLastName });
     }
     if (this.filterForm.value.studentFirstName) {
-      qfilter.push({ property: 'studentFirstName:like', value: this.filterForm.value.studentFirstName });
+      qfilter.push({ property: 'student.firstName:like', value: this.filterForm.value.studentFirstName });
     }
     if (this.filterForm.value.academicYearYear) {
-      qfilter.push({ property: 'academicYearYear:eq', value: this.filterForm.value.academicYearYear });
+      qfilter.push({ property: 'academicYear.year:eq', value: this.filterForm.value.academicYearYear });
     }
 
     const offset = (pageIndex ?? 0) * (pageSize ?? 5);
@@ -112,9 +112,9 @@ export class StudentRegistrationListingComponent implements OnInit, OnDestroy {
 
   ngAfterViewInit() {
     if (this.sort) {
-        this.dataSource.sort = this.sort;
+      this.dataSource.sort = this.sort;
     } else {
-        console.error('MatSort is undefined! Check the HTML template and module imports.');
+      console.error('MatSort is undefined! Check the HTML template and module imports.');
     }
   }
 

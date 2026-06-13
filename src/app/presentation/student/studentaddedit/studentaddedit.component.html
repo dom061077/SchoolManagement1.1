@@ -60,7 +60,8 @@
                                 dropdownPosition="bottom" formControlName="estudioId"
                                 placeholder="{{'COMMON.SELECT_EDUCATION_STATE' | translate}}">
                             </ng-select>
-                            <mat-error *ngIf="estudioIdControl?.errors?.['required'] && (estudioIdControl?.touched || estudioIdControl?.dirty)">
+                            <mat-error
+                                *ngIf="estudioIdControl?.errors?.['required'] && (estudioIdControl?.touched || estudioIdControl?.dirty)">
                                 {{'STUDENT.ESTUDIO_VALIDATION' | translate}}
                             </mat-error>
                         </div>
@@ -69,9 +70,11 @@
                             <ng-select [searchable]="true" [items]="provinceData()" appendTo=".select-wrapper"
                                 bindLabel="nombre" bindValue="id" appendTo="body" class="material-style-select"
                                 dropdownPosition="bottom" formControlName="provinciaId"
-                                placeholder="{{'COMMON.SELECT_PROVINCE' | translate}}" (change)="onProvinceChange($event)">
+                                placeholder="{{'COMMON.SELECT_PROVINCE' | translate}}"
+                                (change)="onProvinceChange($event)">
                             </ng-select>
-                            <mat-error *ngIf="provinciaIdControl?.errors?.['required'] && (provinciaIdControl?.touched || provinciaIdControl?.dirty)">
+                            <mat-error
+                                *ngIf="provinciaIdControl?.errors?.['required'] && (provinciaIdControl?.touched || provinciaIdControl?.dirty)">
                                 {{'COMMON.PROVINCE_REQUIRED_VALIDATION' | translate}}
                             </mat-error>
                         </div>
@@ -178,14 +181,14 @@
                     <mat-checkbox formControlName="fotocopiaLibroMatriz" matInput class=".align-middle">
                         {{'STUDENT.LIBRO_MATRIZ' | translate}}
                     </mat-checkbox>
-
-                    <div>
-                        <button mat-raised-button color="primary" matStepperPrevious>{{'COMMON.BACK_BTN' |
-                            translate}}></button>
-                        <button mat-raised-button color="primary" matStepperNext>{{'COMMON.NEXT_BTN' | translate}}
-                            ></button>
-                    </div>
                 </mat-card-content>
+                <div>
+                    <button mat-raised-button color="primary" matStepperPrevious>{{'COMMON.BACK_BTN' |
+                        translate}}></button>
+                    <button mat-raised-button color="primary" matStepperNext>{{'COMMON.NEXT_BTN' | translate}}
+                        ></button>
+                </div>
+
 
             </form>
         </mat-step>
@@ -234,13 +237,14 @@
                         <mat-label>{{'STUDENT.ADVISOR_RELATIONSHIP' | translate}}</mat-label>
                         <input formControlName="parentescoTutor" matInput class=".align-middle">
                     </mat-form-field>
-                    <div>
-                        <button mat-raised-button color="primary" matStepperPrevious>{{'COMMON.BACK_BTN' |
-                            translate}}></button>
-                        <button mat-raised-button color="accent" [disabled]="advisorDocForm.invalid || readonly"
-                            (click)="onSubmit()">{{'COMMON.SUBMIT_BTN' | translate}}></button>
-                    </div>
                 </mat-card-content>
+                <div>
+                    <button mat-raised-button color="primary" matStepperPrevious>{{'COMMON.BACK_BTN' |
+                        translate}}></button>
+                    <button mat-raised-button color="accent" [disabled]="advisorDocForm.invalid || readonly"
+                        (click)="onSubmit()">{{'COMMON.SUBMIT_BTN' | translate}}></button>
+                </div>
+
             </form>
         </mat-step>
     </mat-stepper>
