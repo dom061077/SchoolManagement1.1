@@ -35,6 +35,7 @@ export class StudentaddeditComponent implements OnInit {
 
   @ViewChild('localitySelect') localitySelect: any; // Reference to the locality ng-select component
   @ViewChild('departmentSelect') departmentSelect: any; // Reference to the department ng-select component
+  @ViewChild('provinceSelect') provinceSelect: any; // Reference to the department ng-select component
 
   onProvinceChange($event: Province) {
     console.log("Available selectors: ", Object.keys(LocalitySelectors));
@@ -217,6 +218,11 @@ export class StudentaddeditComponent implements OnInit {
         this.personDocForm.disable();
         this.additionalDocForm.disable();
       }
+    } else {
+      this.personalDataForm.controls["provinciaId"].setValue(null);
+      this.personalDataForm.controls["departamentoId"].setValue(null);
+      this.personalDataForm.controls["localidadId"].setValue(null);
+      this.personalDataForm.controls["estudioId"].setValue(null);
     }
 
   }

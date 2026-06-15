@@ -134,3 +134,21 @@ button {
     transform: translateY(0);
   }
 }
+
+/* Match the mat-label style of firstName input field with COMMON.SELECT_EDUCATION_STATE's placeholder */
+mat-form-field:has(input[formControlName="firstName"]) mat-label,
+mat-form-field:has(input[formControlName="firstName"]) ::ng-deep .mdc-floating-label,
+mat-form-field:has(input[formControlName="firstName"]) ::ng-deep .mat-mdc-floating-label {
+  color: var(--text-muted) !important;
+  font-family: var(--primary-font) !important;
+}
+
+/* Turn mat-label red when invalid and touched/dirty */
+mat-form-field:has(input[formControlName="firstName"].ng-invalid.ng-touched) mat-label,
+mat-form-field:has(input[formControlName="firstName"].ng-invalid.ng-dirty) mat-label,
+mat-form-field:has(input[formControlName="firstName"].ng-invalid.ng-touched) ::ng-deep .mdc-floating-label,
+mat-form-field:has(input[formControlName="firstName"].ng-invalid.ng-dirty) ::ng-deep .mdc-floating-label,
+mat-form-field:has(input[formControlName="firstName"].ng-invalid.ng-touched) ::ng-deep .mat-mdc-floating-label,
+mat-form-field:has(input[formControlName="firstName"].ng-invalid.ng-dirty) ::ng-deep .mat-mdc-floating-label {
+  color: var(--warn-color) !important;
+}

@@ -5,7 +5,7 @@
   <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
     <div class="form-grid">
       <div class="form-field-group">
-        <ng-select [items]="studentData()" [searchable]="true" appendTo=".select-wrapper"
+        <ng-select [readonly]="editcode>0" [items]="studentData()" [searchable]="true" appendTo=".select-wrapper"
           bindLabel="dniLastNameFirstName" bindValue="id" appendTo="body" class="material-style-select"
           dropdownPosition="bottom" placeholder="{{'COMMON.SELECT_STUDENT' | translate}}" formControlName="studentId"
           [virtualScroll]="true" (scroll)="onScroll($event)" (scrollToEnd)="onScrollToEnd()"
@@ -18,8 +18,8 @@
       </div>
 
       <div class="form-field-group">
-        <ng-select [items]="academicYearData()" [searchable]="true" appendTo=".select-wrapper" bindLabel="year"
-          bindValue="id" appendTo="body" class="material-style-select" dropdownPosition="bottom"
+        <ng-select [readonly]="editcode>0" [items]="academicYearData()" [searchable]="true" appendTo=".select-wrapper"
+          bindLabel="year" bindValue="id" appendTo="body" class="material-style-select" dropdownPosition="bottom"
           placeholder="{{'COMMON.SELECT_ACADEMIC_YEAR' | translate}}" formControlName="academicYearId" required>
         </ng-select>
         <mat-error
