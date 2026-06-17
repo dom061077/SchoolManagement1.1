@@ -14,6 +14,7 @@ import { HttpLoaderFactory } from '../../app.module';
 import { SharedModule } from '../shared/shared.module';
 import { studentRegistrationFeature } from '../../core/state/student-registration/student-registration-reducer';
 import { StudentRegistrationEffects } from '../../core/state/student-registration/student-registration-effects';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { StudentRegistrationEffects } from '../../core/state/student-registratio
   ],
   imports: [
     CommonModule,
+    NgSelectModule,
     SharedModule,
     StoreModule.forFeature(schoolExamFeature.name, schoolExamFeature.reducer),
     EffectsModule.forFeature([SchoolExamEffects]),

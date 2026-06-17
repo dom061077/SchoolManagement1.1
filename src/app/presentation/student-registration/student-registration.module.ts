@@ -23,6 +23,7 @@ import { gradeLevelFeature } from '@app/core/state/grade-level/grade-level.reduc
 import { GradeLevelEffects } from '@app/core/state/grade-level/grade-level.effects';
 import { sectionFeature } from '@app/core/state/section/section.reducer';
 import { SectionEffects } from '@app/core/state/section/section.effects';
+import { StudentRegistrationLookupFacade } from './student-registration-lookup.facade';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { SectionEffects } from '@app/core/state/section/section.effects';
     EffectsModule.forFeature([SectionEffects]),
     MaterialModule,
     StudentRegistrationRoutingModule,
+    StudentRegistrationLookupFacade,
     TranslateModule.forChild({
       defaultLanguage: 'es',
       loader: {

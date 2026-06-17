@@ -23,6 +23,7 @@ import { GradeLevel } from '@app/core/model/grade-level.model';
 import { SectionFacade } from '@app/core/state/section/section.facade';
 import { sectionSelectors } from '@app/core/state/section/section.reducer';
 import { Section } from '@app/core/model/section.model';
+import { StudentRegistrationLookupFacade } from '../student-registration-lookup.facade';
 
 @Component({
   selector: 'app-student-registration-add-edit',
@@ -32,8 +33,8 @@ import { Section } from '@app/core/model/section.model';
 export class StudentRegistrationAddEditComponent implements OnInit {
 
   selectEntities = this.store.selectSignal(studentRegistrationSelectors.selectEntities) as Signal<{ [id: number]: StudentRegistration }>;
-  shiftData = this.store.selectSignal(shiftSelectors.selectAll) as Signal<Shift[]>;
-  academicYearData = this.store.selectSignal(academicYearSelectors.selectAll) as Signal<AcademicYear[]>;
+  shiftData = this.lookupFacade.shifts;
+  academicYearData = this.lookupFacade.academicYears;
   gradeLevelData = this.store.selectSignal(gradeLevelSelectors.selectAll) as Signal<GradeLevel[]>;
   sectionData = this.store.selectSignal(sectionSelectors.selectAll) as Signal<Section[]>;
   title: string = 'STUDENT_REGISTRATION.ADD_REGISTRATION';
@@ -59,11 +60,12 @@ export class StudentRegistrationAddEditComponent implements OnInit {
 
   constructor(
     private facade: StudentRegistrationFacade,
-    private shiftFacade: ShiftFacade,
-    private studentFacade: StudentFacade,
+    /*private shiftFacade: ShiftFacade,
     private academicYearFacade: AcademicYearFacade,
     private gradeLevelFacade: GradeLevelFacade,
-    private sectionFacade: SectionFacade,
+    private sectionFacade: SectionFacade,*/
+    private lookupFacade: StudentRegistrationLookupFacade,
+    private studentFacade: StudentFacade,
     private builder: FormBuilder,
     private translate: TranslateService,
     public ref: MatDialogRef<StudentRegistrationAddEditComponent>,
@@ -75,10 +77,7 @@ export class StudentRegistrationAddEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.editcode = this.data.code;
-    this.shiftFacade.loadAll(0, 100, '[]', '[]', 'AND');
-    this.academicYearFacade.loadAll(0, 100, '[]', '[]', 'AND');
-    this.gradeLevelFacade.loadAll(0, 100, '[]', '[]', 'AND');
-    this.sectionFacade.loadAll(0, 100, '[]', '[]', 'AND');
+    this.lookupFacade.loadAllLookups(0, 100);
 
     this.studentTypeahead$.pipe(
       debounceTime(400),

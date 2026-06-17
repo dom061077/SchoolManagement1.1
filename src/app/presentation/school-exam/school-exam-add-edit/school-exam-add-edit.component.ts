@@ -18,7 +18,7 @@ import { StudentRegistration } from '../../../core/model/student-registration.mo
 export class SchoolExamAddEditComponent implements OnInit {
   selectEntities = this.store.selectSignal(schoolExamSelectors.selectEntities) as Signal<{ [id: number]: SchoolExam }>;
   registrationsData = this.store.selectSignal(studentRegistrationSelectors.selectAll) as Signal<StudentRegistration[]>;
-  
+
   title: string = 'SCHOOL_EXAM.ADD_EXAM';
   editcode!: number;
   readonly: boolean = false;
@@ -80,7 +80,7 @@ export class SchoolExamAddEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.editcode = this.data.code;
-    
+
     // Load student registrations to populate grading lines
     this.registrationFacade.loadAll(0, 100, '[]', '[]', 'AND');
 
@@ -108,6 +108,10 @@ export class SchoolExamAddEditComponent implements OnInit {
       score: [detail?.score || null, [Validators.required, Validators.min(0), Validators.max(10)]],
       academicPeriodId: [detail?.academicPeriodId || this.examForm.value.academicPeriodId || null]
     });
+  }
+
+  findDetailFormGroupById(id: number): FormGroup | undefined {
+    return this.details.controls.find(control => control.get('id')?.value === id) as FormGroup | undefined;
   }
 
   addDetailRow() {
@@ -141,7 +145,7 @@ export class SchoolExamAddEditComponent implements OnInit {
 
   transformToExam(): SchoolExam {
     const rawData = this.examForm.value;
-    
+
     // Format date as YYYY-MM-DD
     let formattedDate = '';
     if (rawData.date) {

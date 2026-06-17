@@ -1,10 +1,10 @@
 <form [formGroup]="examForm" (ngSubmit)="onSubmit()">
   <h2 mat-dialog-title class="dialog-title">{{title}}</h2>
 
-  <mat-dialog-content class="dialog-content">
-    <div class="exam-form-grid">
+  <mat-dialog-content class="dialog-container">
+    <div class="form-grid">
       <!-- Name -->
-      <mat-form-field appearance="outline" class="grid-item full-width">
+      <mat-form-field>
         <mat-label>{{'SCHOOL_EXAM.NAME' | translate}}</mat-label>
         <input matInput formControlName="name">
         <mat-error *ngIf="examForm.get('name')?.hasError('required')">
@@ -13,13 +13,13 @@
       </mat-form-field>
 
       <!-- Description -->
-      <mat-form-field appearance="outline" class="grid-item full-width">
+      <mat-form-field>
         <mat-label>{{'SCHOOL_EXAM.DESCRIPTION' | translate}}</mat-label>
         <textarea matInput formControlName="description" rows="3"></textarea>
       </mat-form-field>
 
       <!-- Date -->
-      <mat-form-field appearance="outline" class="grid-item">
+      <mat-form-field>
         <mat-label>{{'SCHOOL_EXAM.DATE' | translate}}</mat-label>
         <input matInput [matDatepicker]="picker" formControlName="date">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -30,17 +30,15 @@
       </mat-form-field>
 
       <!-- Tipo Examen -->
-      <mat-form-field appearance="outline" class="grid-item">
-        <mat-label>{{'SCHOOL_EXAM.TIPO_EXAMEN' | translate}}</mat-label>
-        <mat-select formControlName="tipoExamenId">
-          <mat-option *ngFor="let item of mockTipoExamen" [value]="item.id">
-            {{item.name}}
-          </mat-option>
-        </mat-select>
+      <div class="form-field-group">
+        <ng-select [items]="tipoExamenData()" bindLabel="name" bindValue="id" [searchable]="true"
+          appendTo=".select-wrapper" class="material-style-select" dropdownPosition="bottom"
+          placeholder="{{'SCHOOL_EXAM.TIPO_EXAMEN' | translate}}" formControlName="tipoExamenId">
+        </ng-select>
         <mat-error *ngIf="examForm.get('tipoExamenId')?.hasError('required')">
           {{'COMMON.REQUIRED' | translate}}
         </mat-error>
-      </mat-form-field>
+      </div>
 
       <!-- Subject -->
       <mat-form-field appearance="outline" class="grid-item">
@@ -94,7 +92,7 @@
 
       <div formArrayName="details" class="details-rows-container">
         <div *ngFor="let detail of details.controls; let i=index" [formGroupName]="i" class="detail-row">
-          
+
           <!-- Student Registration Selection -->
           <mat-form-field appearance="outline" class="student-select">
             <mat-label>{{'SCHOOL_EXAM.STUDENT' | translate}}</mat-label>
@@ -121,7 +119,8 @@
           </mat-form-field>
 
           <!-- Action -->
-          <button type="button" mat-icon-button color="warn" (click)="removeDetailRow(i)" *ngIf="!readonly" class="remove-btn">
+          <button type="button" mat-icon-button color="warn" (click)="removeDetailRow(i)" *ngIf="!readonly"
+            class="remove-btn">
             <mat-icon>delete</mat-icon>
           </button>
         </div>
