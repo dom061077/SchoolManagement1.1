@@ -1,0 +1,147 @@
+.exam-listing-card {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  border-radius: 12px;
+  background: var(--card-bg, #ffffff);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.exam-listing-header {
+  margin-bottom: 1.5rem;
+}
+
+.header-title-container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--primary-color, #3f51b5);
+}
+
+.header-icon {
+  font-size: 2rem;
+  width: 2rem;
+  height: 2rem;
+}
+
+.header-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.filter-form {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.filters-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+
+.filter-field {
+  flex: 1 1 200px;
+}
+
+.filter-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-top: -0.75rem;
+}
+
+.search-btn, .clear-btn {
+  transition: transform 0.2s ease;
+}
+
+.search-btn:hover, .clear-btn:hover {
+  transform: translateY(-2px);
+}
+
+.table-container {
+  overflow-x: auto;
+  border-radius: 8px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.mat-mdc-header-cell {
+  font-weight: 600 !important;
+  color: #333333 !important;
+  background-color: #f1f3f5 !important;
+  padding: 12px 16px !important;
+}
+
+.mat-mdc-cell {
+  padding: 14px 16px !important;
+  font-size: 0.9rem;
+}
+
+.table-row-hover:hover {
+  background-color: rgba(63, 81, 181, 0.04) !important;
+}
+
+.exam-name-cell {
+  font-weight: 550;
+  color: #2b2b2b;
+}
+
+.description-cell {
+  color: #666666;
+  max-width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.actions-header {
+  text-align: center !important;
+}
+
+.actions-cell {
+  display: flex;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.exam-listing-footer {
+  margin-top: 1rem;
+}
+
+.exam-listing-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem 0 0 0;
+}
+
+.add-exam-btn {
+  padding: 0 1.5rem;
+  height: 48px;
+  font-size: 1rem;
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 10px rgba(63, 81, 181, 0.3);
+}
+
+.btn-icon {
+  margin-right: 4px;
+}
+
+.error-container {
+  padding: 1rem;
+  background-color: #ffeef0;
+  color: #d63031;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}

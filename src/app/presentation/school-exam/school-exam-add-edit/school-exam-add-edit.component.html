@@ -1,0 +1,142 @@
+<form [formGroup]="examForm" (ngSubmit)="onSubmit()">
+  <h2 mat-dialog-title class="dialog-title">{{title}}</h2>
+
+  <mat-dialog-content class="dialog-content">
+    <div class="exam-form-grid">
+      <!-- Name -->
+      <mat-form-field appearance="outline" class="grid-item full-width">
+        <mat-label>{{'SCHOOL_EXAM.NAME' | translate}}</mat-label>
+        <input matInput formControlName="name">
+        <mat-error *ngIf="examForm.get('name')?.hasError('required')">
+          {{'COMMON.REQUIRED' | translate}}
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Description -->
+      <mat-form-field appearance="outline" class="grid-item full-width">
+        <mat-label>{{'SCHOOL_EXAM.DESCRIPTION' | translate}}</mat-label>
+        <textarea matInput formControlName="description" rows="3"></textarea>
+      </mat-form-field>
+
+      <!-- Date -->
+      <mat-form-field appearance="outline" class="grid-item">
+        <mat-label>{{'SCHOOL_EXAM.DATE' | translate}}</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="examForm.get('date')?.hasError('required')">
+          {{'COMMON.REQUIRED' | translate}}
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Tipo Examen -->
+      <mat-form-field appearance="outline" class="grid-item">
+        <mat-label>{{'SCHOOL_EXAM.TIPO_EXAMEN' | translate}}</mat-label>
+        <mat-select formControlName="tipoExamenId">
+          <mat-option *ngFor="let item of mockTipoExamen" [value]="item.id">
+            {{item.name}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="examForm.get('tipoExamenId')?.hasError('required')">
+          {{'COMMON.REQUIRED' | translate}}
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Subject -->
+      <mat-form-field appearance="outline" class="grid-item">
+        <mat-label>{{'SCHOOL_EXAM.SUBJECT' | translate}}</mat-label>
+        <mat-select formControlName="subjectId">
+          <mat-option *ngFor="let item of mockSubjects" [value]="item.id">
+            {{item.name}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="examForm.get('subjectId')?.hasError('required')">
+          {{'COMMON.REQUIRED' | translate}}
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Teacher -->
+      <mat-form-field appearance="outline" class="grid-item">
+        <mat-label>{{'SCHOOL_EXAM.TEACHER' | translate}}</mat-label>
+        <mat-select formControlName="teacherId">
+          <mat-option *ngFor="let item of mockTeachers" [value]="item.id">
+            {{item.name}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="examForm.get('teacherId')?.hasError('required')">
+          {{'COMMON.REQUIRED' | translate}}
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Academic Period -->
+      <mat-form-field appearance="outline" class="grid-item">
+        <mat-label>{{'SCHOOL_EXAM.ACADEMIC_PERIOD' | translate}}</mat-label>
+        <mat-select formControlName="academicPeriodId">
+          <mat-option *ngFor="let item of mockAcademicPeriods" [value]="item.id">
+            {{item.name}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="examForm.get('academicPeriodId')?.hasError('required')">
+          {{'COMMON.REQUIRED' | translate}}
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Exam Details / Grades Section -->
+    <div class="details-section">
+      <div class="details-header">
+        <h3>{{'SCHOOL_EXAM.GRADES_LIST' | translate}}</h3>
+        <button type="button" mat-stroked-button color="primary" (click)="addDetailRow()" *ngIf="!readonly">
+          <mat-icon>add</mat-icon>
+          {{'SCHOOL_EXAM.ADD_GRADE_ROW' | translate}}
+        </button>
+      </div>
+
+      <div formArrayName="details" class="details-rows-container">
+        <div *ngFor="let detail of details.controls; let i=index" [formGroupName]="i" class="detail-row">
+          
+          <!-- Student Registration Selection -->
+          <mat-form-field appearance="outline" class="student-select">
+            <mat-label>{{'SCHOOL_EXAM.STUDENT' | translate}}</mat-label>
+            <mat-select formControlName="studentRegistrationId">
+              <mat-option *ngFor="let reg of registrationsData()" [value]="reg.id">
+                {{reg.studentLastName}}, {{reg.studentFirstName}} (DNI: {{reg.studentDni}})
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="detail.get('studentRegistrationId')?.hasError('required')">
+              {{'COMMON.REQUIRED' | translate}}
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Score -->
+          <mat-form-field appearance="outline" class="score-input">
+            <mat-label>{{'SCHOOL_EXAM.SCORE' | translate}}</mat-label>
+            <input matInput type="number" formControlName="score" step="0.1" min="0" max="10">
+            <mat-error *ngIf="detail.get('score')?.hasError('required')">
+              {{'COMMON.REQUIRED' | translate}}
+            </mat-error>
+            <mat-error *ngIf="detail.get('score')?.hasError('min') || detail.get('score')?.hasError('max')">
+              {{'SCHOOL_EXAM.SCORE_LIMIT_ERROR' | translate}}
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Action -->
+          <button type="button" mat-icon-button color="warn" (click)="removeDetailRow(i)" *ngIf="!readonly" class="remove-btn">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+
+        <div *ngIf="details.length === 0" class="no-details-message">
+          <p>{{'SCHOOL_EXAM.NO_GRADES_ADDED' | translate}}</p>
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="dialog-actions">
+    <button mat-button type="button" mat-dialog-close>{{'COMMON.CLOSE' | translate}}</button>
+    <button mat-raised-button color="primary" type="submit" *ngIf="!readonly" [disabled]="examForm.invalid">
+      {{'COMMON.SAVE' | translate}}
+    </button>
+  </mat-dialog-actions>
+</form>

@@ -1,0 +1,119 @@
+<mat-card class="exam-listing-card">
+  <mat-card-header class="exam-listing-header">
+    <div class="header-title-container">
+      <mat-icon class="header-icon">assignment</mat-icon>
+      <h1 class="header-title">{{'SCHOOL_EXAM.LIST_TITLE' | translate}}</h1>
+    </div>
+  </mat-card-header>
+
+  <mat-card-content class="exam-listing-content">
+    <div *ngIf="errormessage" class="error-container">
+      <h1>{{errormessage}}</h1>
+    </div>
+
+    <!-- Filter Form -->
+    <form [formGroup]="filterForm" (ngSubmit)="applyFilter()" class="filter-form">
+      <div class="filters-row">
+        <mat-form-field appearance="outline" class="filter-field">
+          <mat-label>{{'SCHOOL_EXAM.FILTER_NAME' | translate}}</mat-label>
+          <input matInput formControlName="name" (keyup)="applyFilter()" placeholder="{{'SCHOOL_EXAM.FILTER_NAME_PLACEHOLDER' | translate}}">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="filter-field">
+          <mat-label>{{'SCHOOL_EXAM.FILTER_SUBJECT' | translate}}</mat-label>
+          <input matInput formControlName="subjectName" (keyup)="applyFilter()" placeholder="{{'SCHOOL_EXAM.FILTER_SUBJECT_PLACEHOLDER' | translate}}">
+          <mat-icon matSuffix>book</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="filter-field">
+          <mat-label>{{'SCHOOL_EXAM.FILTER_DATE' | translate}}</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="date" (dateChange)="applyFilter()">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <div class="filter-actions">
+          <button type="submit" mat-fab color="primary" aria-label="Search" class="search-btn" matTooltip="{{'COMMON.SEARCH' | translate}}">
+            <mat-icon>search</mat-icon>
+          </button>
+          <button type="button" mat-mini-fab color="warn" (click)="clearFilter()" aria-label="Clear filters" class="clear-btn" matTooltip="{{'COMMON.CLEAR' | translate}}">
+            <mat-icon>clear_all</mat-icon>
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <!-- Data Table -->
+    <div class="table-container mat-elevation-z3">
+      <table *ngIf="!errormessage" matSort mat-table [dataSource]="dataSource" (matSortChange)="sortData($event)">
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+          <th mat-sort-header mat-header-cell *matHeaderCellDef> {{'COMMON.ID' | translate}}</th>
+          <td mat-cell *matCellDef="let element">{{element.id}}</td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-sort-header mat-header-cell *matHeaderCellDef> {{'SCHOOL_EXAM.NAME' | translate}}</th>
+          <td mat-cell *matCellDef="let element" class="exam-name-cell">{{element.name}}</td>
+        </ng-container>
+
+        <!-- Description Column -->
+        <ng-container matColumnDef="description">
+          <th mat-sort-header mat-header-cell *matHeaderCellDef> {{'SCHOOL_EXAM.DESCRIPTION' | translate}}</th>
+          <td mat-cell *matCellDef="let element" class="description-cell">{{element.description}}</td>
+        </ng-container>
+
+        <!-- Date Column -->
+        <ng-container matColumnDef="date">
+          <th mat-sort-header mat-header-cell *matHeaderCellDef> {{'SCHOOL_EXAM.DATE' | translate}}</th>
+          <td mat-cell *matCellDef="let element">{{element.date | date: 'dd/MM/yyyy'}}</td>
+        </ng-container>
+
+        <!-- Tipo Examen Column -->
+        <ng-container matColumnDef="tipoExamenName">
+          <th mat-sort-header mat-header-cell *matHeaderCellDef> {{'SCHOOL_EXAM.TIPO_EXAMEN' | translate}}</th>
+          <td mat-cell *matCellDef="let element">{{element.tipoExamenName || ('COMMON.NOT_AVAILABLE' | translate)}}</td>
+        </ng-container>
+
+        <!-- Subject Column -->
+        <ng-container matColumnDef="subjectName">
+          <th mat-sort-header mat-header-cell *matHeaderCellDef> {{'SCHOOL_EXAM.SUBJECT' | translate}}</th>
+          <td mat-cell *matCellDef="let element">{{element.subjectName || ('COMMON.NOT_AVAILABLE' | translate)}}</td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef class="actions-header">{{'COMMON.GRID_ACTIONS' | translate}}</th>
+          <td mat-cell *matCellDef="let element" class="actions-cell">
+            <button mat-icon-button (click)="schoolExamEdit(element.id)" color="primary" matTooltip="{{'COMMON.GRID_ACTION_EDIT_TOOLTIP' | translate}}">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button (click)="schoolExamDetails(element.id)" color="accent" matTooltip="{{'COMMON.GRID_ACTION_VIEW_TOOLTIP' | translate}}">
+              <mat-icon>visibility</mat-icon>
+            </button>
+            <button mat-icon-button (click)="schoolExamDelete(element.id)" color="warn" matTooltip="{{'COMMON.GRID_ACTION_DELETE_TOOLTIP' | translate}}">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns" class="table-row-hover"></tr>
+      </table>
+    </div>
+  </mat-card-content>
+
+  <mat-card-footer class="exam-listing-footer">
+    <mat-paginator [length]="total()" [pageSize]="pageSize()" [pageSizeOptions]="pageSizeOptions" (page)="onPageChange($event)">
+    </mat-paginator>
+  </mat-card-footer>
+
+  <mat-card-actions class="exam-listing-actions">
+    <button mat-raised-button color="primary" (click)="addSchoolExam()" class="add-exam-btn">
+      <mat-icon class="btn-icon">add</mat-icon>
+      {{'SCHOOL_EXAM.ADD' | translate}}
+    </button>
+  </mat-card-actions>
+</mat-card>
