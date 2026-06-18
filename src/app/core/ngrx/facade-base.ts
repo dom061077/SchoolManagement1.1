@@ -6,11 +6,12 @@ export class FacadeBase<T> {
   items: Signal<T[]>;
   loading: Signal<boolean>;
   error: Signal<any>;
+  totalRest: Signal<number>;
 
   constructor(
     // Use 'any' or a global state interface for the Store root
-    protected store: Store<any>, 
-    
+    protected store: Store<any>,
+
     private actions: {
       loadAll: (payload: { pageIndex: number; pageSize: number; qfilter: string; sorts: string; loperator: string }) => any;
       loadAllSuccess: (payload: { items: T[]; total: number }) => any;
@@ -34,6 +35,7 @@ export class FacadeBase<T> {
     this.items = this.store.selectSignal(this.selectors.selectAll);
     this.loading = this.store.selectSignal(this.selectors.selectLoading);
     this.error = this.store.selectSignal(this.selectors.selectError);
+    this.totalRest = this.store.selectSignal(this.selectors.selectTotalRest);
   }
   loadAll(pageIndex: number, pageSize: number, qfilter: string, sorts: string, loperator: string): void {
     this.store.dispatch(this.actions.loadAll({ pageIndex, pageSize, qfilter, sorts, loperator }));
@@ -50,6 +52,10 @@ export class FacadeBase<T> {
 
   delete(id: string | number): void {
     this.store.dispatch(this.actions.delete({ id }));
+  }
+
+  loadInstance(id: string | number): void {
+    this.store.dispatch(this.actions.loadInstance({ id }));
   }
 
 }

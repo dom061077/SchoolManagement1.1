@@ -8,8 +8,8 @@
         <ng-select [readonly]="editcode>0" [items]="studentData()" [searchable]="true" appendTo=".select-wrapper"
           bindLabel="dniLastNameFirstName" bindValue="id" appendTo="body" class="material-style-select"
           dropdownPosition="bottom" placeholder="{{'COMMON.SELECT_STUDENT' | translate}}" formControlName="studentId"
-          [virtualScroll]="true" (scroll)="onScroll($event)" (scrollToEnd)="onScrollToEnd()"
-          [typeahead]="studentTypeahead$" required>
+          [virtualScroll]="true" (scroll)="onScrollStudent($event)" (scrollToEnd)="onScrollStudentToEnd()"
+          (clear)="onClearStudentTerm()" [typeahead]="studentTypeahead$" required>
         </ng-select>
         <mat-error
           *ngIf="registrationForm.get('studentId')?.errors?.['required'] && (registrationForm.get('studentId')?.touched || registrationForm.get('studentId')?.dirty)">

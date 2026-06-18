@@ -31,10 +31,10 @@
 
       <!-- Tipo Examen -->
       <div class="form-field-group">
-        <ng-select [items]="tipoExamenData()" bindLabel="name" bindValue="id" [searchable]="true"
+        <!--ng-select [items]="tipoExamenData()" bindLabel="name" bindValue="id" [searchable]="true"
           appendTo=".select-wrapper" class="material-style-select" dropdownPosition="bottom"
           placeholder="{{'SCHOOL_EXAM.TIPO_EXAMEN' | translate}}" formControlName="tipoExamenId">
-        </ng-select>
+        </ng-select -->
         <mat-error *ngIf="examForm.get('tipoExamenId')?.hasError('required')">
           {{'COMMON.REQUIRED' | translate}}
         </mat-error>

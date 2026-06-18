@@ -12,7 +12,35 @@ export class StudentFacade extends FacadeBase<Student> {
     super(store, StudentActions, studentSelectors);
   }
 
-  searchStudents(dni: number, lastName: string, firstName: string, pageIndex: number, pageSize: number) {
-    this.store.dispatch(StudentActions.searchStudents({ dni, lastName, firstName, pageIndex, pageSize }));
+  searchStudents(term: string, pageSize: number) {
+    let studentPageSize = 100;
+    let filter = '[]';
+    let firstName = '';
+    let filterObj = [];
+    let termValues = term.split(' ');
+
+    termValues.forEach(value => {
+      if (filterObj.length == 0) {
+        if (Number.isInteger(Number(value))) {
+          filterObj.push({ property: "dni:eq", value: value });
+        } else {
+          filterObj.push({ property: "lastName:like", value: value });
+        }
+      } else {
+        firstName += value + ' ';
+      }
+    });
+    if (firstName.trim() && filterObj.length > 0) {
+      filterObj.push({ property: "firstName:like", value: firstName.trim() });
+    }
+    if (!term.trim()) {
+      filterObj = [];
+    }
+    filter = JSON.stringify(filterObj);
+    this.loadAll(0, studentPageSize, filter, '[{"property": "lastName","value": "ASC"},{"property": "firstName","value": "ASC"} ]', 'OR');
+
   }
+
+
+
 }

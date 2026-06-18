@@ -1,13 +1,13 @@
 import { computed, Injectable } from "@angular/core";
-import { AcademicYearFacade } from "../../core/state/academicyear/academic-year.facade";
-import { GradeLevelFacade } from "../../core/state/grade-level/grade-level.facade";
-import { SectionFacade } from "../../core/state/section/section.facade";
-import { ShiftFacade } from "../../core/state/shift/shift.facade";
+import { AcademicYearFacade } from "../academicyear/academic-year.facade";
+import { GradeLevelFacade } from "../grade-level/grade-level.facade";
+import { SectionFacade } from "../section/section.facade";
+import { ShiftFacade } from "../shift/shift.facade";
 import { Signal } from "@angular/core";
-import { Shift } from "../../core/model/shift.model";
-import { AcademicYear } from "../../core/model/academic-year.model";
-import { GradeLevel } from "../../core/model/grade-level.model";
-import { Section } from "../../core/model/section.model";
+import { Shift } from "../../model/shift.model";
+import { AcademicYear } from "../../model/academic-year.model";
+import { GradeLevel } from "../../model/grade-level.model";
+import { Section } from "../../model/section.model";
 import { Student } from "@app/core/model/student.model";
 import { StudentFacade } from "@app/core/state/student/student.facade";
 

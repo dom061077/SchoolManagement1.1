@@ -23,7 +23,7 @@ import { GradeLevel } from '@app/core/model/grade-level.model';
 import { SectionFacade } from '@app/core/state/section/section.facade';
 import { sectionSelectors } from '@app/core/state/section/section.reducer';
 import { Section } from '@app/core/model/section.model';
-import { StudentRegistrationLookupFacade } from '../student-registration-lookup.facade';
+import { StudentRegistrationLookupFacade } from '@app/core/state/student-registration/student-registration-lookup.facade';
 
 @Component({
   selector: 'app-student-registration-add-edit',
@@ -32,18 +32,18 @@ import { StudentRegistrationLookupFacade } from '../student-registration-lookup.
 })
 export class StudentRegistrationAddEditComponent implements OnInit {
 
-  selectEntities = this.store.selectSignal(studentRegistrationSelectors.selectEntities) as Signal<{ [id: number]: StudentRegistration }>;
+  selectEntities = this.facade.items;
   shiftData = this.lookupFacade.shifts;
   academicYearData = this.lookupFacade.academicYears;
-  gradeLevelData = this.store.selectSignal(gradeLevelSelectors.selectAll) as Signal<GradeLevel[]>;
-  sectionData = this.store.selectSignal(sectionSelectors.selectAll) as Signal<Section[]>;
+  gradeLevelData = this.lookupFacade.gradeLevels;//this.store.selectSignal(gradeLevelSelectors.selectAll) as Signal<GradeLevel[]>;
+  sectionData = this.lookupFacade.sections;//this.store.selectSignal(sectionSelectors.selectAll) as Signal<Section[]>;
   title: string = 'STUDENT_REGISTRATION.ADD_REGISTRATION';
   editcode!: number;
   readonly: boolean = false;
   toDelete: boolean = false;
-  studentData = this.store.selectSignal(studentSelectors.selectAll) as Signal<Student[]>;
-  studentTotal = this.store.selectSignal(studentSelectors.selectTotalRest) as Signal<number>;
-  studentLoading = this.store.selectSignal(studentSelectors.selectLoading) as Signal<boolean>;
+  studentData = this.studentFacade.items;//this.store.selectSignal(studentSelectors.selectAll) as Signal<Student[]>;
+  studentTotal = this.studentFacade.totalRest;//this.store.selectSignal(studentSelectors.selectTotalRest) as Signal<number>;
+  studentLoading = this.studentFacade.loading;//this.store.selectSignal(studentSelectors.selectLoading) as Signal<boolean>;
   studentPageSize = 100;
   studentTypeahead$ = new Subject<string>();
   currentStudentTerm = '';
@@ -83,31 +83,7 @@ export class StudentRegistrationAddEditComponent implements OnInit {
       debounceTime(400),
       distinctUntilChanged()
     ).subscribe(term => {
-      this.studentPageSize = 100;
-      let filter = '[]';
-      let firstName = '';
-      this.filterObj = [];
-      let termValues = term.split(' ');
-
-      termValues.forEach(value => {
-        if (this.filterObj.length == 0) {
-          if (Number.isInteger(Number(value))) {
-            this.filterObj.push({ property: "dni:eq", value: value });
-          } else {
-            this.filterObj.push({ property: "lastName:like", value: value });
-          }
-        } else {
-          firstName += value + ' ';
-        }
-      });
-      if (firstName.trim() && this.filterObj.length > 0) {
-        this.filterObj.push({ property: "firstName:like", value: firstName.trim() });
-      }
-      if (!term.trim()) {
-        this.filterObj = [];
-      }
-      filter = JSON.stringify(this.filterObj);
-      this.studentFacade.loadAll(0, this.studentPageSize, filter, '[{"property": "lastName","value": "ASC"},{"property": "firstName","value": "ASC"} ]', 'OR');
+      this.studentFacade.searchStudents(term, this.studentPageSize);
     });
     if (this.editcode && this.editcode > 0) {
       const entity = this.selectEntities()[this.editcode];
@@ -174,12 +150,17 @@ export class StudentRegistrationAddEditComponent implements OnInit {
     return this.registrationForm.get(name);
   }
 
-  onScrollToEnd() {
+  onScrollStudentToEnd() {
     this.fetchMoreStudents();
   }
 
-  onScroll(event: { start: number; end: number }) {
+  onScrollStudent(event: { start: number; end: number }) {
     // Optional: custom logic during scrolling if required
+  }
+
+  onClearStudentTerm() {
+    this.studentPageSize = 100;
+    this.studentFacade.loadAll(0, this.studentPageSize, '[]', '[{"property": "lastName","value": "ASC"},{"property": "firstName","value": "ASC"} ]', 'OR');
   }
 
   private fetchMoreStudents() {
