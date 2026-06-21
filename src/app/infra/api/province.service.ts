@@ -1,6 +1,6 @@
 import { Inject, Injectable } from "@angular/core";
 import { config } from "./config";
-import { PersistenceService } from "@app/core/ports/persistence.service";
+import { PersistenceService } from "./persistence.service";
 import { Province } from "@app/core/model/province.model";
 
 @Injectable({

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { config } from './config';
 import { Student } from '../../core/model/student.model';
-import { PersistenceService } from '../../core/ports/persistence.service';
+import { PersistenceService } from './persistence.service';
 import { Observable } from 'rxjs';
 import { DataSource } from '@app/core/model/datasource.model';
 

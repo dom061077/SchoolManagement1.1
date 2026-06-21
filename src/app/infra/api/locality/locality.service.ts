@@ -1,5 +1,5 @@
 import { Locality } from "@app/core/model/locality.model";
-import { PersistenceService } from "@app/core/ports/persistence.service";
+import { PersistenceService } from "../persistence.service";
 import { config } from "../config";
 import { Injectable } from "@angular/core";
 import { ILocalityPersistencePort } from "./ilocality-persistence-port";

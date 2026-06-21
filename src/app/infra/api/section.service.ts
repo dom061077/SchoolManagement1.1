@@ -1,4 +1,4 @@
-import { PersistenceService } from "@app/core/ports/persistence.service";
+import { PersistenceService } from "./persistence.service";
 import { Section } from "../../core/model/section.model";
 import { Injectable } from "@angular/core";
 import { config } from "./config";

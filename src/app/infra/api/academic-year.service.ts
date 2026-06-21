@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { PersistenceService } from "@app/core/ports/persistence.service";
+import { PersistenceService } from "./persistence.service";
 import { AcademicYear } from "@app/core/model/academic-year.model";
 import { config } from "./config";
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { config } from './config';
 import { Shift } from '../../core/model/shift.model';
-import { PersistenceService } from '../../core/ports/persistence.service';
+import { PersistenceService } from './persistence.service';
 
 @Injectable({
   providedIn: 'root'

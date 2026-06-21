@@ -1,7 +1,7 @@
-import { Observable, throwError } from "rxjs";
-import { IPersistencePort } from "./persistence-port";
-import { DataSource } from "../model/datasource.model";
-import { config } from "../../infra/api/config";
+import { Observable } from "rxjs";
+import { IPersistencePort } from "@app/core/ports/persistence-port";
+import { DataSource } from "@app/core/model/datasource.model";
+import { config } from "./config";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 
@@ -21,7 +21,6 @@ export class PersistenceService<T> implements IPersistencePort<T, number, string
         return this.http.post<T>(this.baseUrl+'/create', entity );
     }
     update(id: number, entity: T): Observable<T> {
-         //return throwError(new Error("Method not implemented."));
         return this.http.put<T>(this.baseUrl+'/'+id, entity );
     }
     delete(id: number): Observable<void> {

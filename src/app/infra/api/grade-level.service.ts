@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { PersistenceService } from '@app/core/ports/persistence.service';
+import { PersistenceService } from './persistence.service';
 import { GradeLevel } from '@app/core/model/grade-level.model';
 import { config } from './config';
 
