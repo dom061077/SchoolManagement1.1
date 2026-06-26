@@ -41,7 +41,7 @@
       </div>
 
       <!-- Subject -->
-      <mat-form-field appearance="outline" class="grid-item">
+      <mat-form-field class="grid-item">
         <mat-label>{{'SCHOOL_EXAM.SUBJECT' | translate}}</mat-label>
         <mat-select formControlName="subjectId">
           <mat-option *ngFor="let item of mockSubjects" [value]="item.id">
@@ -54,7 +54,7 @@
       </mat-form-field>
 
       <!-- Teacher -->
-      <mat-form-field appearance="outline" class="grid-item">
+      <mat-form-field class="grid-item">
         <mat-label>{{'SCHOOL_EXAM.TEACHER' | translate}}</mat-label>
         <mat-select formControlName="teacherId">
           <mat-option *ngFor="let item of mockTeachers" [value]="item.id">
@@ -67,7 +67,7 @@
       </mat-form-field>
 
       <!-- Academic Period -->
-      <mat-form-field appearance="outline" class="grid-item">
+      <mat-form-field class="grid-item">
         <mat-label>{{'SCHOOL_EXAM.ACADEMIC_PERIOD' | translate}}</mat-label>
         <mat-select formControlName="academicPeriodId">
           <mat-option *ngFor="let item of mockAcademicPeriods" [value]="item.id">
@@ -94,7 +94,7 @@
         <div *ngFor="let detail of details.controls; let i=index" [formGroupName]="i" class="detail-row">
 
           <!-- Student Registration Selection -->
-          <mat-form-field appearance="outline" class="student-select">
+          <mat-form-field class="student-select">
             <mat-label>{{'SCHOOL_EXAM.STUDENT' | translate}}</mat-label>
             <mat-select formControlName="studentRegistrationId">
               <mat-option *ngFor="let reg of registrationsData()" [value]="reg.id">
@@ -107,7 +107,7 @@
           </mat-form-field>
 
           <!-- Score -->
-          <mat-form-field appearance="outline" class="score-input">
+          <mat-form-field class="score-input">
             <mat-label>{{'SCHOOL_EXAM.SCORE' | translate}}</mat-label>
             <input matInput type="number" formControlName="score" step="0.1" min="0" max="10">
             <mat-error *ngIf="detail.get('score')?.hasError('required')">

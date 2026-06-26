@@ -91,7 +91,6 @@ export class StudentaddeditComponent implements OnInit {
     lastName: ['', Validators.required],
     firstName: ['', Validators.required],
     birthDate: ['', Validators.required],
-    estudioId: ['', Validators.required],
     // Regex:
     // ^      : Start of string
     // \d+    : One or more digits (0-9). Use \d* for optional.
@@ -161,10 +160,6 @@ export class StudentaddeditComponent implements OnInit {
     return this.personalDataForm.get('dni');
   }
 
-  get estudioIdControl(): AbstractControl | null {
-    return this.personalDataForm.get('estudioId');
-  }
-
   get provinciaIdControl(): AbstractControl | null {
     return this.personalDataForm.get('provinciaId');
   }
@@ -222,7 +217,6 @@ export class StudentaddeditComponent implements OnInit {
       this.personalDataForm.controls["provinciaId"].setValue(null);
       this.personalDataForm.controls["departamentoId"].setValue(null);
       this.personalDataForm.controls["localidadId"].setValue(null);
-      this.personalDataForm.controls["estudioId"].setValue(null);
     }
 
   }
