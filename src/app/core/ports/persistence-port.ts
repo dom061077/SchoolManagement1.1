@@ -1,6 +1,5 @@
 import { Observable } from "rxjs";
 import { DataSource } from "../model/datasource.model";
-import { config } from "../../infra/api/config";
 
 
 export interface IPersistencePort<T, ID = number, Q = string, S = string>{
