@@ -343,11 +343,15 @@ table td button.mat-warn:hover {
   border-width: 2px !important;
 }
 
-/* Material Icons size balance */
+/* Material Icons size balance - overridden to use Material Symbols Outlined */
 .material-icons {
+  font-family: 'Material Symbols Outlined' !important;
   font-size: 18px;
   width: 18px;
   height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Snackbars */
@@ -410,7 +414,7 @@ table td button.mat-warn:hover {
   width: 100%;
 }
 
-.form-grid > * {
+.form-grid>* {
   flex: none !important;
 }
 
