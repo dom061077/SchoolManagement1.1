@@ -56,7 +56,7 @@
             <div class="sidebar-wrapper">
                 <div class="sidebar-header">
                     <div class="logo-box">
-                        <mat-icon>school</mat-icon>
+                        <mat-icon fontIcon="school"></mat-icon>
                     </div>
                     <span class="logo-text">SchoolAdmin</span>
                 </div>
@@ -67,7 +67,7 @@
                         <mat-list-item class="sidebar-nav-item">
                             <button mat-button routerLink="" routerLinkActive="active-link"
                                 [routerLinkActiveOptions]="{exact: true}">
-                                <mat-icon class="menu-icon">home</mat-icon>
+                                <mat-icon fontIcon="home" class="menu-icon"></mat-icon>
                                 <span class="menu-label">Home</span>
                             </button>
                         </mat-list-item>
@@ -75,19 +75,19 @@
                         <div class="sidebar-section-title" *appIfRole="'preceptor'">Management</div>
                         <mat-list-item *appIfRole="'preceptor'" class="sidebar-nav-item">
                             <button mat-button routerLink="student" routerLinkActive="active-link">
-                                <mat-icon class="menu-icon">people</mat-icon>
+                                <mat-icon fontIcon="people" class="menu-icon"></mat-icon>
                                 <span class="menu-label">{{'STUDENTS.MENU_TITLE' | translate}}</span>
                             </button>
                         </mat-list-item>
                         <mat-list-item *appIfRole="'preceptor'" class="sidebar-nav-item">
                             <button mat-button routerLink="student-registrations" routerLinkActive="active-link">
-                                <mat-icon class="menu-icon">school</mat-icon>
+                                <mat-icon fontIcon="app_registration" class="menu-icon"></mat-icon>
                                 <span class="menu-label">{{'STUDENT_REGISTRATIONS.MENU_TITLE' | translate}}</span>
                             </button>
                         </mat-list-item>
                         <mat-list-item *appIfRole="'preceptor'" class="sidebar-nav-item">
                             <button mat-button routerLink="school-exams" routerLinkActive="active-link">
-                                <mat-icon class="menu-icon">assignment</mat-icon>
+                                <mat-icon class="menu-icon" fontIcon="assignment"></mat-icon>
                                 <span class="menu-label">{{'SCHOOL_EXAM.MENU_TITLE' | translate}}</span>
                             </button>
                         </mat-list-item>

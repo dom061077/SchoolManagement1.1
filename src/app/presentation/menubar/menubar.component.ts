@@ -22,6 +22,9 @@ export class MenubarComponent implements DoCheck, OnInit {
 
   ismenuvisible = false;
 
+  /*
+    The actual Router service IS a Singleton
+  */
   constructor(private router: Router, private store: Store, private ks: KeycloakService) {
     this.profile$ = this.ks.keycloak.loadUserProfile();
   }

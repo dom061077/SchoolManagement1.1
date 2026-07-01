@@ -4,16 +4,16 @@ import { AddpersonComponent } from '../addperson/addperson.component';
 import { Store } from '@ngrx/store';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { Person } from '../../person/person.model';
-import { deleteePERSON, loadPERSON, loadPERSONtotalrows } from '../../person/store/person.actions';
-import { getErrormessage, getTotalRows, getpersonlist } from '../../person/store/person.selectors';
+import { Person } from '../../../person/person.model';
+import { deleteePERSON, loadPERSON, loadPERSONtotalrows } from '../../../person/store/person.actions';
+import { getErrormessage, getTotalRows, getpersonlist } from '../../../person/store/person.selectors';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormBuilder } from '@angular/forms';
 import { ChangeDetectorRef } from '@angular/core';
-import { config } from '../../infra/api/config';
+import { config } from '../../../infra/api/config';
 import { Observable, Subject, takeUntil, filter } from 'rxjs';
-import { getLoading, getPdfReportBlob, getPdfReportError } from '../../common/store/pdfreport.selectors';
-import { pdfREPORTgenerate, pdfREPORTsuccess } from '../../common/store/pdfreport.actions';
+import { getLoading, getPdfReportBlob, getPdfReportError } from '../../../common/store/pdfreport.selectors';
+import { pdfREPORTgenerate, pdfREPORTsuccess } from '../../../common/store/pdfreport.actions';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -24,7 +24,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class PersonlistingComponent implements OnInit, OnDestroy {
   personList!: Person[];
   datasource: any;
-  errormessage='';
+  errormessage = '';
   totalRows: number = 50;
   loading$: Observable<boolean> | undefined;
   pdfReportError$: Observable<string | null> | undefined;
@@ -36,17 +36,17 @@ export class PersonlistingComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  displayedColums: string[] = ["id","dni","apellido","nombre", "action"]
-  displayedHeaderColumns: string[] = ["PERSON.ID","PERSON.DNI","PERSON.APELLIDO","PERSON.NOMBRE", "COMMON.GRID_ACTION"]
+  displayedColums: string[] = ["id", "dni", "apellido", "nombre", "action"]
+  displayedHeaderColumns: string[] = ["PERSON.ID", "PERSON.DNI", "PERSON.APELLIDO", "PERSON.NOMBRE", "COMMON.GRID_ACTION"]
   constructor(private translate: TranslateService, private dialog: MatDialog, private store: Store, private builder: FormBuilder
-    ) {
+  ) {
 
   }
 
   filterForm = this.builder.group({
-    apellido : "",
-    nombre : "",
-    dni : null,
+    apellido: "",
+    nombre: "",
+    dni: null,
   });
 
   ngOnInit(): void {
@@ -68,14 +68,14 @@ export class PersonlistingComponent implements OnInit, OnDestroy {
         URL.revokeObjectURL(blobUrl);
       });
 
-    this.store.dispatch(loadPERSON({offset: 0, limit: 5, qfilter: "", sorts: ""}));
-    
+    this.store.dispatch(loadPERSON({ offset: 0, limit: 5, qfilter: "", sorts: "" }));
+
     this.store.select(getErrormessage)
       .pipe(takeUntil(this.destroy$))
       .subscribe((res) => {
         this.errormessage = res;
       });
-    
+
     this.store.select(getpersonlist)
       .pipe(takeUntil(this.destroy$))
       .subscribe((item) => {
@@ -83,7 +83,7 @@ export class PersonlistingComponent implements OnInit, OnDestroy {
         this.datasource = new MatTableDataSource<Person>(this.personList);
         this.datasource.sort = this.sort;
       });
-    
+
     this.store.select(getTotalRows)
       .pipe(takeUntil(this.destroy$))
       .subscribe((tot) => {
@@ -91,25 +91,25 @@ export class PersonlistingComponent implements OnInit, OnDestroy {
       });
   }
 
-  addPerson(){
-    this.openPopup(0,'Agregar Persona');
+  addPerson() {
+    this.openPopup(0, 'Agregar Persona');
   }
 
-  personEdit(id: number){ 
-    const url = config.apiUrl+'/api/v1/person/'
-    this.openPopup(id,"Modificación")
+  personEdit(id: number) {
+    const url = config.apiUrl + '/api/v1/person/'
+    this.openPopup(id, "Modificación")
   }
 
-  personPrintCert(personId: number){
-    this.store.dispatch(pdfREPORTgenerate({id:personId}));
+  personPrintCert(personId: number) {
+    this.store.dispatch(pdfREPORTgenerate({ id: personId }));
   }
 
-  personDelete(personId: number){
-    this.store.dispatch(deleteePERSON({code: personId}));
+  personDelete(personId: number) {
+    this.store.dispatch(deleteePERSON({ code: personId }));
   }
 
-  openPopup(code: number, title: string){
-    this.dialog.open(AddpersonComponent,{ 
+  openPopup(code: number, title: string) {
+    this.dialog.open(AddpersonComponent, {
       //width: '50%',
       enterAnimationDuration: '1000ms',
       exitAnimationDuration: '1000ms',
@@ -120,44 +120,44 @@ export class PersonlistingComponent implements OnInit, OnDestroy {
     });
   }
 
-  applyFilter(){
+  applyFilter() {
     this.paginator?.firstPage();
     const pageIndex = this.paginator?.pageIndex;
     const pageSize = this.paginator?.pageSize;
     const sortField = this.datasource.sort?.active;
-    const sortDirection = this.datasource.sort?.direction;   
+    const sortDirection = this.datasource.sort?.direction;
     var sorts = '';
-    if(sortField != undefined && sortDirection!= undefined)
-      sorts = '[{"property": "'+sortField+'","value":"'+sortDirection+'"}]'; 
-    const qfilter = '[{ "property":"apellido:like", "value": "'+ this.filterForm.value.apellido+'"},{"property":"nombre:like", "value" : "'
-      +this.filterForm.value.nombre+'"},{"property":"dni:eq","value": '+this.filterForm.value?.dni+'}]';
-    this.store.dispatch(loadPERSON({offset:pageIndex*pageSize, limit: pageSize, qfilter: qfilter?.toString(),sorts}));
+    if (sortField != undefined && sortDirection != undefined)
+      sorts = '[{"property": "' + sortField + '","value":"' + sortDirection + '"}]';
+    const qfilter = '[{ "property":"apellido:like", "value": "' + this.filterForm.value.apellido + '"},{"property":"nombre:like", "value" : "'
+      + this.filterForm.value.nombre + '"},{"property":"dni:eq","value": ' + this.filterForm.value?.dni + '}]';
+    this.store.dispatch(loadPERSON({ offset: pageIndex * pageSize, limit: pageSize, qfilter: qfilter?.toString(), sorts }));
   }
-  
-  sortData(event: any){
-    const pageIndex = this.paginator.pageIndex;
-    const pageSize = this.paginator.pageSize;    
-    const sortField = this.datasource.sort?.active;
-    const sortDirection = this.datasource.sort?.direction; 
-    var sorts = '';
-    if(sortField != undefined && sortDirection!= undefined)
-      sorts = '[{"property": "'+sortField+'","value":"'+sortDirection+'"}]'; 
-    const qfilter = '[{ "property":"apellido:like", "value": "'+ this.filterForm.value.apellido+'"}]';
-    this.store.dispatch(loadPERSON({offset:pageIndex*pageSize, limit: pageSize, qfilter: qfilter?.toString(),sorts}));
-  }  
 
-  nextPageEvent(event:any){
+  sortData(event: any) {
+    const pageIndex = this.paginator.pageIndex;
+    const pageSize = this.paginator.pageSize;
+    const sortField = this.datasource.sort?.active;
+    const sortDirection = this.datasource.sort?.direction;
+    var sorts = '';
+    if (sortField != undefined && sortDirection != undefined)
+      sorts = '[{"property": "' + sortField + '","value":"' + sortDirection + '"}]';
+    const qfilter = '[{ "property":"apellido:like", "value": "' + this.filterForm.value.apellido + '"}]';
+    this.store.dispatch(loadPERSON({ offset: pageIndex * pageSize, limit: pageSize, qfilter: qfilter?.toString(), sorts }));
+  }
+
+  nextPageEvent(event: any) {
     console.log('Next page event: ', event);
     const pageIndex = event.pageIndex;
-    const pageSize = this.paginator.pageSize;    
+    const pageSize = this.paginator.pageSize;
     const sortField = this.datasource.sort?.active;
-    const sortDirection = this.datasource.sort?.direction; 
+    const sortDirection = this.datasource.sort?.direction;
     var sorts = '';
-    if(sortField != undefined && sortDirection!= undefined)
-      sorts = '[{"property": "'+sortField+'","value":"'+sortDirection+'"}]'; 
+    if (sortField != undefined && sortDirection != undefined)
+      sorts = '[{"property": "' + sortField + '","value":"' + sortDirection + '"}]';
 
-    const qfilter = '[{ "property":"apellido:like", "value": "'+ this.filterForm.value.apellido+'"}]';
-    this.store.dispatch(loadPERSON({offset:pageIndex*pageSize, limit: pageSize, qfilter: qfilter?.toString(),sorts}));    
+    const qfilter = '[{ "property":"apellido:like", "value": "' + this.filterForm.value.apellido + '"}]';
+    this.store.dispatch(loadPERSON({ offset: pageIndex * pageSize, limit: pageSize, qfilter: qfilter?.toString(), sorts }));
   }
 
   ngOnDestroy(): void {

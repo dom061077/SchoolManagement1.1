@@ -6,7 +6,7 @@ import {
   EventEmitter
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationDialogComponent } from '../component/dialog/confirm-dialog/confirm-dialog.component';
+import { ConfirmationDialogComponent } from '../presentation/dialog/confirm-dialog/confirm-dialog.component';
 
 @Directive({
   selector: '[appConfirmDialog]'
@@ -15,7 +15,7 @@ export class ConfirmDialogDirective {
   @Input() message = 'Are you sure?';
   @Output() confirmed = new EventEmitter<void>();
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog) { }
 
   @HostListener('click', ['$event'])
   async onClick(event: Event) {

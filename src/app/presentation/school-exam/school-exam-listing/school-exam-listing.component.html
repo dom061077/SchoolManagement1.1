@@ -1,7 +1,7 @@
 <mat-card class="exam-listing-card">
   <mat-card-header class="exam-listing-header">
     <div class="header-title-container">
-      <mat-icon class="header-icon">assignment</mat-icon>
+      <mat-icon class="header-icon" fontIcon="assignment"></mat-icon>
       <h1 class="header-title">{{'SCHOOL_EXAM.LIST_TITLE' | translate}}</h1>
     </div>
   </mat-card-header>
@@ -16,13 +16,15 @@
       <div class="filters-row">
         <mat-form-field appearance="outline" class="filter-field">
           <mat-label>{{'SCHOOL_EXAM.FILTER_NAME' | translate}}</mat-label>
-          <input matInput formControlName="name" (keyup)="applyFilter()" placeholder="{{'SCHOOL_EXAM.FILTER_NAME_PLACEHOLDER' | translate}}">
+          <input matInput formControlName="name" (keyup)="applyFilter()"
+            placeholder="{{'SCHOOL_EXAM.FILTER_NAME_PLACEHOLDER' | translate}}">
           <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="filter-field">
           <mat-label>{{'SCHOOL_EXAM.FILTER_SUBJECT' | translate}}</mat-label>
-          <input matInput formControlName="subjectName" (keyup)="applyFilter()" placeholder="{{'SCHOOL_EXAM.FILTER_SUBJECT_PLACEHOLDER' | translate}}">
+          <input matInput formControlName="subjectName" (keyup)="applyFilter()"
+            placeholder="{{'SCHOOL_EXAM.FILTER_SUBJECT_PLACEHOLDER' | translate}}">
           <mat-icon matSuffix>book</mat-icon>
         </mat-form-field>
 
@@ -34,10 +36,12 @@
         </mat-form-field>
 
         <div class="filter-actions">
-          <button type="submit" mat-fab color="primary" aria-label="Search" class="search-btn" matTooltip="{{'COMMON.SEARCH' | translate}}">
+          <button type="submit" mat-fab color="primary" aria-label="Search" class="search-btn"
+            matTooltip="{{'COMMON.SEARCH' | translate}}">
             <mat-icon>search</mat-icon>
           </button>
-          <button type="button" mat-mini-fab color="warn" (click)="clearFilter()" aria-label="Clear filters" class="clear-btn" matTooltip="{{'COMMON.CLEAR' | translate}}">
+          <button type="button" mat-mini-fab color="warn" (click)="clearFilter()" aria-label="Clear filters"
+            class="clear-btn" matTooltip="{{'COMMON.CLEAR' | translate}}">
             <mat-icon>clear_all</mat-icon>
           </button>
         </div>
@@ -87,13 +91,16 @@
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef class="actions-header">{{'COMMON.GRID_ACTIONS' | translate}}</th>
           <td mat-cell *matCellDef="let element" class="actions-cell">
-            <button mat-icon-button (click)="schoolExamEdit(element.id)" color="primary" matTooltip="{{'COMMON.GRID_ACTION_EDIT_TOOLTIP' | translate}}">
+            <button mat-icon-button (click)="schoolExamEdit(element.id)" color="primary"
+              matTooltip="{{'COMMON.GRID_ACTION_EDIT_TOOLTIP' | translate}}">
               <mat-icon>edit</mat-icon>
             </button>
-            <button mat-icon-button (click)="schoolExamDetails(element.id)" color="accent" matTooltip="{{'COMMON.GRID_ACTION_VIEW_TOOLTIP' | translate}}">
+            <button mat-icon-button (click)="schoolExamDetails(element.id)" color="accent"
+              matTooltip="{{'COMMON.GRID_ACTION_VIEW_TOOLTIP' | translate}}">
               <mat-icon>visibility</mat-icon>
             </button>
-            <button mat-icon-button (click)="schoolExamDelete(element.id)" color="warn" matTooltip="{{'COMMON.GRID_ACTION_DELETE_TOOLTIP' | translate}}">
+            <button mat-icon-button (click)="schoolExamDelete(element.id)" color="warn"
+              matTooltip="{{'COMMON.GRID_ACTION_DELETE_TOOLTIP' | translate}}">
               <mat-icon>delete</mat-icon>
             </button>
           </td>
@@ -106,7 +113,8 @@
   </mat-card-content>
 
   <mat-card-footer class="exam-listing-footer">
-    <mat-paginator [length]="total()" [pageSize]="pageSize()" [pageSizeOptions]="pageSizeOptions" (page)="onPageChange($event)">
+    <mat-paginator [length]="total()" [pageSize]="pageSize()" [pageSizeOptions]="pageSizeOptions"
+      (page)="onPageChange($event)">
     </mat-paginator>
   </mat-card-footer>
 
