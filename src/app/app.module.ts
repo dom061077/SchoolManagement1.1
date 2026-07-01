@@ -3,9 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MenubarComponent } from './component/menubar/menubar.component';
-import { AddpersonComponent } from './component/addperson/addperson.component';
-import { PersonlistingComponent } from './component/personlisting/personlisting.component';
 import { MaterialModule } from './presentation/shared/material.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
@@ -16,7 +13,6 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
-import { LoginComponent } from './component/login/login.component';
 import { AppEffects } from './common/store/app.effects';
 import { PERSONreducer } from './person/store/person.reducer';
 import { PersonEffects } from './person/store/person.effects';
@@ -28,7 +24,7 @@ import { notificationFeatureKey, notificationReducer } from './core/state/notifi
 import { NotificationEffects } from './core/state/notification/notification.effects';
 import { ConfirmDialogDirective } from './directive/confirm-dialog.directive';
 import { NumbersOnlyDirective } from './presentation/shared/directives/numbers-only.directive';
-import { ConfirmationDialogComponent } from './component/dialog/confirm-dialog/confirm-dialog.component';
+import { ConfirmationDialogComponent } from './presentation/dialog/confirm-dialog/confirm-dialog.component';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
@@ -41,6 +37,7 @@ import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 import 'moment/min/locales';
 import { IfPermissionDirective } from './directive/if-permission.directive';
 import { IfRoleDirective } from './directive/if-role.directive';
+import { MenubarComponent } from './presentation/menubar/menubar.component';
 
 export function kcFactory(kcService: KeycloakService) {
   return () => kcService.init();
@@ -66,9 +63,6 @@ export const DYNAMIC_LOCALE_FORMATS = {
 @NgModule({
   declarations: [
     AppComponent,
-    AddpersonComponent,
-    PersonlistingComponent,
-    LoginComponent,
     MenubarComponent,
     ConfirmDialogDirective,
     ConfirmationDialogComponent,
