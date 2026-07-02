@@ -23,7 +23,7 @@ import { GradeLevel } from '@app/core/model/grade-level.model';
 import { SectionFacade } from '@app/core/state/section/section.facade';
 import { sectionSelectors } from '@app/core/state/section/section.reducer';
 import { Section } from '@app/core/model/section.model';
-import { StudentRegistrationLookupFacade } from '@app/core/state/student-registration/student-registration-lookup.facade';
+import { StudentRegistrationLookupFacade } from '@app/core/state/student-registration-lookup.facade';
 
 @Component({
   selector: 'app-student-registration-add-edit',
@@ -32,7 +32,7 @@ import { StudentRegistrationLookupFacade } from '@app/core/state/student-registr
 })
 export class StudentRegistrationAddEditComponent implements OnInit {
 
-  selectEntities = this.facade.items;
+  selectEntities = this.store.selectSignal(studentRegistrationSelectors.selectEntities) as Signal<{ [id: number]: StudentRegistration }>;
   shiftData = this.lookupFacade.shifts;
   academicYearData = this.lookupFacade.academicYears;
   gradeLevelData = this.lookupFacade.gradeLevels;//this.store.selectSignal(gradeLevelSelectors.selectAll) as Signal<GradeLevel[]>;
