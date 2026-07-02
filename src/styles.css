@@ -344,14 +344,29 @@ table td button.mat-warn:hover {
 }
 
 /* Material Icons size balance - overridden to use Material Symbols Outlined */
-.material-icons {
+.material-icons,
+.material-icons-outlined,
+.material-symbols-outlined {
   font-family: 'Material Symbols Outlined' !important;
+  font-weight: normal;
+  font-style: normal;
   font-size: 18px;
   width: 18px;
   height: 18px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: 'liga';
+  flex-shrink: 0;
 }
 
 /* Snackbars */

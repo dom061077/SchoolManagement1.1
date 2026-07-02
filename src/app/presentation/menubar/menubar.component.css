@@ -205,6 +205,7 @@
 .sidebar-content {
     flex-grow: 1;
     overflow-y: auto;
+    overflow-x: auto;
 }
 
 .sidebar-section-title {
@@ -226,6 +227,8 @@
     border-radius: 4px !important;
     overflow: hidden;
     padding: 0 !important;
+    width: max-content !important;
+    min-width: calc(100% - 24px) !important;
 }
 
 /* Navigation button styling inside sidebar list */
@@ -236,6 +239,7 @@
 
 .sidebar-nav-item button {
     width: 100% !important;
+    min-width: max-content !important;
     text-align: left !important;
     color: var(--sidebar-text) !important;
     background-color: transparent !important;
@@ -270,11 +274,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
 }
 
 .sidebar-nav-item .menu-label {
     font-size: 13px;
     font-weight: 500;
+    white-space: nowrap;
 }
 
 /* Sidebar Footer / Profile card */
@@ -360,6 +366,7 @@
 /* Sidenav Scrollbar adjustments */
 .sidebar-content::-webkit-scrollbar {
     width: 5px;
+    height: 5px;
 }
 
 .sidebar-content::-webkit-scrollbar-track {
