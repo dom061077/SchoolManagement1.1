@@ -52,15 +52,15 @@
             <ng-container matColumnDef="action">
                 <th mat-header-cell *matHeaderCellDef>{{'COMMON.GRID_ACTIONS' | translate}}</th>
                 <td mat-cell *matCellDef="let element">
-                    <button mat-icon-button (click)="studentRegistrationEdit(element.id)" color="primary"
+                    <button mat-fab (click)="studentRegistrationEdit(element.id)" color="primary"
                         matTooltip="{{'COMMON.GRID_ACTION_EDIT_TOOLTIP' | translate}}">
                         <mat-icon>edit</mat-icon>
                     </button>
-                    <button mat-icon-button (click)="studentRegistrationDetails(element.id)" color="accent"
+                    <button mat-fab (click)="studentRegistrationDetails(element.id)" color="accent"
                         matTooltip="{{'COMMON.GRID_ACTION_VIEW_TOOLTIP' | translate}}">
                         <mat-icon>visibility</mat-icon>
                     </button>
-                    <button mat-icon-button (click)="studentRegistrationDelete(element.id)" color="warn"
+                    <button mat-fab (click)="studentRegistrationDelete(element.id)" color="warn"
                         matTooltip="{{'COMMON.GRID_ACTION_DELETE_TOOLTIP' | translate}}">
                         <mat-icon>delete</mat-icon>
                     </button>
