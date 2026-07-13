@@ -38,9 +38,10 @@ import 'moment/min/locales';
 import { IfPermissionDirective } from './directive/if-permission.directive';
 import { IfRoleDirective } from './directive/if-role.directive';
 import { MenubarComponent } from './presentation/menubar/menubar.component';
+import { StudentRegistrationLookupFacade } from './core/state/student-registration-lookup.facade';
 
-export function kcFactory(kcService: KeycloakService) {
-  return () => kcService.init();
+export function appInitializerFactory(kcService: KeycloakService, lookupFacade: StudentRegistrationLookupFacade) {
+  return () => kcService.init().then(() => lookupFacade.loadAllLookups());
 }
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -105,8 +106,8 @@ export const DYNAMIC_LOCALE_FORMATS = {
     provideAnimationsAsync(),
     {
       provide: APP_INITIALIZER,
-      deps: [KeycloakService],
-      useFactory: kcFactory,
+      deps: [KeycloakService, StudentRegistrationLookupFacade],
+      useFactory: appInitializerFactory,
       multi: true
     }
   ],

@@ -77,7 +77,6 @@ export class StudentRegistrationAddEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.editcode = this.data.code;
-    this.lookupFacade.loadAllLookups(0, 100);
 
     this.studentTypeahead$.pipe(
       debounceTime(400),
