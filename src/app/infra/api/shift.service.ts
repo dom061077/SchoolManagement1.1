@@ -7,5 +7,5 @@ import { PersistenceService } from './persistence.service';
   providedIn: 'root'
 })
 export class ShiftService extends PersistenceService<Shift> {
-  protected override baseUrl = config.apiUrl + '/api/v1/shift';
+  protected override baseUrl = config.apiUrl + '/shift';
 }

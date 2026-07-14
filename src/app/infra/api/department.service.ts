@@ -7,6 +7,6 @@ import { config } from './config';
   providedIn: 'root'
 })
 export class DepartmentService extends PersistenceService<Department> {
-  protected override baseUrl = config.apiUrl + '/api/v1/departamento';
+  protected override baseUrl = config.apiUrl + '/departamento';
 
 }

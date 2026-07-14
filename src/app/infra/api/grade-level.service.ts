@@ -7,5 +7,5 @@ import { config } from './config';
   providedIn: 'root'
 })
 export class GradeLevelService extends PersistenceService<GradeLevel> {
-  protected override baseUrl = config.apiUrl + '/api/v1/grade-level';
+  protected override baseUrl = config.apiUrl + '/grade-level';
 }

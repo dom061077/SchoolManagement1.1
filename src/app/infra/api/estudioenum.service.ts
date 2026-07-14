@@ -9,5 +9,5 @@ import { PersistenceService } from './persistence.service';
   providedIn: 'root'
 })
 export class EstudioEnumService extends PersistenceService<EstudioEnum> {
-  protected override baseUrl = config.apiUrl + '/api/v1/enum';
+  protected override baseUrl = config.apiUrl + '/enum';
 }

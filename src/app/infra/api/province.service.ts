@@ -7,5 +7,5 @@ import { Province } from "@app/core/model/province.model";
   providedIn: 'root'
 })
 export class ProvinceService extends PersistenceService<Province> {
-    protected override baseUrl = config.apiUrl + '/api/v1/provincia';
+  protected override baseUrl = config.apiUrl + '/provincia';
 }

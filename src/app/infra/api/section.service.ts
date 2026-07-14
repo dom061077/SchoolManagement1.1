@@ -7,5 +7,5 @@ import { config } from "./config";
     providedIn: 'root'
 })
 export class SectionService extends PersistenceService<Section> {
-    protected override baseUrl = config.apiUrl + '/api/v1/section';
+    protected override baseUrl = config.apiUrl + '/section';
 }

@@ -7,5 +7,5 @@ import { PersistenceService } from './persistence.service';
   providedIn: 'root'
 })
 export class StudentRegistrationService extends PersistenceService<StudentRegistration> {
-  protected override baseUrl = config.apiUrl + '/api/v1/student-registrations';
+  protected override baseUrl = config.apiUrl + '/student-registrations';
 }

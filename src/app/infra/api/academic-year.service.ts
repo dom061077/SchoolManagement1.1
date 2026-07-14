@@ -7,5 +7,5 @@ import { config } from "./config";
     providedIn: 'root'
 })
 export class AcademicYearService extends PersistenceService<AcademicYear> {
-    protected override baseUrl = config.apiUrl + '/api/v1/academic-year';
+    protected override baseUrl = config.apiUrl + '/academic-year';
 }
