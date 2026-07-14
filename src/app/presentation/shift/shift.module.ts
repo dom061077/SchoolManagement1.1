@@ -12,6 +12,8 @@ import { ShiftEffects } from '../../core/state/shift/shift.effects';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpLoaderFactory } from '../../app.module';
+import { SHIFT_PERSISTENCE_PORT } from '../../core/ports/shift-persistence-port';
+import { ShiftService } from '../../infra/api/shift.service';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,10 @@ import { HttpLoaderFactory } from '../../app.module';
       },
       isolate: false
     }),
+  ],
+  providers: [
+    { provide: SHIFT_PERSISTENCE_PORT, useClass: ShiftService }
   ]
 })
 export class ShiftModule { }
+

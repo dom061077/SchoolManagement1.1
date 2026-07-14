@@ -9,7 +9,7 @@ import { DataSource } from '@app/core/model/datasource.model';
   providedIn: 'root'
 })
 export class StudentService extends PersistenceService<Student> {
-  protected override baseUrl = config.apiUrl + '/api/v1/alumno';
+  protected override baseUrl = config.apiUrl + '/alumno';
 
   searchStudents(dni: number, lastName: string, firstName: string, pageIndex: number, pageSize: number): Observable<DataSource<Student>> {
     const url = `${this.baseUrl}/search?dni=${dni}&lastName=${lastName}&firstName=${firstName}&pageIndex=${pageIndex}&pageSize=${pageSize}`;

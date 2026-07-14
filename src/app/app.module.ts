@@ -45,7 +45,7 @@ export function appInitializerFactory(kcService: KeycloakService, lookupFacade: 
 }
 
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, config.apiUrl + '/api/v1/translation/messages/', '');
+  return new TranslateHttpLoader(http, config.apiUrl + '/translation/messages/', '');
 }
 
 // 'L' is the Moment.js token for a Localized Date (e.g., DD/MM/YYYY or MM/DD/YYYY)
