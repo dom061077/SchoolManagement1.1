@@ -3,12 +3,15 @@ import {
   HttpInterceptor,
   HttpRequest,
   HttpHandler,
-  HttpEvent
+  HttpEvent,
+  HttpErrorResponse
 } from '@angular/common/http';
 
 
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { KeycloakService } from './keycloak/keycloak.service';
+import * as NotificationActions from '../core/state/notification/notification.actions';
+import { Store } from '@ngrx/store';
 //import * as fromApp from '../store/app.reducer';
 /**
  * 
@@ -21,7 +24,7 @@ import { KeycloakService } from './keycloak/keycloak.service';
 export class AuthInterceptorService implements HttpInterceptor {
   //constructor( private store: Store, private route: Router) {}
   constructor(
-    private keycloakService: KeycloakService
+    private keycloakService: KeycloakService, private store: Store<any>
   ) { }
   /*intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
    if (config.apiUrl && 
@@ -68,7 +71,15 @@ export class AuthInterceptorService implements HttpInterceptor {
         }
       });
       console.log('Request: ' + authReq.url);
-      return next.handle(authReq);
+      return next.handle(authReq).pipe(catchError((error: HttpErrorResponse) => {
+        if (error.status === 0) {
+          this.store.dispatch(NotificationActions.showNotification({
+            message: 'Error al conectar con el servidor. Verifique que el servidor esté funcionando correctamente.',
+            kind: 'error'
+          }));
+        }
+        return throwError(() => error);
+      }));
     }
     return next.handle(request);
   }

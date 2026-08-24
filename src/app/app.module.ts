@@ -40,8 +40,16 @@ import { IfRoleDirective } from './directive/if-role.directive';
 import { MenubarComponent } from './presentation/menubar/menubar.component';
 import { StudentRegistrationLookupFacade } from './core/state/student-registration-lookup.facade';
 
-export function appInitializerFactory(kcService: KeycloakService, lookupFacade: StudentRegistrationLookupFacade) {
-  return () => kcService.init().then(() => lookupFacade.loadAllLookups());
+export function appInitializerFactory(
+  kcService: KeycloakService,
+  lookupFacade: StudentRegistrationLookupFacade
+) {
+  return async () => {
+    const isAuth = await kcService.init();
+    if (isAuth) {
+      lookupFacade.loadAllLookups();
+    }
+  };
 }
 
 export function HttpLoaderFactory(http: HttpClient) {
