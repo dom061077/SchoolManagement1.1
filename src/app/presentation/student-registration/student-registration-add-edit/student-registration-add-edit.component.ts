@@ -12,7 +12,6 @@ import { ShiftFacade } from '@app/core/state/shift/shift.facade';
 import { shiftSelectors } from '@app/core/state/shift/shift.reducer';
 import { Shift } from '@app/core/model/shift.model';
 import { StudentFacade } from '@app/core/state/student/student.facade';
-import { studentSelectors } from '@app/core/state/student/student-reducer';
 import { Student } from '@app/core/model/student.model';
 import { AcademicYearFacade } from '@app/core/state/academicyear/academic-year.facade';
 import { academicYearSelectors } from '@app/core/state/academicyear/academic-year.reducer';

@@ -4,7 +4,6 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { StudentFacade } from '../../../core/state/student/student.facade';
-import { studentSelectors } from '../../../core/state/student/student-reducer';
 import * as NotificationActions from '../../../core/state/notification/notification.actions';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -14,7 +13,6 @@ import { StudentaddeditComponent } from '../studentaddedit/studentaddedit.compon
 import { TranslateService } from '@ngx-translate/core';
 import { UiService } from '../../shared/ui.service';
 import { QueryFIlterCriterion } from '../../../core/model/query-filter-criterion';
-//import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-studentlisting',
@@ -26,11 +24,11 @@ pageSizeOptions: number[] = [5,10,20];
 
   displayedColumns: string[] = ['id', 'lastName', 'firstName', 'dni', 'action'];
   dataSource = new MatTableDataSource<Student>();
-  data = this.store.selectSignal(studentSelectors.selectAll) as Signal<Student []>;
-  total = this.store.selectSignal(studentSelectors.selectTotalRest) as Signal<number>;
-  pageIndex = this.store.selectSignal(studentSelectors.selectPageIndex) as Signal<number>;    
-  pageSize = this.store.selectSignal(studentSelectors.selectPageSize) as Signal<number>;
- // loading = this.store.selectSignal(studentSelectors.selectLoading) as Signal<boolean>; 
+  data = this.facade.items;
+  total = this.facade.totalRest;
+  pageIndex = this.facade.pageIndex;    
+  pageSize = this.facade.pageSize;
+  loading = this.facade.loading; 
 
   errormessage : string = '';
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;

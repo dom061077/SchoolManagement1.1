@@ -5,14 +5,11 @@ import { StudentRoutingModule } from './student-routing.module';
 import { MaterialModule } from '../shared/material.module';
 import { StudentaddeditComponent } from './studentaddedit/studentaddedit.component';
 import { StoreModule } from '@ngrx/store';
-import { studentFeature } from '../../core/state/student/student-reducer';
 import { EffectsModule } from '@ngrx/effects';
-import { StudentEffects } from '../../core/state/student/student-effects';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpLoaderFactory } from '../../app.module';
 import { MatStepperModule } from '@angular/material/stepper';
-import { NumbersOnlyDirective } from '../shared/directives/numbers-only.directive';
 import { SharedModule } from '../shared/shared.module';
 import { estudioenumFeature } from '../../core/state/estudioenum/estudioenum.reducer';
 import { EstudioenumEffects } from '../../core/state/estudioenum/estudioenum.effects';
@@ -38,11 +35,10 @@ import { ProvinceEffects } from '@app/core/state/location/province/province.effe
     SharedModule,
     NgSelectModule,
     ClearableSelectDirective,
-    StoreModule.forFeature(studentFeature.name, studentFeature.reducer),
     StoreModule.forFeature(estudioenumFeature.name, estudioenumFeature.reducer),
     StoreModule.forFeature(localityFeature.name, localityFeature.reducer),
     StoreModule.forFeature(provinceFeature.name, provinceFeature.reducer),
-    EffectsModule.forFeature([StudentEffects, EstudioenumEffects, LocalityEffects, ProvinceEffects])  ,  
+    EffectsModule.forFeature([EstudioenumEffects, LocalityEffects, ProvinceEffects])  ,  
     MaterialModule,
     MatStepperModule,
     StudentRoutingModule,

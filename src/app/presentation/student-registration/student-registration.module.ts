@@ -15,8 +15,6 @@ import { SharedModule } from '../shared/shared.module';
 import { shiftFeature } from '@app/core/state/shift/shift.reducer';
 import { ShiftEffects } from '@app/core/state/shift/shift.effects';
 import { NgSelectModule } from "@ng-select/ng-select";
-import { StudentEffects } from '@app/core/state/student/student-effects';
-import { studentFeature } from '@app/core/state/student/student-reducer';
 import { academicYearFeature } from '@app/core/state/academicyear/academic-year.reducer';
 import { AcademicYearEffects } from '@app/core/state/academicyear/academic-year.effects';
 import { gradeLevelFeature } from '@app/core/state/grade-level/grade-level.reducer';
@@ -36,8 +34,6 @@ import { SectionEffects } from '@app/core/state/section/section.effects';
     EffectsModule.forFeature([StudentRegistrationEffects]),
     StoreModule.forFeature(shiftFeature.name, shiftFeature.reducer),
     EffectsModule.forFeature([ShiftEffects]),
-    StoreModule.forFeature(studentFeature.name, studentFeature.reducer),
-    EffectsModule.forFeature([StudentEffects]),
     StoreModule.forFeature(academicYearFeature.name, academicYearFeature.reducer),
     EffectsModule.forFeature([AcademicYearEffects]),
     StoreModule.forFeature(gradeLevelFeature.name, gradeLevelFeature.reducer),

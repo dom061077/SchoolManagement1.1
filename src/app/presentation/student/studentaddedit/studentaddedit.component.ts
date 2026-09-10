@@ -10,7 +10,6 @@ import { Observable } from 'rxjs';
 import { estudioenumSelectors } from '../../../core/state/estudioenum/estudioenum.reducer';
 import { StudentFacade } from '../../../core/state/student/student.facade';
 import { EstudioEnumFacade } from '../../../core/state/estudioenum/estudioenum.facade';
-import { studentSelectors } from '../../../core/state/student/student-reducer';
 import { UiService } from '../../shared/ui.service';
 import { Locality } from '@app/core/model/locality.model';
 import { LocalitySelectors } from '@app/core/state/location/locality/locality.reducer';
@@ -57,7 +56,7 @@ export class StudentaddeditComponent implements OnInit {
     console.log("Localidades: " + this.localtyData());
   }
 
-  selectEntities = this.store.selectSignal(studentSelectors.selectEntities) as Signal<{ [id: number]: Student }>;
+  selectEntities = this.facade.selectEntities as unknown as Signal<{ [id: number]: Student }>;
   dateformat: string;
   title: string = 'STUDENT.ADD_STUDENT';
   dialogdata: any;

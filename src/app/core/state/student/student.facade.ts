@@ -1,46 +1,40 @@
-import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { FacadeBase } from '../../ngrx/facade-base';
+import { Injectable, inject, Signal } from '@angular/core';
 import { Student } from '../../model/student.model';
-import { StudentActions } from '../../state/student/student-actions';
-import { studentSelectors } from '../../state/student/student-reducer';
-import { EntityState } from '@ngrx/entity';
+import { StudentStore } from './student.store';
 
 @Injectable({ providedIn: 'root' })
-export class StudentFacade extends FacadeBase<Student> {
-  constructor(store: Store<{ feature: EntityState<Student> }>) {
-    super(store, StudentActions, studentSelectors);
+export class StudentFacade {
+  readonly store = inject(StudentStore);
+
+  readonly items: Signal<Student[]> = this.store.entities;
+  readonly selectEntities: Signal<{ [id: string | number]: Student }> = this.store.entityMap;
+  readonly loading: Signal<boolean> = this.store.loading;
+  readonly error: Signal<any> = this.store.error;
+  readonly totalRest: Signal<number> = this.store.total;
+  readonly pageIndex: Signal<number> = this.store.pageIndex;
+  readonly pageSize: Signal<number> = this.store.pageSize;
+
+  loadAll(pageIndex: number, pageSize: number, qfilter: string, sorts: string, loperator: string): void {
+    this.store.loadAll({ pageIndex, pageSize, qfilter, sorts, loperator });
   }
 
-  searchStudents(term: string, pageSize: number) {
-    let studentPageSize = 100;
-    let filter = '[]';
-    let firstName = '';
-    let filterObj = [];
-    let termValues = term.split(' ');
-
-    termValues.forEach(value => {
-      if (filterObj.length == 0) {
-        if (Number.isInteger(Number(value))) {
-          filterObj.push({ property: "dni:eq", value: value });
-        } else {
-          filterObj.push({ property: "lastName:like", value: value });
-        }
-      } else {
-        firstName += value + ' ';
-      }
-    });
-    if (firstName.trim() && filterObj.length > 0) {
-      filterObj.push({ property: "firstName:like", value: firstName.trim() });
-    }
-    if (!term.trim()) {
-      filterObj = [];
-    }
-    filter = JSON.stringify(filterObj);
-    this.loadAll(0, studentPageSize, filter, '[{"property": "lastName","value": "ASC"},{"property": "firstName","value": "ASC"} ]', 'OR');
-
+  create(item: Student): void {
+    this.store.create({ item });
   }
 
+  update(item: Student): void {
+    this.store.update({ item });
+  }
 
+  delete(id: string | number): void {
+    this.store.delete({ id });
+  }
 
+  loadInstance(id: string | number): void {
+    this.store.loadInstance({ id });
+  }
+
+  searchStudents(term: string, pageSize: number): void {
+    this.store.searchStudentsByTerm(term, pageSize);
+  }
 }
