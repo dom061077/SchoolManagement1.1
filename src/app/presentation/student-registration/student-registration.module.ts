@@ -23,6 +23,8 @@ import { gradeLevelFeature } from '@app/core/state/grade-level/grade-level.reduc
 import { GradeLevelEffects } from '@app/core/state/grade-level/grade-level.effects';
 import { sectionFeature } from '@app/core/state/section/section.reducer';
 import { SectionEffects } from '@app/core/state/section/section.effects';
+import { SHIFT_PERSISTENCE_PORT } from '@app/core/ports/shift-persistence-port';
+import { ShiftService } from '@app/infra/api/shift.service';
 
 @NgModule({
   declarations: [
@@ -55,6 +57,9 @@ import { SectionEffects } from '@app/core/state/section/section.effects';
       },
     }),
     NgSelectModule
+  ],
+  providers: [
+    { provide: SHIFT_PERSISTENCE_PORT, useClass: ShiftService }
   ]
 })
 export class StudentRegistrationModule { }

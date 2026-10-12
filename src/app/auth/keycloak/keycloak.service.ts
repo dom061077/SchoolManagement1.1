@@ -28,15 +28,19 @@ export class KeycloakService {
   async init(...args: []): Promise<boolean> {
     console.log('Authenticating user with Keycloak...');
 
+    // 1. Attach event handlers BEFORE calling init()
+    this.setupTokenRefresh();
+
     try {
       const authenticated = await this.keycloak.init({
         onLoad: 'login-required',
-        checkLoginIframe: false // prevents iframe timeout errors when server is down
+        checkLoginIframe: false
       });
 
       if (authenticated) {
         console.log('Authenticated successfully');
-        this.setupTokenRefresh();
+        // 2. Start proactive background refresh check
+        this.startProactiveTokenRefresh();
       }
 
       this.isServerDown = false;
@@ -50,31 +54,54 @@ export class KeycloakService {
       this.isServerDown$.next(true);
       this.errorMessage = 'Unable to connect to the Authentication Service (Keycloak). Please make sure the service is running.';
 
-      // Optional: Inject a fail-safe overlay directly to the DOM in case Angular routing hasn't started yet
       this.showFallbackErrorScreen();
-
-      // Return false instead of rethrowing, allowing the app to render the error screen rather than crashing
       return false;
     }
   }
 
   private setupTokenRefresh() {
     this.keycloak.onTokenExpired = () => {
-      if (this.isRefreshing) return;
-      this.isRefreshing = true;
-
-      this.keycloak.updateToken(30)
-        .then((refreshed) => {
-          if (refreshed) console.log('Token refreshed successfully');
-        })
-        .catch(() => {
-          console.error('Token refresh failed, logging out...');
-          this.logout();
-        })
-        .finally(() => {
-          this.isRefreshing = false;
-        });
+      console.log('Keycloak event: onTokenExpired triggered');
+      this.refreshToken();
     };
+
+    this.keycloak.onAuthRefreshSuccess = () => {
+      console.log('Token successfully refreshed');
+    };
+
+    this.keycloak.onAuthRefreshError = () => {
+      console.error('Failed to refresh token, logging out...');
+      this.logout();
+    };
+  }
+
+  /**
+   * Proactively checks every 20 seconds and refreshes the token
+   * if it has less than 30 seconds of validity remaining.
+   */
+  private startProactiveTokenRefresh() {
+    setInterval(() => {
+      this.refreshToken();
+    }, 20000); // Check every 20s
+  }
+
+  private refreshToken() {
+    if (this.isRefreshing) return;
+    this.isRefreshing = true;
+
+    // updateToken(30): only refreshes if token expires within the next 30 seconds
+    this.keycloak.updateToken(30)
+      .then((refreshed) => {
+        if (refreshed) {
+          console.log('Token was refreshed proactively');
+        }
+      })
+      .catch((err) => {
+        console.error('Token refresh failed:', err);
+      })
+      .finally(() => {
+        this.isRefreshing = false;
+      });
   }
 
   /**
@@ -124,7 +151,8 @@ export class KeycloakService {
     return this.keycloak.logout({ redirectUri: 'http://localhost:4200' });
   }
 
-  hasRole(role: string) {
-    return this.keycloak.tokenParsed?.realm_access?.roles.includes(role);
+  hasRole(role: string): boolean {
+    return this.keycloak.tokenParsed?.realm_access?.roles.includes(role) ?? false;
   }
 }
+
